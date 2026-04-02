@@ -2648,14 +2648,50 @@ a:hover {
   box-shadow: 0 28px 64px rgba(26, 31, 46, 0.13), 0 8px 24px rgba(13, 110, 110, 0.07);
 }
 
+.apt-card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem 0.65rem;
+  align-items: center;
+  margin: 0 0 0.65rem;
+}
+
+.apt-card-meta-pill {
+  margin: 0;
+}
+
 .apt-card-guests {
-  margin: 0 0 0.35rem;
-  font-size: 0.8rem;
+  margin: 0;
+  font-size: 0.78rem;
   font-weight: 600;
   color: var(--accent-hover);
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 0.35rem;
+  padding: 0.28rem 0.55rem;
+  background: rgba(13, 110, 110, 0.07);
+  border-radius: 999px;
+  border: 1px solid rgba(13, 110, 110, 0.12);
+}
+
+.apt-card-distance {
+  margin: 0;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--ink-muted);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.28rem 0.55rem;
+  background: rgba(26, 31, 46, 0.04);
+  border-radius: 999px;
+  border: 1px solid var(--border);
+}
+
+.apt-distance-pill {
+  font-size: 0.95rem;
+  line-height: 1;
+  opacity: 0.85;
 }
 
 .apt-guest-pill {
@@ -2664,7 +2700,7 @@ a:hover {
 }
 
 .apt-card-blurb {
-  margin: 0 0 0.85rem;
+  margin: 0 0 0.75rem;
   font-size: 0.88rem;
   line-height: 1.55;
   color: var(--ink-muted);
@@ -2718,9 +2754,100 @@ a:hover {
 }
 
 .apt-card-price {
-  margin: 0 0 1rem;
+  margin: 0 0 0.85rem;
   font-size: 0.92rem;
   color: var(--ink-muted);
+  font-weight: 600;
+}
+
+.apt-card-price--on-request {
+  color: var(--accent-hover);
+  font-size: 0.9rem;
+}
+
+.apt-card-cta-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+  margin: 0 0 0.65rem;
+}
+
+.apt-card-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  min-height: 46px;
+  padding: 0.45rem 0.55rem;
+  font-size: 0.76rem;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: 0.01em;
+  border-radius: 12px;
+  text-decoration: none;
+  border: 1px solid transparent;
+  transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.22s ease,
+    filter 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.apt-card-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(26, 31, 46, 0.12);
+}
+
+.apt-card-cta:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.apt-card-cta--airbnb {
+  background: #ff385c;
+  border-color: #ff385c;
+  color: #fff;
+}
+
+.apt-card-cta--airbnb:hover {
+  background: #e31c5f;
+  border-color: #e31c5f;
+  color: #fff;
+  filter: brightness(1.02);
+}
+
+.apt-card-cta--booking {
+  background: #003580;
+  border-color: #003580;
+  color: #fff;
+}
+
+.apt-card-cta--booking:hover {
+  background: #00224d;
+  border-color: #00224d;
+  color: #fff;
+}
+
+.apt-card-cta--whatsapp {
+  background: #25d366;
+  border-color: #1ebe5a;
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(37, 211, 102, 0.25);
+}
+
+.apt-card-cta--whatsapp:hover {
+  background: #1fc056;
+  border-color: #1aa34a;
+  color: #fff;
+}
+
+.apt-card-cta--telegram {
+  background: #229ed9;
+  border-color: #1f8bc2;
+  color: #fff;
+}
+
+.apt-card-cta--telegram:hover {
+  background: #1b8ec4;
+  border-color: #1679a8;
+  color: #fff;
 }
 
 .apt-price-num {
@@ -4886,6 +5013,16 @@ button,
   .apt-card-chat-row .btn-telegram-card,
   .apt-card-book--full {
     min-height: 50px;
+  }
+
+  .apt-card-cta {
+    min-height: 48px;
+    font-size: 0.74rem;
+    padding: 0.5rem 0.45rem;
+  }
+
+  .apt-card-cta-grid {
+    gap: 0.45rem;
   }
 
   .card-chat-row {

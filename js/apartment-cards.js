@@ -40,11 +40,6 @@
     return out;
   }
 
-  function resolveBookingUrl(apt) {
-    var u = (apt.bookingLink || (apt.ota && apt.ota.booking) || "").trim();
-    return u;
-  }
-
   function el(tag, cls, attrs) {
     var node = document.createElement(tag);
     if (cls) node.className = cls;
@@ -169,79 +164,91 @@
 
       var body = el("div", "apt-card-body");
 
-      var guests = el("p", "apt-card-guests");
+      var meta = el("div", "apt-card-meta");
+      var guests = el("p", "apt-card-guests apt-card-meta-pill");
       guests.appendChild(el("span", "apt-guest-pill", { text: "👥" }));
-      var gspan = el("span", "", { "data-i18n": apt.guestsKey });
-      guests.appendChild(gspan);
-      body.appendChild(guests);
+      guests.appendChild(el("span", "", { "data-i18n": apt.guestsKey }));
+      meta.appendChild(guests);
+
+      var dist = el("p", "apt-card-distance apt-card-meta-pill");
+      dist.appendChild(el("span", "apt-distance-pill", { text: "✈" }));
+      var dspan = document.createElement("span");
+      dspan.setAttribute("data-i18n", apt.cardDistanceKey || "apt_airport_dist_generic");
+      dist.appendChild(dspan);
+      meta.appendChild(dist);
+      body.appendChild(meta);
 
       body.appendChild(el("h3", "", { "data-i18n": apt.titleKey }));
 
       body.appendChild(el("p", "apt-card-blurb", { "data-i18n": apt.blurbKey }));
 
       var price = el("p", "apt-card-price");
-      price.innerHTML =
-        '<span class="apt-price-cur">' +
-        t("price_from") +
-        '</span> <span class="apt-price-num">' +
-        apt.priceFrom +
-        '</span> <span class="apt-price-cur">' +
-        t("currency_azn") +
-        '</span> <span class="apt-price-per">' +
-        t("price_per_night") +
-        "</span>";
+      if (apt.cardPriceOnRequest) {
+        price.setAttribute("data-i18n", "price_on_request");
+        price.classList.add("apt-card-price--on-request");
+      } else {
+        price.innerHTML =
+          '<span class="apt-price-cur">' +
+          t("price_from") +
+          '</span> <span class="apt-price-num">' +
+          apt.priceFrom +
+          '</span> <span class="apt-price-cur">' +
+          t("currency_azn") +
+          '</span> <span class="apt-price-per">' +
+          t("price_per_night") +
+          "</span>";
+      }
       body.appendChild(price);
 
-      var chatRow = el("div", "apt-card-chat-row");
-      var wa = el("a", "btn btn-primary apt-card-book--full", {
-        href: "#",
-        target: "_blank",
-        rel: "noopener noreferrer",
-        "data-wa-prefill": "",
-        "data-wa-suffix-key": apt.waSuffixKey,
-        "data-i18n": "book_whatsapp_short",
-      });
-      var tg = el("a", "btn btn-telegram btn-telegram-card", {
-        href: "https://t.me/apartamentnearbaku",
-        target: "_blank",
-        rel: "noopener noreferrer",
-        "data-i18n": "nav_telegram",
-      });
-      chatRow.appendChild(wa);
-      chatRow.appendChild(tg);
-      body.appendChild(chatRow);
+      var ctaGrid = el("div", "apt-card-cta-grid");
+      ctaGrid.setAttribute("data-i18n-aria-label", apt.otaAriaKey || "apt_card_cta_group_a11y");
 
-      var hasBooking = !!resolveBookingUrl(apt);
-      var hasAirbnb = apt.ota && apt.ota.airbnb;
-      if (hasBooking || hasAirbnb) {
-        var ota = el(
-          "div",
-          "apt-card-actions--ota" +
-            (hasBooking !== hasAirbnb ? " apt-card-actions--ota--single" : "")
+      var airbnbUrl = (apt.cardAirbnbUrl || "").trim();
+      if (airbnbUrl) {
+        ctaGrid.appendChild(
+          el("a", "apt-card-cta apt-card-cta--airbnb", {
+            href: airbnbUrl,
+            target: "_blank",
+            rel: "noopener noreferrer",
+            "data-i18n": "apt_btn_book_airbnb",
+          })
         );
-        if (apt.otaAriaKey) ota.setAttribute("data-i18n-aria-label", apt.otaAriaKey);
-        if (hasBooking) {
-          ota.appendChild(
-            el("a", "btn btn-ota btn-booking", {
-              href: resolveBookingUrl(apt),
-              target: "_blank",
-              rel: "noopener noreferrer",
-              "data-i18n": "book_on_booking_com",
-            })
-          );
-        }
-        if (hasAirbnb) {
-          ota.appendChild(
-            el("a", "btn btn-ota btn-airbnb-ota", {
-              href: apt.ota.airbnb,
-              target: "_blank",
-              rel: "noopener noreferrer",
-              "data-i18n": "brand_airbnb",
-            })
-          );
-        }
-        body.appendChild(ota);
       }
+
+      var bookingUrl = (apt.cardBookingUrl || "").trim();
+      if (bookingUrl) {
+        ctaGrid.appendChild(
+          el("a", "apt-card-cta apt-card-cta--booking", {
+            href: bookingUrl,
+            target: "_blank",
+            rel: "noopener noreferrer",
+            "data-i18n": "apt_btn_book_booking",
+          })
+        );
+      }
+
+      ctaGrid.appendChild(
+        el("a", "apt-card-cta apt-card-cta--whatsapp", {
+          href: "#",
+          target: "_blank",
+          rel: "noopener noreferrer",
+          "data-wa-prefill": "",
+          "data-wa-suffix-key": apt.waSuffixKey,
+          "data-i18n": "apt_btn_reserve_whatsapp",
+        })
+      );
+
+      var tgUrl = (apt.cardTelegramUrl || "https://t.me/apartamentnearbaku").trim();
+      ctaGrid.appendChild(
+        el("a", "apt-card-cta apt-card-cta--telegram", {
+          href: tgUrl,
+          target: "_blank",
+          rel: "noopener noreferrer",
+          "data-i18n": "apt_btn_reserve_telegram",
+        })
+      );
+
+      body.appendChild(ctaGrid);
 
       var det = el("a", "apt-card-details-link", {
         href: "apartment-detail.html?apt=" + encodeURIComponent(apt.id),
