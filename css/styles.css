@@ -2752,6 +2752,10 @@ a:hover {
   border-top: 1px solid var(--border);
 }
 
+.apt-card-actions--ota--single {
+  grid-template-columns: 1fr;
+}
+
 .apt-card-actions--ota .btn-ota {
   min-width: 0;
   min-height: 46px;

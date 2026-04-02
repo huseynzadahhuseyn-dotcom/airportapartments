@@ -17,6 +17,23 @@
   /** @deprecated Use SITE_GALLERY_IMAGES */
   window.POSTIMG_GALLERY_IMAGES = SITE_GALLERY_IMAGES;
 
+  /** Fallback when no property-specific Booking URL is set (bina); replace in data if you add a listing. */
+  var BOOKING_SEARCH_NEAR_GYD =
+    "https://www.booking.com/searchresults.en-gb.html?ss=Heydar+Aliyev+International+Airport";
+
+  /** Booking.com property links (affiliate params preserved). */
+  var BOOKING_HOUSE_NEAR_EXPO_CENTER =
+    "https://www.booking.com/hotel/az/house-near-airport-and-baku-expo-center.ru.html?label=gen173bo-10CAsoEUInaG91c2UtbmVhci1haXJwb3J0LWFuZC1iYWt1LWV4cG8tY2VudGVySDNYA2gRiAEBmAEzuAEXyAEM2AED6AEB-AEBiAIBmAIGqAIBuALuxLnOBsACAdICJDMyMDY4ZGMyLTUyZTEtNDRjNC1iMzNiLWY3OTY5NTJjMGNmZtgCAeACAQ&sid=050bd510d0756cc961ebf1977517a667&dist=0&group_adults=2&group_children=0&no_rooms=1&sb_price_type=total&type=total&";
+
+  var BOOKING_FIVE_MINUTE_FROM_AIRPORT =
+    "https://www.booking.com/hotel/az/5-minute-from-airport.en-gb.html?label=gen173bo-10CAsoEUIVNS1taW51dGUtZnJvbS1haXJwb3J0SDNYA2gRiAEBmAEzuAEXyAEM2AED6AEB-AEBiAIBmAIGqAIBuAKzwrnOBsACAdICJDEyMTFmNGE3LTNjMzktNDNhOC05YTY1LTcwZTJmOGE1ZTZkM9gCAeACAQ&sid=b62d44cfcc68ca9d61cc909dab83e40c&dist=0&keep_landing=1&sb_price_type=total&type=total&";
+
+  var BOOKING_AIRPORT_HAVEN =
+    "https://www.booking.com/hotel/az/airport-haven-cozy-and-convenient.ru.html?label=gen173bo-10CAsoEUIhYWlycG9ydC1oYXZlbi1jb3p5LWFuZC1jb252ZW5pZW50SDNYA2gRiAEBmAEzuAEXyAEM2AED6AEB-AEBiAIBmAIGqAIBuAKMwrnOBsACAdICJGZhYmM0MWEyLTRjYjEtNGRjNS1iMjRhLTFlMTlmMWY3MWM3NdgCAeACAQ&sid=050bd510d0756cc961ebf1977517a667&dist=0&sb_price_type=total&type=total&";
+
+  var BOOKING_HOUSE_NEAR_BOS =
+    "https://www.booking.com/hotel/az/house-near-baku-airport-and-bos.ru.html?label=gen173bo-10CAsoEUIfaG91c2UtbmVhci1iYWt1LWFpcnBvcnQtYW5kLWJvc0gzWANoEYgBAZgBM7gBF8gBDNgBA-gBAfgBAYgCAZgCBqgCAbgCicK5zgbAAgHSAiQxYTliN2ZlNC1iNTAwLTQ1Y2ItYjdjZi02NjcwOWU2ZDQ5ZTfYAgHgAgE&sid=050bd510d0756cc961ebf1977517a667&dist=0&sb_price_type=total&type=total&";
+
   /**
    * Airport Layover Studio — 12 photos only (postimg.cc order: 64GrGs6g … mhcNn9Nx).
    */
@@ -160,8 +177,9 @@
       priceFrom: 95,
       waSuffixKey: "wa_suffix_haven",
       otaAriaKey: "aria_book_haven_ota",
+      bookingLink: BOOKING_AIRPORT_HAVEN,
       ota: {
-        booking: "https://www.booking.com/hotel/az/airport-haven-cozy-and-convenient.en-gb.html",
+        booking: BOOKING_AIRPORT_HAVEN,
         airbnb: "https://www.airbnb.com/h/airporth",
       },
       altMode: "comfort",
@@ -176,6 +194,10 @@
       priceFrom: 85,
       waSuffixKey: "wa_suffix_avia",
       otaAriaKey: "aria_book_avia_ota",
+      bookingLink: BOOKING_FIVE_MINUTE_FROM_AIRPORT,
+      ota: {
+        booking: BOOKING_FIVE_MINUTE_FROM_AIRPORT,
+      },
       altMode: "cozy",
       images: AVIA_COZY_IMAGES,
     },
@@ -188,6 +210,10 @@
       priceFrom: 120,
       waSuffixKey: "wa_suffix_bina",
       otaAriaKey: "aria_book_bina_ota",
+      bookingLink: BOOKING_SEARCH_NEAR_GYD,
+      ota: {
+        booking: BOOKING_SEARCH_NEAR_GYD,
+      },
       altMode: "premium",
       images: PREMIUM_RESIDENCE_IMAGES,
     },
@@ -200,6 +226,10 @@
       priceFrom: 90,
       waSuffixKey: "wa_suffix_horizon",
       otaAriaKey: "aria_book_horizon_ota",
+      bookingLink: BOOKING_HOUSE_NEAR_EXPO_CENTER,
+      ota: {
+        booking: BOOKING_HOUSE_NEAR_EXPO_CENTER,
+      },
       altMode: "horizon",
       images: HORIZON_APARTMENT_IMAGES,
     },
@@ -212,6 +242,10 @@
       priceFrom: 70,
       waSuffixKey: "wa_suffix_express",
       otaAriaKey: "aria_book_express_ota",
+      bookingLink: BOOKING_FIVE_MINUTE_FROM_AIRPORT,
+      ota: {
+        booking: BOOKING_FIVE_MINUTE_FROM_AIRPORT,
+      },
       altMode: "express",
       images: EXPRESS_STUDIO_IMAGES,
     },
@@ -224,6 +258,10 @@
       priceFrom: 110,
       waSuffixKey: "wa_suffix_family",
       otaAriaKey: "aria_book_family_ota",
+      bookingLink: BOOKING_HOUSE_NEAR_BOS,
+      ota: {
+        booking: BOOKING_HOUSE_NEAR_BOS,
+      },
       altMode: "family",
       images: FAMILY_APARTMENT_IMAGES,
     },

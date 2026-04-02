@@ -40,6 +40,11 @@
     return out;
   }
 
+  function resolveBookingUrl(apt) {
+    var u = (apt.bookingLink || (apt.ota && apt.ota.booking) || "").trim();
+    return u;
+  }
+
   function el(tag, cls, attrs) {
     var node = document.createElement(tag);
     if (cls) node.className = cls;
@@ -206,23 +211,35 @@
       chatRow.appendChild(tg);
       body.appendChild(chatRow);
 
-      if (apt.ota && apt.ota.booking && apt.ota.airbnb) {
-        var ota = el("div", "apt-card-actions--ota");
+      var hasBooking = !!resolveBookingUrl(apt);
+      var hasAirbnb = apt.ota && apt.ota.airbnb;
+      if (hasBooking || hasAirbnb) {
+        var ota = el(
+          "div",
+          "apt-card-actions--ota" +
+            (hasBooking !== hasAirbnb ? " apt-card-actions--ota--single" : "")
+        );
         if (apt.otaAriaKey) ota.setAttribute("data-i18n-aria-label", apt.otaAriaKey);
-        var bk = el("a", "btn btn-ota btn-booking", {
-          href: apt.ota.booking,
-          target: "_blank",
-          rel: "noopener noreferrer",
-          "data-i18n": "brand_booking",
-        });
-        var ab = el("a", "btn btn-ota btn-airbnb-ota", {
-          href: apt.ota.airbnb,
-          target: "_blank",
-          rel: "noopener noreferrer",
-          "data-i18n": "brand_airbnb",
-        });
-        ota.appendChild(bk);
-        ota.appendChild(ab);
+        if (hasBooking) {
+          ota.appendChild(
+            el("a", "btn btn-ota btn-booking", {
+              href: resolveBookingUrl(apt),
+              target: "_blank",
+              rel: "noopener noreferrer",
+              "data-i18n": "book_on_booking_com",
+            })
+          );
+        }
+        if (hasAirbnb) {
+          ota.appendChild(
+            el("a", "btn btn-ota btn-airbnb-ota", {
+              href: apt.ota.airbnb,
+              target: "_blank",
+              rel: "noopener noreferrer",
+              "data-i18n": "brand_airbnb",
+            })
+          );
+        }
         body.appendChild(ota);
       }
 

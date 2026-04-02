@@ -33,6 +33,10 @@
     return out;
   }
 
+  function resolveBookingUrl(apt) {
+    return (apt.bookingLink || (apt.ota && apt.ota.booking) || "").trim();
+  }
+
   function findApt(id) {
     var data = window.APARTMENTS_DATA || [];
     for (var i = 0; i < data.length; i++) {
@@ -252,24 +256,32 @@
 
     if (otaHost) {
       otaHost.textContent = "";
-      if (apt.ota && apt.ota.booking && apt.ota.airbnb) {
+      var hasBooking = !!resolveBookingUrl(apt);
+      var hasAirbnb = apt.ota && apt.ota.airbnb;
+      if (hasBooking || hasAirbnb) {
         var ota = document.createElement("div");
-        ota.className = "apt-detail-ota apt-card-actions--ota";
+        ota.className =
+          "apt-detail-ota apt-card-actions--ota" +
+          (hasBooking !== hasAirbnb ? " apt-card-actions--ota--single" : "");
         if (apt.otaAriaKey) ota.setAttribute("data-i18n-aria-label", apt.otaAriaKey);
-        var bk = document.createElement("a");
-        bk.className = "btn btn-ota btn-booking";
-        bk.href = apt.ota.booking;
-        bk.target = "_blank";
-        bk.rel = "noopener noreferrer";
-        bk.setAttribute("data-i18n", "brand_booking");
-        var ab = document.createElement("a");
-        ab.className = "btn btn-ota btn-airbnb-ota";
-        ab.href = apt.ota.airbnb;
-        ab.target = "_blank";
-        ab.rel = "noopener noreferrer";
-        ab.setAttribute("data-i18n", "brand_airbnb");
-        ota.appendChild(bk);
-        ota.appendChild(ab);
+        if (hasBooking) {
+          var bk = document.createElement("a");
+          bk.className = "btn btn-ota btn-booking";
+          bk.href = resolveBookingUrl(apt);
+          bk.target = "_blank";
+          bk.rel = "noopener noreferrer";
+          bk.setAttribute("data-i18n", "book_on_booking_com");
+          ota.appendChild(bk);
+        }
+        if (hasAirbnb) {
+          var ab = document.createElement("a");
+          ab.className = "btn btn-ota btn-airbnb-ota";
+          ab.href = apt.ota.airbnb;
+          ab.target = "_blank";
+          ab.rel = "noopener noreferrer";
+          ab.setAttribute("data-i18n", "brand_airbnb");
+          ota.appendChild(ab);
+        }
         otaHost.appendChild(ota);
       }
     }
