@@ -3579,6 +3579,39 @@ a:hover {
   background: linear-gradient(90deg, var(--gold) 0%, #a67c00 100%);
 }
 
+/* Mercedes Vito City Tour — slightly richer shadow + spacing */
+.tour-card--vito-city {
+  box-shadow:
+    0 22px 56px rgba(26, 31, 46, 0.11),
+    0 10px 32px rgba(13, 110, 110, 0.07),
+    0 0 0 1px rgba(13, 110, 110, 0.1);
+}
+
+.tour-card--vito-city:hover {
+  box-shadow:
+    0 28px 68px rgba(26, 31, 46, 0.14),
+    0 14px 36px rgba(13, 110, 110, 0.1),
+    0 0 0 1px rgba(13, 110, 110, 0.2);
+}
+
+.tour-card-body--vito-city {
+  padding-bottom: 1.35rem;
+}
+
+.tour-card-meta--vito-city {
+  gap: 0.45rem 0.55rem;
+}
+
+.card-chat-row--tour {
+  gap: 0.65rem;
+  flex-wrap: wrap;
+}
+
+.card-chat-row--tour .btn {
+  flex: 1 1 auto;
+  min-width: min(100%, 12rem);
+}
+
 .tour-card--luxury::before {
   background: linear-gradient(90deg, #1a1f2e 0%, var(--accent) 55%, #c9a227 100%);
 }
@@ -3595,6 +3628,96 @@ a:hover {
     0 0 52px rgba(201, 162, 39, 0.28),
     0 0 80px rgba(13, 110, 110, 0.08);
   border-color: rgba(201, 162, 39, 0.55);
+}
+
+/* BMW X5 — luxury tier above standard city tour cards */
+.tour-card--x5-elite {
+  border-radius: calc(var(--radius-lg) + 4px);
+  border-color: rgba(201, 162, 39, 0.45);
+  box-shadow:
+    0 28px 72px rgba(26, 31, 46, 0.14),
+    0 14px 40px rgba(201, 162, 39, 0.12),
+    0 0 0 1px rgba(201, 162, 39, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+.tour-card--x5-elite:hover {
+  transform: translateY(-5px);
+  box-shadow:
+    0 34px 80px rgba(26, 31, 46, 0.16),
+    0 18px 48px rgba(201, 162, 39, 0.16),
+    0 0 0 1px rgba(201, 162, 39, 0.5),
+    0 0 64px rgba(201, 162, 39, 0.22),
+    0 0 96px rgba(13, 110, 110, 0.06);
+  border-color: rgba(201, 162, 39, 0.62);
+}
+
+.tour-card--luxury.tour-card--x5.tour-card--x5-elite:hover {
+  box-shadow:
+    0 34px 80px rgba(26, 31, 46, 0.16),
+    0 18px 48px rgba(201, 162, 39, 0.16),
+    0 0 0 1px rgba(201, 162, 39, 0.5),
+    0 0 64px rgba(201, 162, 39, 0.22),
+    0 0 96px rgba(13, 110, 110, 0.06);
+  border-color: rgba(201, 162, 39, 0.62);
+}
+
+.tour-card-media--x5-elite.tour-card-media--hero-gallery {
+  background: linear-gradient(180deg, #1a1510 0%, #252a35 42%, var(--bg-alt) 100%);
+  padding: 0.75rem 0.75rem 0.95rem;
+}
+
+.tour-card-media--x5-elite .tour-hero-gallery__main {
+  box-shadow:
+    0 20px 54px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(201, 162, 39, 0.38);
+}
+
+.tour-card-media--x5-elite .tour-hero-gallery__main:hover {
+  box-shadow:
+    0 26px 64px rgba(0, 0, 0, 0.32),
+    0 0 0 1px rgba(201, 162, 39, 0.5),
+    0 12px 40px rgba(201, 162, 39, 0.12);
+}
+
+.tour-card-body--x5-lux {
+  padding: 0.2rem 1.15rem 1.5rem;
+}
+
+.tour-card-meta--x5-lux {
+  gap: 0.48rem 0.55rem;
+  margin-bottom: 1.05rem;
+}
+
+.tour-meta-pill--lux {
+  color: #3d3428;
+  background: linear-gradient(145deg, rgba(255, 252, 245, 0.98) 0%, rgba(201, 162, 39, 0.2) 100%);
+  border-color: rgba(201, 162, 39, 0.38);
+  font-weight: 650;
+}
+
+.tour-card-title--x5-elite {
+  font-size: 1.3rem;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.55rem;
+}
+
+.tour-highlights--x5-elite {
+  background: linear-gradient(145deg, rgba(201, 162, 39, 0.1) 0%, rgba(13, 110, 110, 0.07) 100%);
+  border-color: rgba(201, 162, 39, 0.22);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+
+.tour-price-block--x5-elite {
+  border-color: rgba(201, 162, 39, 0.28);
+  background: linear-gradient(145deg, rgba(201, 162, 39, 0.11) 0%, rgba(26, 31, 46, 0.05) 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+@media (max-width: 479.98px) {
+  .tour-card-wrap--x5-luxury .tour-hero-gallery__thumbs {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 .tour-card-badge--vip-suv {

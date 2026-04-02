@@ -14,8 +14,8 @@
       },
     },
     {
-      root: ".tour-card-media--vito-tour",
-      link: "a.tour-vito-lightbox",
+      root: ".tour-card-media--vito-city-tour",
+      link: "a.tour-vito-city-lightbox",
       isVehicle: function (anchor) {
         return anchor.getAttribute("data-tour-slide") === "vehicle";
       },
