@@ -45,7 +45,8 @@
       priceOnRequest: false,
       coverImage: "",
       airbnbUrl: "",
-      bookingUrl: "",
+      bookingUrl:
+        "https://www.booking.com/hotel/az/house-near-airport-and-baku-expo-center.ru.html?label=gen173bo-10CAsoEUInaG91c2UtbmVhci1haXJwb3J0LWFuZC1iYWt1LWV4cG8tY2VudGVySDNYA2gRiAEBmAEzuAEXyAEM2AED6AEB-AEBiAIBmAIGqAIBuALuxLnOBsACAdICJDMyMDY4ZGMyLTUyZTEtNDRjNC1iMzNiLWY3OTY5NTJjMGNmZtgCAeACAQ&sid=050bd510d0756cc961ebf1977517a667&dist=0&group_adults=2&group_children=0&no_rooms=1&sb_price_type=total&type=total&",
       telegramUrl: DEFAULT_TELEGRAM,
     },
     express: {
@@ -53,7 +54,7 @@
       priceOnRequest: false,
       coverImage: "",
       airbnbUrl: "",
-      bookingUrl: "",
+      bookingUrl: "https://www.booking.com/hotel/az/5-minute-from-airport.en-gb.html",
       telegramUrl: DEFAULT_TELEGRAM,
     },
     family: {
@@ -61,7 +62,7 @@
       priceOnRequest: false,
       coverImage: "",
       airbnbUrl: "",
-      bookingUrl: "",
+      bookingUrl: "https://www.booking.com/hotel/az/house-near-baku-airport-and-bos.ru.html",
       telegramUrl: DEFAULT_TELEGRAM,
     },
   };

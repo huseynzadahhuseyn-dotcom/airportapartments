@@ -51,6 +51,7 @@
         if (e.target.closest(".apt-slider-nav")) return;
         if (e.target.closest(".apt-slider-dots")) return;
         if (e.target.closest(".apt-card-view-photos")) return;
+        if (e.target.closest(".apt-card-thumb-strip")) return;
         window.location.href = detailHref;
       });
     }

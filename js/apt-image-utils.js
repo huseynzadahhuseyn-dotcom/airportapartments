@@ -60,7 +60,8 @@
     var cls = img.getAttribute("class") || "";
     var isSliderImg = /\bapt-slider-img\b/.test(cls);
     var isDetailThumb = /\bapt-detail-thumb-img\b/.test(cls);
-    if (isSliderImg || isDetailThumb) {
+    var isAptCardThumb = /\bapt-card-thumb-img\b/.test(cls);
+    if (isSliderImg || isDetailThumb || isAptCardThumb) {
       var s0 = img.getAttribute("src") || "";
       if (!s0 || s0.indexOf(IMAGE_PLACEHOLDER) !== -1) return;
       img.setAttribute("data-img-fallback-once", "1");
