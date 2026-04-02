@@ -1844,22 +1844,24 @@ a:hover {
   color: var(--ink-muted);
 }
 
+/* Single cover preview — compact hotel-style hero tile */
 #gallery .gallery-grid.gallery-grid--preview {
-  gap: clamp(0.35rem, 1.2vw, 0.5rem);
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  max-width: 44rem;
+  gap: 0;
+  grid-template-columns: 1fr;
+  max-width: min(100%, 48rem);
   margin-inline: auto;
 }
 
-@media (min-width: 768px) {
-  #gallery .gallery-grid.gallery-grid--preview {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 0.5rem;
-  }
+#gallery .gallery-grid.gallery-grid--preview.gallery-grid--cover {
+  max-width: min(100%, 46rem);
 }
 
 .gallery-item--preview {
   margin: 0;
+}
+
+.gallery-item--cover {
+  width: 100%;
 }
 
 .gallery-preview-btn {
@@ -1882,10 +1884,76 @@ a:hover {
   -webkit-tap-highlight-color: transparent;
 }
 
+.gallery-preview-btn--cover {
+  aspect-ratio: unset;
+  border-radius: var(--radius-lg);
+  border-color: var(--border);
+  box-shadow: var(--shadow-sm);
+  min-height: 11rem;
+  height: clamp(11.25rem, 32vw, 17.5rem);
+}
+
+.gallery-preview-btn--cover .gallery-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+}
+
+.gallery-cover-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-start;
+  gap: 0.4rem;
+  padding: 0.85rem 1rem 1rem;
+  background: linear-gradient(
+    180deg,
+    rgba(22, 28, 42, 0) 35%,
+    rgba(22, 28, 42, 0.55) 72%,
+    rgba(22, 28, 42, 0.82) 100%
+  );
+  pointer-events: none;
+}
+
+.gallery-cover-badge {
+  display: inline-block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.96);
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  padding: 0.32rem 0.65rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  line-height: 1.2;
+}
+
+.gallery-cover-cta {
+  font-family: var(--font-sans);
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: #fff;
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.35);
+  line-height: 1.3;
+}
+
 .gallery-preview-btn:hover {
   border-color: rgba(0, 0, 0, 0.14);
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
   transform: translateY(-1px);
+}
+
+.gallery-preview-btn--cover:hover {
+  border-color: rgba(13, 110, 110, 0.35);
+  box-shadow: var(--shadow);
 }
 
 .gallery-preview-btn:hover .gallery-img,
@@ -1903,6 +1971,7 @@ a:hover {
   height: 100%;
   min-height: 100%;
   object-fit: cover;
+  object-position: center;
   transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 

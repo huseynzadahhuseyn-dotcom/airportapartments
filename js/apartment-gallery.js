@@ -1,11 +1,11 @@
 /**
- * Homepage #gallery: small preview grid (3 tiles); tap opens GLightbox with full POSTIMG_GALLERY_IMAGES
+ * Homepage #gallery: one cover image; tap opens GLightbox with full POSTIMG_GALLERY_IMAGES
  * (prev/next controls, keyboard, swipe on touch).
  */
 (function () {
   "use strict";
 
-  var PREVIEW_COUNT = 3;
+  var PREVIEW_COUNT = 1;
   var GALLERY_NAME = "baku-airport-apartments";
   var gbInstance = null;
   var previewListenerAttached = false;
@@ -129,39 +129,51 @@
 
   function updatePreviewLabels(container) {
     if (!container) return;
+    var items = buildGalleryItems();
+    var total = items.length;
     container.querySelectorAll(".gallery-preview-btn").forEach(function (btn) {
       var i = parseInt(btn.getAttribute("data-gallery-index"), 10);
       if (isNaN(i)) return;
-      var items = buildGalleryItems();
       var item = items[i];
       if (!item) return;
       var alt = altForItem(item);
       var hint = t("gallery_open_full_set_a11y");
-      btn.setAttribute("aria-label", alt + " — " + hint);
+      var badgeText = t("gallery_photo_count_badge", { count: total });
+      btn.setAttribute("aria-label", alt + " — " + badgeText + ". " + hint);
+      var badgeEl = btn.querySelector(".gallery-cover-badge");
+      var ctaEl = btn.querySelector(".gallery-cover-cta");
+      if (badgeEl) badgeEl.textContent = badgeText;
+      if (ctaEl) ctaEl.textContent = t("gallery_view_gallery_cta");
     });
   }
 
   function renderGallery(container) {
     if (!container) return;
     container.textContent = "";
-    container.classList.add("gallery-grid--preview");
+    container.classList.add("gallery-grid--preview", "gallery-grid--cover");
 
     var items = buildGalleryItems();
     var n = Math.min(PREVIEW_COUNT, items.length);
+    var total = items.length;
 
     for (var i = 0; i < n; i++) {
       var item = items[i];
       var fullUrl = resolveFullUrl(item);
       if (!fullUrl) continue;
 
-      var figure = el("figure", { className: "gallery-item gallery-item--preview" });
+      var figure = el("figure", { className: "gallery-item gallery-item--preview gallery-item--cover" });
 
       var hint = t("gallery_open_full_set_a11y");
       var btn = el("button", {
         type: "button",
-        className: "gallery-preview-btn",
+        className: "gallery-preview-btn gallery-preview-btn--cover",
         "data-gallery-index": String(i),
-        "aria-label": altForItem(item) + " — " + hint,
+        "aria-label":
+          altForItem(item) +
+          " — " +
+          t("gallery_photo_count_badge", { count: total }) +
+          ". " +
+          hint,
       });
 
       var img = el("img", {
@@ -170,17 +182,22 @@
         alt: altForItem(item),
         width: "1200",
         height: "900",
-        sizes: "(max-width: 767px) 34vw, 22vw",
+        sizes: "(max-width: 767px) 100vw, min(48rem, 88vw)",
         decoding: "async",
       });
-      if (i === 0) {
-        img.setAttribute("loading", "eager");
-        img.setAttribute("fetchpriority", "high");
-      } else {
-        img.setAttribute("loading", "lazy");
-      }
+      img.setAttribute("loading", "eager");
+      img.setAttribute("fetchpriority", "high");
+
+      var overlay = el("span", { className: "gallery-cover-overlay" });
+      var badge = el("span", { className: "gallery-cover-badge" });
+      badge.textContent = t("gallery_photo_count_badge", { count: total });
+      var cta = el("span", { className: "gallery-cover-cta" });
+      cta.textContent = t("gallery_view_gallery_cta");
+      overlay.appendChild(badge);
+      overlay.appendChild(cta);
 
       btn.appendChild(img);
+      btn.appendChild(overlay);
       figure.appendChild(btn);
       container.appendChild(figure);
     }
