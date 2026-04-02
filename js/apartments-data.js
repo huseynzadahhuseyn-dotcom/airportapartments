@@ -6,25 +6,14 @@
 
   var POSTIMG_GALLERY_IMAGES = [
     "/images/1.jpg",
-    "/images/555f64cc-0f41-4e14-a943-9a9a5aa5b569.jpg",
-    "/images/619884148.jpg",
-    "/images/809414780.jpg",
-    "/images/809905749.jpg",
-    "/images/813869831.jpg",
-    "/images/813870546.jpg",
-    "/images/813871146.jpg",
-    "/images/813876698.jpg",
-    "/images/Chat-GPT-Image-Mar-28-2026-01-39-54-PM.png",
-    "/images/heyet.jpg",
-    "/images/Whats-App-Image-2025-09-05-at-09-16-40.jpg",
-    "/images/Whats-App-Image-2025-09-05-at-09-16-41-(4).jpg",
+    "/images/room1.png",
+    "/images/apartment2.webp",
   ];
 
   window.POSTIMG_GALLERY_IMAGES = POSTIMG_GALLERY_IMAGES;
 
   /**
-   * Six listing cards: slide images reuse the Comfort Residence gallery URLs (all still on CDN).
-   * `haven` uses the full 13 for parity with #gallery lightbox set.
+   * Six listing cards: sliders cycle `/images/1.jpg`, `room1.png`, `apartment2.webp` (pool length 3).
    */
   window.APARTMENTS_DATA = [
     {
@@ -42,7 +31,7 @@
         airbnb: "https://www.airbnb.com/h/airporth",
       },
       altMode: "comfort",
-      imgCount: 13,
+      imgCount: 3,
       imgStart: 0,
     },
     {
@@ -55,7 +44,7 @@
       waSuffixKey: "wa_suffix_avia",
       otaAriaKey: "aria_book_avia_ota",
       altMode: "generic",
-      imgCount: 4,
+      imgCount: 3,
       imgStart: 0,
     },
     {
@@ -68,8 +57,8 @@
       waSuffixKey: "wa_suffix_bina",
       otaAriaKey: "aria_book_bina_ota",
       altMode: "generic",
-      imgCount: 4,
-      imgStart: 3,
+      imgCount: 3,
+      imgStart: 1,
     },
     {
       id: "horizon",
@@ -81,7 +70,7 @@
       waSuffixKey: "wa_suffix_horizon",
       otaAriaKey: "aria_book_horizon_ota",
       altMode: "horizon",
-      imgCount: 5,
+      imgCount: 3,
       imgStart: 2,
     },
     {
@@ -95,7 +84,7 @@
       otaAriaKey: "aria_book_express_ota",
       altMode: "express",
       imgCount: 3,
-      imgStart: 5,
+      imgStart: 0,
     },
     {
       id: "family",
@@ -107,8 +96,8 @@
       waSuffixKey: "wa_suffix_family",
       otaAriaKey: "aria_book_family_ota",
       altMode: "family",
-      imgCount: 4,
-      imgStart: 7,
+      imgCount: 3,
+      imgStart: 1,
     },
   ];
 })();
