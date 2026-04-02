@@ -567,7 +567,7 @@
                   data-i18n-aria-label="tour_sedan_gallery_aria"
                   aria-label=""
                 >
-                  <!-- Sedan gallery order: city / experience (slides 0–2), sedan vehicle last (slide 3). Thumbnails match this order. -->
+                  <!-- Sedan: city/experience tiles first; figure.baku-tour-gallery__item--vehicle last. Lightbox opens on first city slide (js/tour-tours-lightbox.js). -->
                   <div class="gallery-grid baku-tour-gallery">
                     <figure class="gallery-item">
                       <a
@@ -718,14 +718,14 @@
                     <div class="tour-vito-slider__viewport">
                       <figure class="tour-vito-slider__slide">
                         <a
-                          class="tour-vito-slider__link glightbox"
-                          href="https://i.postimg.cc/vbXgRsW-y/Whats-App-Image-2026-04-02-at-11-50-56.jpg"
+                          class="tour-vito-slider__link tour-vito-lightbox"
+                          href="https://i.postimg.cc/4sw7CgzK/Whats-App-Image-2026-04-02-at-11-50-57.jpg"
                           data-type="image"
                           data-gallery="city-tour-vito"
                         >
                           <img
                             class="tour-vito-slider__img"
-                            src="https://i.postimg.cc/vbXgRsW-y/Whats-App-Image-2026-04-02-at-11-50-56.jpg"
+                            src="https://i.postimg.cc/4sw7CgzK/Whats-App-Image-2026-04-02-at-11-50-57.jpg"
                             alt=""
                             data-i18n="tour_vito_gallery_alt_1"
                             width="1600"
@@ -737,16 +737,17 @@
                           />
                         </a>
                       </figure>
-                      <figure class="tour-vito-slider__slide">
+                      <figure class="tour-vito-slider__slide tour-vito-slider__slide--vehicle">
                         <a
-                          class="tour-vito-slider__link glightbox"
-                          href="https://i.postimg.cc/4sw7CgzK/Whats-App-Image-2026-04-02-at-11-50-57.jpg"
+                          class="tour-vito-slider__link tour-vito-lightbox"
+                          href="https://i.postimg.cc/vbXgRsW-y/Whats-App-Image-2026-04-02-at-11-50-56.jpg"
                           data-type="image"
                           data-gallery="city-tour-vito"
+                          data-tour-slide="vehicle"
                         >
                           <img
                             class="tour-vito-slider__img"
-                            src="https://i.postimg.cc/4sw7CgzK/Whats-App-Image-2026-04-02-at-11-50-57.jpg"
+                            src="https://i.postimg.cc/vbXgRsW-y/Whats-App-Image-2026-04-02-at-11-50-56.jpg"
                             alt=""
                             data-i18n="tour_vito_gallery_alt_2"
                             width="1600"
@@ -827,34 +828,35 @@
                   aria-label=""
                 >
                   <a
-                    class="tour-x5-gallery__hero glightbox"
-                    href="https://i.postimg.cc/nh8M3Rfw/Chat-GPT-Image-Apr-2-2026-11-51-25-AM.png"
+                    class="tour-x5-gallery__hero tour-x5-lightbox"
+                    href="https://i.postimg.cc/yY3kXqtp/Chat-GPT-Image-Apr-2-2026-11-52-50-AM.png"
                     data-type="image"
                     data-gallery="city-tour-x5"
                   >
                     <img
                       class="tour-x5-gallery__hero-img"
-                      src="https://i.postimg.cc/nh8M3Rfw/Chat-GPT-Image-Apr-2-2026-11-51-25-AM.png"
+                      src="https://i.postimg.cc/yY3kXqtp/Chat-GPT-Image-Apr-2-2026-11-52-50-AM.png"
                       alt=""
                       data-i18n="tour_x5_gallery_alt_1"
                       width="900"
                       height="560"
                       sizes="(max-width: 767px) 100vw, 33vw"
-                      loading="lazy"
+                      loading="eager"
                       decoding="async"
+                      fetchpriority="high"
                     />
                     <span class="tour-x5-gallery__zoom-hint" data-i18n="tour_x5_zoom_hint"></span>
                   </a>
                   <ul class="tour-x5-gallery__thumbs">
                     <li>
                       <a
-                        class="tour-x5-gallery__thumb glightbox"
-                        href="https://i.postimg.cc/y8qWLQCb/Chat-GPT-Image-Apr-2-2026-11-52-30-AM.png"
+                        class="tour-x5-gallery__thumb tour-x5-lightbox"
+                        href="https://i.postimg.cc/nh8M3Rfw/Chat-GPT-Image-Apr-2-2026-11-51-25-AM.png"
                         data-type="image"
                         data-gallery="city-tour-x5"
                       >
                         <img
-                          src="https://i.postimg.cc/y8qWLQCb/Chat-GPT-Image-Apr-2-2026-11-52-30-AM.png"
+                          src="https://i.postimg.cc/nh8M3Rfw/Chat-GPT-Image-Apr-2-2026-11-51-25-AM.png"
                           alt=""
                           data-i18n="tour_x5_gallery_alt_2"
                           width="200"
@@ -866,13 +868,14 @@
                     </li>
                     <li>
                       <a
-                        class="tour-x5-gallery__thumb glightbox"
-                        href="https://i.postimg.cc/yY3kXqtp/Chat-GPT-Image-Apr-2-2026-11-52-50-AM.png"
+                        class="tour-x5-gallery__thumb tour-x5-lightbox"
+                        href="https://i.postimg.cc/y8qWLQCb/Chat-GPT-Image-Apr-2-2026-11-52-30-AM.png"
                         data-type="image"
                         data-gallery="city-tour-x5"
+                        data-tour-slide="vehicle"
                       >
                         <img
-                          src="https://i.postimg.cc/yY3kXqtp/Chat-GPT-Image-Apr-2-2026-11-52-50-AM.png"
+                          src="https://i.postimg.cc/y8qWLQCb/Chat-GPT-Image-Apr-2-2026-11-52-30-AM.png"
                           alt=""
                           data-i18n="tour_x5_gallery_alt_3"
                           width="200"
@@ -1534,7 +1537,7 @@
     <script src="js/apartment-slider.js"></script>
     <script src="js/apartment-cards.js"></script>
     <script src="js/apartment-gallery.js"></script>
-    <script src="js/tour-sedan-gallery.js"></script>
+    <script src="js/tour-tours-lightbox.js"></script>
     <script src="js/tour-vito-slider.js"></script>
     <script src="js/site.js"></script>
     <script src="js/nav-header.js"></script>
