@@ -1,10 +1,11 @@
 /**
- * Homepage #gallery: compact preview grid (4 tiles); tap opens GLightbox with all POSTIMG_GALLERY_IMAGES.
+ * Homepage #gallery: small preview grid (3 tiles); tap opens GLightbox with full POSTIMG_GALLERY_IMAGES
+ * (prev/next controls, keyboard, swipe on touch).
  */
 (function () {
   "use strict";
 
-  var PREVIEW_COUNT = 4;
+  var PREVIEW_COUNT = 3;
   var GALLERY_NAME = "baku-airport-apartments";
   var gbInstance = null;
   var previewListenerAttached = false;
@@ -169,7 +170,7 @@
         alt: altForItem(item),
         width: "1200",
         height: "900",
-        sizes: "(max-width: 767px) 50vw, 25vw",
+        sizes: "(max-width: 767px) 34vw, 22vw",
         decoding: "async",
       });
       if (i === 0) {

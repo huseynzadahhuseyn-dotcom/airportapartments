@@ -1,9 +1,8 @@
 /**
  * If your site used a larger `apartments-data.js` (APARTMENTS_DATA, COZY_*, etc.):
- * restore that file from Git / backup, then replace only `POSTIMG_GALLERY_IMAGES` with the 14 URLs below
- * (delete the `bzhBCMHp/Whats-App-Image-2025-09-05-at-09-16-39.jpg` entry from the old list).
+ * restore from Git / backup and merge `POSTIMG_GALLERY_IMAGES` with this 13-URL list.
  *
- * Removed image: WhatsApp photo `Whats-App-Image-2025-09-05-at-09-16-39.jpg` (postimg id bzhBCMHp) — interior / white-door style shot.
+ * Removed (white-door style): `Whats-App-Image-2025-09-05-at-09-16-39-(1).jpg` (postimg yVHbQ5Xz).
  */
 (function () {
   "use strict";
@@ -20,7 +19,6 @@
     "https://i.postimg.cc/zJrctMwc/813876698.jpg",
     "https://i.postimg.cc/fwNr2FjQ/Chat-GPT-Image-Mar-28-2026-01-39-54-PM.png",
     "https://i.postimg.cc/CFgQPtCX/heyet.jpg",
-    "https://i.postimg.cc/yVHbQ5Xz/Whats-App-Image-2025-09-05-at-09-16-39-(1).jpg",
     "https://i.postimg.cc/qkxZ9LjV/Whats-App-Image-2025-09-05-at-09-16-40.jpg",
     "https://i.postimg.cc/fwfg6KBZ/Whats-App-Image-2025-09-05-at-09-16-41-(4).jpg",
   ];
