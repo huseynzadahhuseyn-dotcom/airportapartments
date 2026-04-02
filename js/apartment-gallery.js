@@ -1,11 +1,10 @@
 /**
- * Homepage #gallery: one cover image; tap opens GLightbox with `window.SITE_GALLERY_IMAGES` (`/images/*` only).
- * (prev/next controls, keyboard, swipe on touch).
+ * Homepage #gallery: mosaic of preview images; each opens GLightbox with full `window.SITE_GALLERY_IMAGES`.
  */
 (function () {
   "use strict";
 
-  var PREVIEW_COUNT = 1;
+  var PREVIEW_COUNT = 6;
   var GALLERY_NAME = "baku-airport-apartments";
   var gbInstance = null;
   var previewListenerAttached = false;
@@ -17,34 +16,44 @@
     return key;
   }
 
+  function altKeyForGalleryUrl(url) {
+    if (typeof url !== "string") return "gallery_alt_1";
+    var cozy = url.match(/\/images\/cozy-(\d+)\./);
+    if (cozy) return "cozy_studio_alt_" + parseInt(cozy[1], 10);
+    var haven = url.match(/\/images\/haven-(\d+)\./);
+    if (haven) return "comfort_residence_alt_" + parseInt(haven[1], 10);
+    var premium = url.match(/\/images\/premium-(\d+)\./);
+    if (premium) return "premium_residence_alt_" + parseInt(premium[1], 10);
+    var leg = url.match(/\/images\/([a-z]+)-(\d+)\./);
+    if (leg) {
+      var n = parseInt(leg[2], 10);
+      return "gallery_alt_" + Math.min(Math.max(n, 1), 20);
+    }
+    return "gallery_alt_1";
+  }
+
+  function listingNameKeyForUrl(url) {
+    if (typeof url !== "string") return "gallery_listing_name";
+    if (url.indexOf("/images/cozy-") !== -1) return "listing_name_avia";
+    if (url.indexOf("/images/haven-") !== -1) return "listing_name_haven";
+    if (url.indexOf("/images/premium-") !== -1) return "listing_name_bina";
+    return "gallery_listing_name";
+  }
+
   function buildGalleryItems() {
     var urls = window.SITE_GALLERY_IMAGES || window.POSTIMG_GALLERY_IMAGES || [];
-    var nCozy = 0;
-    for (var ci = 0; ci < urls.length; ci++) {
-      if (typeof urls[ci] === "string" && /\/images\/cozy-\d+\.jpg$/.test(urls[ci])) {
-        nCozy++;
-      }
-    }
     return urls.map(function (url, i) {
       var idx = i + 1;
       var isFirst = idx === 1;
-      var cozyMatch = typeof url === "string" ? url.match(/\/images\/cozy-(\d+)\.jpg$/) : null;
-      var altKey;
-      if (cozyMatch) {
-        altKey = "cozy_studio_alt_" + parseInt(cozyMatch[1], 10);
-      } else {
-        var legSlot = idx - nCozy;
-        altKey = "gallery_alt_" + Math.min(Math.max(legSlot, 1), 13);
-      }
-      var isCozy = !!cozyMatch;
+      var isCozy = typeof url === "string" && url.indexOf("/images/cozy-") !== -1;
       return {
         gallery: GALLERY_NAME,
-        altKey: altKey,
+        altKey: altKeyForGalleryUrl(url),
         photoIndex: idx,
         captionKey: isFirst ? (isCozy ? "gallery_caption_cozy_1" : "gallery_caption_1") : null,
         captionIsHtml: isFirst,
         captionSimple: !isFirst,
-        captionNameKey: isCozy ? "listing_name_avia" : "gallery_listing_name",
+        captionNameKey: listingNameKeyForUrl(url),
         imageUrl: url,
       };
     });
@@ -175,23 +184,34 @@
   function renderGallery(container) {
     if (!container) return;
     container.textContent = "";
-    container.classList.add("gallery-grid--preview", "gallery-grid--cover");
+    container.classList.remove("gallery-grid--preview", "gallery-grid--cover", "gallery-grid--mosaic");
+    container.classList.add("gallery-grid--preview");
 
     var items = buildGalleryItems();
     var n = Math.min(PREVIEW_COUNT, items.length);
     var total = items.length;
+    var mosaic = n > 1;
+
+    if (mosaic) {
+      container.classList.add("gallery-grid--mosaic");
+    } else {
+      container.classList.add("gallery-grid--cover");
+    }
 
     for (var i = 0; i < n; i++) {
       var item = items[i];
       var fullUrl = resolveFullUrl(item);
       if (!fullUrl) continue;
 
-      var figure = el("figure", { className: "gallery-item gallery-item--preview gallery-item--cover" });
+      var figClass = "gallery-item gallery-item--preview" + (mosaic ? " gallery-item--thumb" : " gallery-item--cover");
+      var figure = el("figure", { className: figClass });
 
       var hint = t("gallery_open_full_set_a11y");
+      var btnClass =
+        "gallery-preview-btn" + (mosaic ? " gallery-preview-btn--thumb" : " gallery-preview-btn--cover");
       var btn = el("button", {
         type: "button",
-        className: "gallery-preview-btn gallery-preview-btn--cover",
+        className: btnClass,
         "data-gallery-index": String(i),
         "aria-label":
           altForItem(item) +
@@ -207,22 +227,36 @@
         alt: altForItem(item),
         width: "1200",
         height: "900",
-        sizes: "(max-width: 767px) 100vw, min(48rem, 88vw)",
+        sizes: mosaic
+          ? "(max-width: 639px) 50vw, 33vw"
+          : "(max-width: 767px) 100vw, min(48rem, 88vw)",
         decoding: "async",
       });
-      img.setAttribute("loading", "eager");
-      img.setAttribute("fetchpriority", "high");
-
-      var overlay = el("span", { className: "gallery-cover-overlay" });
-      var badge = el("span", { className: "gallery-cover-badge" });
-      badge.textContent = t("gallery_photo_count_badge", { count: total });
-      var cta = el("span", { className: "gallery-cover-cta" });
-      cta.textContent = t("gallery_view_gallery_cta");
-      overlay.appendChild(badge);
-      overlay.appendChild(cta);
+      img.setAttribute("loading", i === 0 ? "eager" : "lazy");
+      if (i === 0) img.setAttribute("fetchpriority", "high");
 
       btn.appendChild(img);
-      btn.appendChild(overlay);
+
+      if (mosaic && i === 0) {
+        var overlay0 = el("span", { className: "gallery-cover-overlay gallery-cover-overlay--compact" });
+        var badge0 = el("span", { className: "gallery-cover-badge" });
+        badge0.textContent = t("gallery_photo_count_badge", { count: total });
+        var cta0 = el("span", { className: "gallery-cover-cta" });
+        cta0.textContent = t("gallery_view_gallery_cta");
+        overlay0.appendChild(badge0);
+        overlay0.appendChild(cta0);
+        btn.appendChild(overlay0);
+      } else if (!mosaic) {
+        var overlay = el("span", { className: "gallery-cover-overlay" });
+        var badge = el("span", { className: "gallery-cover-badge" });
+        badge.textContent = t("gallery_photo_count_badge", { count: total });
+        var cta = el("span", { className: "gallery-cover-cta" });
+        cta.textContent = t("gallery_view_gallery_cta");
+        overlay.appendChild(badge);
+        overlay.appendChild(cta);
+        btn.appendChild(overlay);
+      }
+
       figure.appendChild(btn);
       container.appendChild(figure);
     }

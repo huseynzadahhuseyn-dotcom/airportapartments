@@ -203,18 +203,6 @@
       var ctaGrid = el("div", "apt-card-cta-grid");
       ctaGrid.setAttribute("data-i18n-aria-label", apt.otaAriaKey || "apt_card_cta_group_a11y");
 
-      var airbnbUrl = (apt.cardAirbnbUrl || "").trim();
-      if (airbnbUrl) {
-        ctaGrid.appendChild(
-          el("a", "apt-card-cta apt-card-cta--airbnb", {
-            href: airbnbUrl,
-            target: "_blank",
-            rel: "noopener noreferrer",
-            "data-i18n": "apt_btn_book_airbnb",
-          })
-        );
-      }
-
       var bookingUrl = (apt.cardBookingUrl || "").trim();
       if (bookingUrl) {
         ctaGrid.appendChild(
@@ -223,6 +211,18 @@
             target: "_blank",
             rel: "noopener noreferrer",
             "data-i18n": "apt_btn_book_booking",
+          })
+        );
+      }
+
+      var airbnbUrl = (apt.cardAirbnbUrl || "").trim();
+      if (airbnbUrl) {
+        ctaGrid.appendChild(
+          el("a", "apt-card-cta apt-card-cta--airbnb", {
+            href: airbnbUrl,
+            target: "_blank",
+            rel: "noopener noreferrer",
+            "data-i18n": "apt_btn_book_airbnb",
           })
         );
       }

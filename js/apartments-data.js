@@ -11,7 +11,7 @@
   "use strict";
 
   var SITE_IMAGE_PLACEHOLDER = "/images/placeholder.svg";
-  var SITE_USE_IMAGE_PLACEHOLDER = true;
+  var SITE_USE_IMAGE_PLACEHOLDER = false;
 
   function keepsRealPath(u) {
     return (
@@ -35,22 +35,18 @@
     return out;
   }
 
-  /** Fallback when no property-specific Booking URL is set (bina); replace in data if you add a listing. */
-  var BOOKING_SEARCH_NEAR_GYD =
-    "https://www.booking.com/searchresults.en-gb.html?ss=Heydar+Aliyev+International+Airport";
-
-  /** Booking.com property links (affiliate params preserved). */
+  /** Booking.com property links (short URLs; add tracking params in `apartment-listings-config` if needed). */
   var BOOKING_HOUSE_NEAR_EXPO_CENTER =
     "https://www.booking.com/hotel/az/house-near-airport-and-baku-expo-center.ru.html?label=gen173bo-10CAsoEUInaG91c2UtbmVhci1haXJwb3J0LWFuZC1iYWt1LWV4cG8tY2VudGVySDNYA2gRiAEBmAEzuAEXyAEM2AED6AEB-AEBiAIBmAIGqAIBuALuxLnOBsACAdICJDMyMDY4ZGMyLTUyZTEtNDRjNC1iMzNiLWY3OTY5NTJjMGNmZtgCAeACAQ&sid=050bd510d0756cc961ebf1977517a667&dist=0&group_adults=2&group_children=0&no_rooms=1&sb_price_type=total&type=total&";
 
   var BOOKING_FIVE_MINUTE_FROM_AIRPORT =
-    "https://www.booking.com/hotel/az/5-minute-from-airport.en-gb.html?label=gen173bo-10CAsoEUIVNS1taW51dGUtZnJvbS1haXJwb3J0SDNYA2gRiAEBmAEzuAEXyAEM2AED6AEB-AEBiAIBmAIGqAIBuAKzwrnOBsACAdICJDEyMTFmNGE3LTNjMzktNDNhOC05YTY1LTcwZTJmOGE1ZTZkM9gCAeACAQ&sid=b62d44cfcc68ca9d61cc909dab83e40c&dist=0&keep_landing=1&sb_price_type=total&type=total&";
+    "https://www.booking.com/hotel/az/5-minute-from-airport.en-gb.html";
 
   var BOOKING_AIRPORT_HAVEN =
-    "https://www.booking.com/hotel/az/airport-haven-cozy-and-convenient.ru.html?label=gen173bo-10CAsoEUIhYWlycG9ydC1oYXZlbi1jb3p5LWFuZC1jb252ZW5pZW50SDNYA2gRiAEBmAEzuAEXyAEM2AED6AEB-AEBiAIBmAIGqAIBuAKMwrnOBsACAdICJGZhYmM0MWEyLTRjYjEtNGRjNS1iMjRhLTFlMTlmMWY3MWM3NdgCAeACAQ&sid=050bd510d0756cc961ebf1977517a667&dist=0&sb_price_type=total&type=total&";
+    "https://www.booking.com/hotel/az/airport-haven-cozy-and-convenient.ru.html";
 
   var BOOKING_HOUSE_NEAR_BOS =
-    "https://www.booking.com/hotel/az/house-near-baku-airport-and-bos.ru.html?label=gen173bo-10CAsoEUIfaG91c2UtbmVhci1iYWt1LWFpcnBvcnQtYW5kLWJvc0gzWANoEYgBAZgBM7gBF8gBDNgBA-gBAfgBAYgCAZgCBqgCAbgCicK5zgbAAgHSAiQxYTliN2ZlNC1iNTAwLTQ1Y2ItYjdjZi02NjcwOWU2ZDQ5ZTfYAgHgAgE&sid=050bd510d0756cc961ebf1977517a667&dist=0&sb_price_type=total&type=total&";
+    "https://www.booking.com/hotel/az/house-near-baku-airport-and-bos.ru.html";
 
   /**
    * Airport Layover Studio — 12 photos only (postimg.cc order: 64GrGs6g … mhcNn9Nx).
@@ -184,8 +180,11 @@
     "/images/cozy-26.jpg",
   ];
 
-  /** Homepage #gallery + card fallback pool: same set as Cozy listing (no legacy tail — avoids placeholder slots). */
-  var SITE_GALLERY_IMAGES = AVIA_COZY_IMAGES.slice();
+  /** Homepage #gallery: mix of Cozy, Haven, and Premium listing photos (all local `/images/*`). */
+  var SITE_GALLERY_IMAGES = []
+    .concat(AVIA_COZY_IMAGES.slice(0, 8))
+    .concat(HAVEN_COMFORT_IMAGES.slice(0, 8))
+    .concat(PREMIUM_RESIDENCE_IMAGES.slice(0, 8));
 
   /**
    * Listings: dedicated `images` arrays per apartment; only shared pool where no `images` is set.
@@ -221,6 +220,7 @@
       bookingLink: BOOKING_FIVE_MINUTE_FROM_AIRPORT,
       ota: {
         booking: BOOKING_FIVE_MINUTE_FROM_AIRPORT,
+        airbnb: "https://www.airbnb.com/h/aviaapartmentz",
       },
       altMode: "cozy",
       images: AVIA_COZY_IMAGES,
@@ -234,9 +234,10 @@
       priceFrom: 120,
       waSuffixKey: "wa_suffix_bina",
       otaAriaKey: "aria_book_bina_ota",
-      bookingLink: BOOKING_SEARCH_NEAR_GYD,
+      bookingLink: BOOKING_HOUSE_NEAR_BOS,
       ota: {
-        booking: BOOKING_SEARCH_NEAR_GYD,
+        booking: BOOKING_HOUSE_NEAR_BOS,
+        airbnb: "https://www.airbnb.com/h/binaairport",
       },
       altMode: "premium",
       images: PREMIUM_RESIDENCE_IMAGES,
