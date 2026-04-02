@@ -2753,11 +2753,13 @@ a:hover {
 
 @media (min-width: 640px) {
   .payment-methods-grid {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
   }
+}
 
-  .payment-method-card--brands-duo {
-    grid-column: span 2;
+@media (min-width: 900px) {
+  .payment-methods-grid {
+    grid-template-columns: repeat(6, 1fr);
   }
 }
 
@@ -2799,13 +2801,30 @@ a:hover {
   flex-shrink: 0;
 }
 
+.payment-method-icon--bank-card {
+  min-height: 2.75rem;
+}
+
+.payment-icon-svg--bank-card {
+  max-width: min(3.35rem, 32vw);
+  height: auto;
+  border-radius: 8px;
+}
+
 .payment-method-icon--cur {
   min-height: 2.75rem;
+  width: 3.35rem;
+  height: 3.35rem;
+  margin-inline: auto;
+  border-radius: 50%;
+  background: var(--accent-soft);
+  border: 1px solid rgba(13, 110, 110, 0.18);
+  box-sizing: border-box;
 }
 
 .payment-cur {
   font-family: var(--font-display);
-  font-size: 1.625rem;
+  font-size: 1.5rem;
   font-weight: 700;
   font-variant-numeric: tabular-nums;
   color: var(--accent);
@@ -2813,43 +2832,7 @@ a:hover {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 2rem;
-}
-
-.payment-method-card--brands-duo {
-  min-height: 7.5rem;
-  padding: 1.15rem 1rem;
-}
-
-.payment-brands-duo {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem 1.35rem;
-  flex-wrap: wrap;
-  width: 100%;
-}
-
-.payment-brand-svg {
-  display: block;
-  flex-shrink: 0;
-  height: auto;
-  max-width: 100%;
-}
-
-.payment-brand-svg--visa {
-  width: min(4.75rem, 38vw);
-  height: auto;
-}
-
-.payment-brand-svg--mastercard {
-  width: min(3.35rem, 28vw);
-  height: auto;
-}
-
-.payment-method-card--brands-duo .payment-method-name {
-  max-width: 16rem;
+  min-height: 0;
 }
 
 .payment-method-name {
