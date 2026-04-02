@@ -1,6 +1,7 @@
 /**
- * Homepage #gallery: `/images/apartments/<folder>/1.jpg`, `2.jpg`, …
- * Edit counts or `images` arrays when you add files. `titleKey` → locales `gallery_group_*`.
+ * Homepage #gallery: same URL sources as listing cards (`js/*-images.js` globals + fallbacks).
+ * Each group uses `window.*_IMAGE_URLS` when non-empty (cozy, haven, horizon, family; premium block = premium + bina merged).
+ * Otherwise `/images/apartments/<folder>/1.jpg`, … `titleKey` → locales `gallery_group_*`.
  */
 (function () {
   "use strict";

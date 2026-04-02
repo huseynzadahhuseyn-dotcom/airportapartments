@@ -1,12 +1,17 @@
 /**
- * Gallery + apartment sliders: logical paths are `/images/<file>` (files live in `public/images/`, sync to root `images/` via
- * `node scripts/sync-public-images.js`). `js/apartment-image-sources.js` maps these to HTTPS when `SITE_APARTMENT_IMAGE_STRATEGY`
- * is `"remote"` so photos load before you add files. Use `"local"` + real files for production.
+ * Gallery + apartment sliders: same image pipeline as Cozy (`js/cozy-studio-images.js`).
  *
- * Do not use postimg.cc *page* URLs as src — only direct file URLs or `/images/…`.
+ * Per-listing URL arrays (load before this file, after `apartment-image-sources.js`):
+ *   `COZY_AIRPORT_STUDIO_IMAGE_URLS`, `AIRPORT_HAVEN_IMAGE_URLS`, `HORIZON_APARTMENT_IMAGE_URLS`,
+ *   `FAMILY_RESIDENCE_IMAGE_URLS`, `PREMIUM_RESIDENCE_IMAGE_URLS`, `BINA_RESIDENCE_IMAGE_URLS` (listing `bina` = premium then bina).
+ * If a global array is missing or empty, legacy `/images/<listing>-NN.*` paths are used.
  *
- * When `SITE_USE_IMAGE_PLACEHOLDER` is true, only URLs under known listing prefixes (cozy/haven/premium/horizon/express/family)
- * keep their real paths; anything else becomes `/images/placeholder.svg`.
+ * `apartment-image-sources.js` maps `/images/…` when `SITE_APARTMENT_IMAGE_STRATEGY` is `"remote"`. Use `"local"` for production files
+ * (`public/images/`, sync via `node scripts/sync-public-images.js`). Direct HTTPS (e.g. i.postimg.cc) passes through.
+ * Do not use postimg.cc *page* URLs — only direct file URLs or `/images/…`.
+ *
+ * Cards, `apartment-detail.html`, and homepage gallery read resolved `APARTMENTS_DATA[].images` / `SITE_GALLERY_GROUPS` (see
+ * `apartment-gallery-config.js`). Broken slider/detail images → `placeholder.svg` via `apt-image-utils.js`; gallery hides broken thumbs.
  */
 (function () {
   "use strict";
