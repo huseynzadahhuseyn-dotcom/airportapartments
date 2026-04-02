@@ -158,35 +158,37 @@
   ];
   var HAVEN_COMFORT_IMAGES = mapResolvedUrls(HAVEN_COMFORT_PATHS);
 
-  /** Cozy Airport Studio (`avia`) — 26 photos (`cozy-NN.jpg` in public/images). */
-  var AVIA_COZY_PATHS = [
-    "/images/cozy-01.jpg",
-    "/images/cozy-02.jpg",
-    "/images/cozy-03.jpg",
-    "/images/cozy-04.jpg",
-    "/images/cozy-05.jpg",
-    "/images/cozy-06.jpg",
-    "/images/cozy-07.jpg",
-    "/images/cozy-08.jpg",
-    "/images/cozy-09.jpg",
-    "/images/cozy-10.jpg",
-    "/images/cozy-11.jpg",
-    "/images/cozy-12.jpg",
-    "/images/cozy-13.jpg",
-    "/images/cozy-14.jpg",
-    "/images/cozy-15.jpg",
-    "/images/cozy-16.jpg",
-    "/images/cozy-17.jpg",
-    "/images/cozy-18.jpg",
-    "/images/cozy-19.jpg",
-    "/images/cozy-20.jpg",
-    "/images/cozy-21.jpg",
-    "/images/cozy-22.jpg",
-    "/images/cozy-23.jpg",
-    "/images/cozy-24.jpg",
-    "/images/cozy-25.jpg",
-    "/images/cozy-26.jpg",
-  ];
+  /** Cozy Airport Studio (`avia`) — URLs from `js/cozy-studio-images.js`, or local `/images/cozy-NN.jpg` fallback. */
+  var AVIA_COZY_PATHS = Array.isArray(window.COZY_AIRPORT_STUDIO_IMAGE_URLS)
+    ? window.COZY_AIRPORT_STUDIO_IMAGE_URLS.slice()
+    : [
+        "/images/cozy-01.jpg",
+        "/images/cozy-02.jpg",
+        "/images/cozy-03.jpg",
+        "/images/cozy-04.jpg",
+        "/images/cozy-05.jpg",
+        "/images/cozy-06.jpg",
+        "/images/cozy-07.jpg",
+        "/images/cozy-08.jpg",
+        "/images/cozy-09.jpg",
+        "/images/cozy-10.jpg",
+        "/images/cozy-11.jpg",
+        "/images/cozy-12.jpg",
+        "/images/cozy-13.jpg",
+        "/images/cozy-14.jpg",
+        "/images/cozy-15.jpg",
+        "/images/cozy-16.jpg",
+        "/images/cozy-17.jpg",
+        "/images/cozy-18.jpg",
+        "/images/cozy-19.jpg",
+        "/images/cozy-20.jpg",
+        "/images/cozy-21.jpg",
+        "/images/cozy-22.jpg",
+        "/images/cozy-23.jpg",
+        "/images/cozy-24.jpg",
+        "/images/cozy-25.jpg",
+        "/images/cozy-26.jpg",
+      ];
   var AVIA_COZY_IMAGES = mapResolvedUrls(AVIA_COZY_PATHS);
 
   /** Homepage #gallery: logical paths (same order as resolved `SITE_GALLERY_IMAGES`) for alt text. */

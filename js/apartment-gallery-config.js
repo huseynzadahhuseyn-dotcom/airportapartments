@@ -22,7 +22,9 @@
     },
     {
       titleKey: "gallery_group_cozy",
-      images: seq("cozy", 24),
+      images: Array.isArray(window.COZY_AIRPORT_STUDIO_IMAGE_URLS)
+        ? window.COZY_AIRPORT_STUDIO_IMAGE_URLS.slice()
+        : seq("cozy", 24),
     },
     {
       titleKey: "gallery_group_haven",
