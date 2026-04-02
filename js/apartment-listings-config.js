@@ -79,11 +79,10 @@
     return u;
   }
 
-  function apply() {
-    var rows = window.APARTMENTS_DATA;
-    if (!Array.isArray(rows)) return;
+  function applyApartmentCardConfig(rows) {
+    if (!Array.isArray(rows)) return [];
 
-    window.APARTMENTS_DATA = rows.map(function (apt) {
+    return rows.map(function (apt) {
       var cfg = APARTMENT_CARD_CONFIG[apt.id] || {};
       var imgs = apt.images && apt.images.length ? apt.images.slice() : [];
 
@@ -126,7 +125,10 @@
     });
   }
 
-  apply();
+  window.APARTMENTS_DATA = applyApartmentCardConfig(window.APARTMENTS_DATA || []);
+  window.APARTMENTS_BOOKING_EXTRA = applyApartmentCardConfig(window.APARTMENTS_BOOKING_EXTRA || []);
+
+  window.applyApartmentCardConfig = applyApartmentCardConfig;
 
   window.APARTMENT_CARD_CONFIG = APARTMENT_CARD_CONFIG;
 })();

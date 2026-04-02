@@ -37,8 +37,14 @@
     return (apt.bookingLink || (apt.ota && apt.ota.booking) || "").trim();
   }
 
+  function allApartmentRows() {
+    return []
+      .concat(window.APARTMENTS_DATA || [])
+      .concat(window.APARTMENTS_BOOKING_EXTRA || []);
+  }
+
   function findApt(id) {
-    var data = window.APARTMENTS_DATA || [];
+    var data = allApartmentRows();
     for (var i = 0; i < data.length; i++) {
       if (data[i].id === id) return data[i];
     }

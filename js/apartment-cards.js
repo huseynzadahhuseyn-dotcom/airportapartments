@@ -1,8 +1,11 @@
 /**
- * Renders #apartments-grid from window.APARTMENTS_DATA — premium listing cards (large gallery + thumbs, specs, OTA CTAs).
+ * Renders #apartments-grid — booking-style cards (hero slider, WhatsApp primary, OTA row).
+ * Data: window.APARTMENTS_DATA + window.APARTMENTS_BOOKING_EXTRA (see apartment-booking-listings.js).
  */
 (function () {
   "use strict";
+
+  var PLACEHOLDER_IMAGE = "/images/placeholder.svg";
 
   function normImgUrl(u) {
     if (window.AptImageUtils && typeof window.AptImageUtils.normalizeSiteImageUrl === "function") {
@@ -26,16 +29,21 @@
   }
 
   function slideUrls(apt, pool) {
-    if (apt.images && Array.isArray(apt.images) && apt.images.length) {
-      return apt.images.slice();
-    }
     var out = [];
-    var len = pool.length;
-    if (!len) return out;
-    var count = apt.imgCount || 4;
-    var start = apt.imgStart || 0;
-    for (var s = 0; s < count; s++) {
-      out.push(pool[(start + s) % len]);
+    if (apt.images && Array.isArray(apt.images) && apt.images.length) {
+      out = apt.images.slice();
+    } else {
+      var len = pool.length;
+      if (len) {
+        var count = apt.imgCount || 4;
+        var start = apt.imgStart || 0;
+        for (var s = 0; s < count; s++) {
+          out.push(pool[(start + s) % len]);
+        }
+      }
+    }
+    if (!out.length) {
+      out.push(PLACEHOLDER_IMAGE);
     }
     return out;
   }
@@ -53,28 +61,6 @@
     return node;
   }
 
-  function wireThumbStrip(art) {
-    var sr = art.querySelector("[data-apt-slider]");
-    var strip = art.querySelector(".apt-card-thumb-strip");
-    if (!sr || !strip) return;
-    sr.addEventListener("apt-slider-changed", function (ev) {
-      var idx = ev.detail && ev.detail.index;
-      if (typeof idx !== "number") return;
-      strip.querySelectorAll(".apt-card-thumb").forEach(function (b, bi) {
-        var on = bi === idx;
-        b.classList.toggle("is-active", on);
-        b.setAttribute("aria-selected", on ? "true" : "false");
-      });
-    });
-    strip.querySelectorAll(".apt-card-thumb").forEach(function (btn, ti) {
-      btn.addEventListener("click", function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-        sr.dispatchEvent(new CustomEvent("apt-slider-goto", { detail: { index: ti } }));
-      });
-    });
-  }
-
   function buildApartmentCards(grid, data) {
     if (!grid || !data || !data.length) return;
     var pool = window.SITE_GALLERY_IMAGES || window.POSTIMG_GALLERY_IMAGES || [];
@@ -87,17 +73,18 @@
 
       var art = el(
         "article",
-        "apt-card apt-card--listing" + (apt.premium ? " apt-card--listing-premium" : "")
+        "apt-card apt-card--booking" + (apt.premium ? " apt-card--booking-featured" : "")
       );
       art.setAttribute("role", "listitem");
       art.setAttribute("data-apt-id", apt.id);
-      art.setAttribute("data-apt-gallery", urls.join("|"));
 
-      var badge = el("span", "apt-card-badge" + (apt.premium ? " apt-card-badge--gold" : ""));
-      badge.setAttribute("data-i18n", apt.premium ? "apt_badge_featured" : "apt_badge_popular");
-      art.appendChild(badge);
+      if (apt.premium) {
+        var badge = el("span", "apt-card-badge apt-card-badge--gold apt-booking-badge", {});
+        badge.setAttribute("data-i18n", "apt_badge_featured");
+        art.appendChild(badge);
+      }
 
-      var mediaShell = el("div", "apt-card-media-shell");
+      var media = el("div", "apt-booking-media");
 
       var sliderRoot = el(
         "div",
@@ -110,7 +97,7 @@
         "apartment-detail.html?apt=" + encodeURIComponent(apt.id)
       );
 
-      var viewport = el("div", "apt-slider-viewport");
+      var viewport = el("div", "apt-slider-viewport apt-booking-slider-viewport");
       var track = el("div", "apt-slider-track apt-slider-track--smooth");
 
       urls.forEach(function (url, si) {
@@ -144,129 +131,63 @@
         );
       }
 
-      var viewPhotos = el("button", "apt-card-view-photos", {
-        type: "button",
-        "data-i18n": "apt_card_view_photos",
-      });
-      viewPhotos.addEventListener("click", function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-        var raw = art.getAttribute("data-apt-gallery") || "";
-        var galleryUrls = raw.split("|").filter(Boolean);
-        if (!galleryUrls.length || typeof window.openComfortImageLightbox !== "function") return;
-        var aptRef = apt;
-        var sliderEl = art.querySelector("[data-apt-slider]");
-        var startIdx = 0;
-        if (sliderEl) {
-          var thumbs = sliderEl.parentElement && sliderEl.parentElement.querySelector(".apt-card-thumb-strip");
-          if (thumbs) {
-            var tb = thumbs.querySelectorAll(".apt-card-thumb");
-            for (var di = 0; di < tb.length; di++) {
-              if (tb[di].classList.contains("is-active")) {
-                startIdx = di;
-                break;
-              }
-            }
-          }
-        }
-        var elements = galleryUrls.map(function (url, si) {
-          return {
-            href: normImgUrl(url),
-            type: "image",
-            alt: t(altKeyFor(aptRef, si)),
-          };
-        });
-        window.openComfortImageLightbox(elements, startIdx);
-      });
-      sliderRoot.appendChild(viewPhotos);
+      media.appendChild(sliderRoot);
+      art.appendChild(media);
 
-      mediaShell.appendChild(sliderRoot);
+      var body = el("div", "apt-booking-body");
 
-      if (urls.length > 1) {
-        var strip = el("div", "apt-card-thumb-strip");
-        strip.setAttribute("role", "tablist");
-        strip.setAttribute("aria-label", t("apt_card_thumbs_a11y"));
-        urls.forEach(function (url, ti) {
-          var tb = el("button", "apt-card-thumb" + (ti === 0 ? " is-active" : ""), {
-            type: "button",
-          });
-          tb.setAttribute("role", "tab");
-          tb.setAttribute("aria-selected", ti === 0 ? "true" : "false");
-          tb.setAttribute(
-            "aria-label",
-            t("tour_slider_goto", { n: ti + 1, total: urls.length })
-          );
-          var tim = el("img", "apt-card-thumb-img", {
-            src: normImgUrl(url),
-            alt: "",
-            loading: "lazy",
-            decoding: "async",
-          });
-          tb.appendChild(tim);
-          strip.appendChild(tb);
-        });
-        mediaShell.appendChild(strip);
-      }
+      body.appendChild(el("h3", "apt-booking-title", { "data-i18n": apt.titleKey }));
 
-      art.appendChild(mediaShell);
+      body.appendChild(el("p", "apt-booking-desc", { "data-i18n": apt.blurbKey }));
 
-      var body = el("div", "apt-card-body apt-card-body--listing");
+      var guestsRow = el("div", "apt-booking-guests");
+      guestsRow.appendChild(el("span", "apt-booking-guests-ic", { "aria-hidden": "true", text: "👥" }));
+      var gSpan = el("span", "apt-booking-guests-text");
+      gSpan.setAttribute("data-i18n", apt.guestsKey);
+      guestsRow.appendChild(gSpan);
+      body.appendChild(guestsRow);
 
-      body.appendChild(el("h3", "apt-card-title apt-card-title--listing", { "data-i18n": apt.titleKey }));
-
-      body.appendChild(el("p", "apt-card-desc apt-card-desc--listing", { "data-i18n": apt.blurbKey }));
-
-      var specs = el("div", "apt-card-specs");
-
-      var specGuests = el("span", "apt-card-spec");
-      specGuests.appendChild(el("span", "apt-card-spec-ic", { "aria-hidden": "true", text: "👥" }));
-      var gEl = el("span", "apt-card-spec-text");
-      gEl.setAttribute("data-i18n", apt.guestsKey);
-      specGuests.appendChild(gEl);
-      specs.appendChild(specGuests);
-
-      var specDist = el("span", "apt-card-spec");
-      specDist.appendChild(el("span", "apt-card-spec-ic", { "aria-hidden": "true", text: "✈️" }));
-      var dEl = el("span", "apt-card-spec-text");
-      dEl.setAttribute("data-i18n", apt.cardDistanceKey || "apt_airport_dist_generic");
-      specDist.appendChild(dEl);
-      specs.appendChild(specDist);
-
-      var specType = el("span", "apt-card-spec");
-      specType.appendChild(el("span", "apt-card-spec-ic", { "aria-hidden": "true", text: "🏠" }));
-      var tEl = el("span", "apt-card-spec-text");
-      tEl.setAttribute("data-i18n", apt.typeKey || "apt_card_type_generic");
-      specType.appendChild(tEl);
-      specs.appendChild(specType);
-
-      var specPrice = el("span", "apt-card-spec apt-card-spec--price");
-      specPrice.appendChild(el("span", "apt-card-spec-ic", { "aria-hidden": "true", text: "💰" }));
+      var priceRow = el("div", "apt-booking-price");
       if (apt.cardPriceOnRequest) {
-        var pr = el("span", "apt-card-spec-text");
+        var pr = el("span", "apt-booking-price-text");
         pr.setAttribute("data-i18n", "price_on_request");
-        specPrice.appendChild(pr);
+        priceRow.appendChild(pr);
       } else {
-        var pv = el("span", "apt-card-spec-price-inner");
-        pv.innerHTML =
-          '<span class="apt-price-cur" data-i18n="price_from"></span> <span class="apt-price-num">' +
+        priceRow.innerHTML =
+          '<span class="apt-booking-price-from" data-i18n="price_from"></span> ' +
+          '<strong class="apt-booking-price-num">' +
           apt.priceFrom +
-          '</span> <span class="apt-price-cur" data-i18n="currency_azn"></span> <span class="apt-price-per apt-card-spec-per" data-i18n="price_per_night"></span>';
-        specPrice.appendChild(pv);
+          "</strong> " +
+          '<span class="apt-booking-price-cur" data-i18n="currency_azn"></span>' +
+          '<span class="apt-booking-price-per" data-i18n="price_per_night"></span>';
       }
-      specs.appendChild(specPrice);
+      body.appendChild(priceRow);
 
-      body.appendChild(specs);
+      body.appendChild(
+        el("a", "btn btn-lg btn-wa-card apt-booking-wa", {
+          href: "#",
+          target: "_blank",
+          rel: "noopener noreferrer",
+          "data-wa-prefill": "",
+          "data-wa-suffix-key": apt.waSuffixKey || "",
+          "data-i18n": "apt_btn_reserve_whatsapp",
+        })
+      );
+
+      body.appendChild(
+        el("a", "apt-booking-details-btn", {
+          href: "apartment-detail.html?apt=" + encodeURIComponent(apt.id),
+          "data-i18n": "view_details",
+        })
+      );
 
       var bookingUrl = (apt.cardBookingUrl || "").trim();
       var airbnbUrl = (apt.cardAirbnbUrl || "").trim();
-      var tgUrl = (apt.cardTelegramUrl || "https://t.me/apartamentnearbaku").trim();
 
-      var ctaPanel = el("div", "apt-card-cta-panel");
-      ctaPanel.setAttribute("data-i18n-aria-label", apt.otaAriaKey || "apt_card_cta_group_a11y");
-
+      var otaRow = el("div", "apt-booking-ota-row");
       if (bookingUrl) {
-        ctaPanel.appendChild(
-          el("a", "apt-card-cta apt-card-cta--block apt-card-cta--booking", {
+        otaRow.appendChild(
+          el("a", "btn btn-ota btn-sm btn-booking apt-booking-ota-link", {
             href: bookingUrl,
             target: "_blank",
             rel: "noopener noreferrer",
@@ -274,16 +195,17 @@
           })
         );
       } else {
-        var sb = el("span", "apt-card-cta apt-card-cta--block apt-card-cta--disabled", {
-          "aria-disabled": "true",
-          "data-i18n": "apt_cta_unavailable",
-        });
-        ctaPanel.appendChild(sb);
+        otaRow.appendChild(
+          el("span", "apt-booking-ota-placeholder", {
+            "aria-disabled": "true",
+            "data-i18n": "apt_cta_unavailable",
+          })
+        );
       }
 
       if (airbnbUrl) {
-        ctaPanel.appendChild(
-          el("a", "apt-card-cta apt-card-cta--block apt-card-cta--airbnb", {
+        otaRow.appendChild(
+          el("a", "btn btn-ota btn-sm btn-airbnb-ota apt-booking-ota-link", {
             href: airbnbUrl,
             target: "_blank",
             rel: "noopener noreferrer",
@@ -291,50 +213,18 @@
           })
         );
       } else {
-        ctaPanel.appendChild(
-          el("span", "apt-card-cta apt-card-cta--block apt-card-cta--disabled", {
+        otaRow.appendChild(
+          el("span", "apt-booking-ota-placeholder", {
             "aria-disabled": "true",
             "data-i18n": "apt_cta_unavailable",
           })
         );
       }
 
-      ctaPanel.appendChild(
-        el("a", "apt-card-cta apt-card-cta--block apt-card-cta--whatsapp", {
-          href: "#",
-          target: "_blank",
-          rel: "noopener noreferrer",
-          "data-wa-prefill": "",
-          "data-wa-suffix-key": apt.waSuffixKey,
-          "data-i18n": "apt_btn_reserve_whatsapp",
-        })
-      );
-
-      ctaPanel.appendChild(
-        el("a", "apt-card-cta apt-card-cta--block apt-card-cta--telegram", {
-          href: tgUrl,
-          target: "_blank",
-          rel: "noopener noreferrer",
-          "data-i18n": "apt_btn_reserve_telegram",
-        })
-      );
-
-      body.appendChild(ctaPanel);
-
-      body.appendChild(
-        el("p", "apt-card-footnote", { "data-i18n": "apt_wa_reply_hint" })
-      );
-
-      body.appendChild(
-        el("a", "apt-card-details-link apt-card-details-link--listing", {
-          href: "apartment-detail.html?apt=" + encodeURIComponent(apt.id),
-          "data-i18n": "view_details",
-        })
-      );
+      body.appendChild(otaRow);
 
       art.appendChild(body);
       grid.appendChild(art);
-      wireThumbStrip(art);
     });
 
     if (window.I18N && typeof window.I18N.apply === "function") {
@@ -365,8 +255,12 @@
   function tryRender() {
     var grid = document.getElementById("apartments-grid");
     if (!grid) return;
-    var data = window.APARTMENTS_DATA;
-    if (data && Array.isArray(data) && data.length) {
+    var base = window.APARTMENTS_DATA;
+    var extra = window.APARTMENTS_BOOKING_EXTRA;
+    var data = []
+      .concat(Array.isArray(base) ? base : [])
+      .concat(Array.isArray(extra) ? extra : []);
+    if (data.length) {
       buildApartmentCards(grid, data);
       return;
     }
