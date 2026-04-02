@@ -17,6 +17,23 @@
     return u;
   }
 
+  function isPlaceholderImageUrl(u) {
+    if (u == null || typeof u !== "string") return true;
+    var s = u.trim().toLowerCase();
+    return s === "" || s.indexOf("placeholder.svg") !== -1;
+  }
+
+  /** Same pipeline as listing data: resolve /images/… (remote/local) then normalize path. */
+  function cardSliderSrc(url) {
+    var u = url;
+    if (typeof window.resolveListingImageUrl === "function") {
+      var r = window.resolveListingImageUrl(u);
+      if (r != null && String(r).trim() !== "") u = r;
+    }
+    var out = normImgUrl(u);
+    return out == null ? "" : String(out);
+  }
+
   function t(key) {
     if (window.I18N && typeof window.I18N.t === "function") {
       return window.I18N.t(key) || "";
@@ -31,21 +48,37 @@
     return "apt_slide_alt_generic_1";
   }
 
-  function slideUrls(apt, pool) {
+  /**
+   * @param {object} opts
+   * @param {boolean} [opts.bookListingImagesOnly] — #book-apartments-grid: only `apt.images` URLs, no gallery pool or placeholder.svg slides
+   */
+  function slideUrls(apt, pool, opts) {
+    opts = opts || {};
+    var bookOnly = opts.bookListingImagesOnly === true;
     var out = [];
+
     if (apt.images && Array.isArray(apt.images) && apt.images.length) {
-      out = apt.images.slice();
-    } else {
+      for (var i = 0; i < apt.images.length; i++) {
+        var item = apt.images[i];
+        if (item == null) continue;
+        var s = String(item).trim();
+        if (!s) continue;
+        if (bookOnly && isPlaceholderImageUrl(s)) continue;
+        out.push(s);
+      }
+    }
+
+    if (!out.length && !bookOnly) {
       var len = pool.length;
       if (len) {
         var count = apt.imgCount || 4;
         var start = apt.imgStart || 0;
-        for (var s = 0; s < count; s++) {
-          out.push(pool[(start + s) % len]);
+        for (var j = 0; j < count; j++) {
+          out.push(pool[(start + j) % len]);
         }
       }
     }
-    if (!out.length) {
+    if (!out.length && !bookOnly) {
       out.push(PLACEHOLDER_IMAGE);
     }
     return out;
@@ -79,12 +112,22 @@
   function buildApartmentCards(grid, data) {
     if (!grid || !data || !data.length) return;
     var pool = window.SITE_GALLERY_IMAGES || window.POSTIMG_GALLERY_IMAGES || [];
+    var bookGrid = grid.id === "book-apartments-grid";
     grid.textContent = "";
     grid.setAttribute("role", "list");
 
     data.forEach(function (apt) {
-      var urls = slideUrls(apt, pool);
+      var urls = slideUrls(apt, pool, { bookListingImagesOnly: bookGrid });
       if (!urls.length) return;
+
+      var slidesPayload = [];
+      for (var ui = 0; ui < urls.length; ui++) {
+        var resolvedSrc = cardSliderSrc(urls[ui]);
+        if (resolvedSrc) {
+          slidesPayload.push({ src: resolvedSrc, altIndex: ui });
+        }
+      }
+      if (!slidesPayload.length) return;
 
       var art = el(
         "article",
@@ -103,7 +146,7 @@
 
       var sliderRoot = el(
         "div",
-        "apt-card-slider" + (urls.length < 2 ? " apt-card-slider--single" : "")
+        "apt-card-slider" + (slidesPayload.length < 2 ? " apt-card-slider--single" : "")
       );
       sliderRoot.setAttribute("data-apt-slider", "");
       sliderRoot.setAttribute("tabindex", "0");
@@ -115,15 +158,16 @@
       var viewport = el("div", "apt-slider-viewport apt-booking-slider-viewport");
       var track = el("div", "apt-slider-track apt-slider-track--smooth");
 
-      urls.forEach(function (url, si) {
+      slidesPayload.forEach(function (cell, idx) {
         var slide = el("div", "apt-slider-slide");
         var img = el("img", "apt-slider-img", {
-          src: normImgUrl(url),
-          alt: imgAltFor(apt, si),
-          loading: si === 0 ? "eager" : "lazy",
+          src: cell.src,
+          alt: imgAltFor(apt, cell.altIndex),
+          loading: idx === 0 ? "eager" : "lazy",
           decoding: "async",
         });
-        if (si === 0) img.setAttribute("fetchpriority", "high");
+        if (idx === 0) img.setAttribute("fetchpriority", "high");
+        if (bookGrid) img.setAttribute("data-no-img-fallback", "true");
         slide.appendChild(img);
         track.appendChild(slide);
       });
@@ -131,7 +175,7 @@
       viewport.appendChild(track);
       sliderRoot.appendChild(viewport);
 
-      if (urls.length > 1) {
+      if (slidesPayload.length > 1) {
         sliderRoot.appendChild(
           el("button", "apt-slider-nav apt-slider-prev", {
             type: "button",
@@ -311,26 +355,41 @@
     }
   }
 
-  function tryRender() {
-    var grid = document.getElementById("apartments-grid");
-    if (!grid) return;
+  function getApartmentListingRows() {
     var simple = window.APARTMENT_CARDS_DATA;
-    var data;
     if (Array.isArray(simple) && simple.length && typeof window.normalizeApartmentCardEntry === "function") {
-      data = simple.map(window.normalizeApartmentCardEntry).filter(Boolean);
-    } else {
-      data = []
-        .concat(Array.isArray(window.APARTMENTS_DATA) ? window.APARTMENTS_DATA : [])
-        .concat(Array.isArray(window.APARTMENTS_BOOKING_EXTRA) ? window.APARTMENTS_BOOKING_EXTRA : []);
+      return simple.map(window.normalizeApartmentCardEntry).filter(Boolean);
     }
-    if (data.length) {
-      buildApartmentCards(grid, data);
-      return;
+    return []
+      .concat(Array.isArray(window.APARTMENTS_DATA) ? window.APARTMENTS_DATA : [])
+      .concat(Array.isArray(window.APARTMENTS_BOOKING_EXTRA) ? window.APARTMENTS_BOOKING_EXTRA : []);
+  }
+
+  function tryRender() {
+    var data = getApartmentListingRows();
+    var hasData = data.length > 0;
+    var aptGrid = document.getElementById("apartments-grid");
+    var bookGrid = document.getElementById("book-apartments-grid");
+
+    if (aptGrid) {
+      if (hasData) {
+        buildApartmentCards(aptGrid, data);
+      } else {
+        renderFallback(aptGrid);
+      }
     }
-    renderFallback(grid);
+
+    if (bookGrid) {
+      if (hasData) {
+        buildApartmentCards(bookGrid, data);
+      } else {
+        bookGrid.textContent = "";
+      }
+    }
   }
 
   window.buildApartmentCards = buildApartmentCards;
+  window.getApartmentListingRows = getApartmentListingRows;
 
   window.addEventListener("i18n:applied", tryRender);
 })();
