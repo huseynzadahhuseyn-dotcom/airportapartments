@@ -1,5 +1,5 @@
 /**
- * Homepage #gallery: one cover image; tap opens GLightbox with full POSTIMG_GALLERY_IMAGES (`/images/*` URLs).
+ * Homepage #gallery: one cover image; tap opens GLightbox with `window.SITE_GALLERY_IMAGES` (`/images/*` only).
  * (prev/next controls, keyboard, swipe on touch).
  */
 (function () {
@@ -18,7 +18,7 @@
   }
 
   function buildGalleryItems() {
-    var urls = window.POSTIMG_GALLERY_IMAGES || [];
+    var urls = window.SITE_GALLERY_IMAGES || window.POSTIMG_GALLERY_IMAGES || [];
     return urls.map(function (url, i) {
       var idx = i + 1;
       var isFirst = idx === 1;

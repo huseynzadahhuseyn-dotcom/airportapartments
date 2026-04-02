@@ -1,5 +1,5 @@
 /**
- * Renders #apartments-grid from window.APARTMENTS_DATA + POSTIMG_GALLERY_IMAGES.
+ * Renders #apartments-grid from window.APARTMENTS_DATA + SITE_GALLERY_IMAGES (`/images/*` paths).
  */
 (function () {
   "use strict";
@@ -47,7 +47,7 @@
 
   function buildApartmentCards(grid, data) {
     if (!grid || !data || !data.length) return;
-    var pool = window.POSTIMG_GALLERY_IMAGES || [];
+    var pool = window.SITE_GALLERY_IMAGES || window.POSTIMG_GALLERY_IMAGES || [];
     grid.textContent = "";
     grid.setAttribute("role", "list");
 

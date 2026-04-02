@@ -1,19 +1,22 @@
 /**
- * Gallery image paths: files live in `public/images/` (mirrored to root `images/` for `/images/*` URLs).
+ * Gallery + apartment sliders: only absolute paths `/images/<file>` (source files in `public/images/`,
+ * mirrored to root `images/` so static hosts resolve `/images/*` from site root).
  */
 (function () {
   "use strict";
 
-  var POSTIMG_GALLERY_IMAGES = [
+  var SITE_GALLERY_IMAGES = [
     "/images/1.jpg",
     "/images/room1.png",
     "/images/apartment2.webp",
   ];
 
-  window.POSTIMG_GALLERY_IMAGES = POSTIMG_GALLERY_IMAGES;
+  window.SITE_GALLERY_IMAGES = SITE_GALLERY_IMAGES;
+  /** @deprecated Use SITE_GALLERY_IMAGES */
+  window.POSTIMG_GALLERY_IMAGES = SITE_GALLERY_IMAGES;
 
   /**
-   * Six listing cards: sliders cycle `/images/1.jpg`, `room1.png`, `apartment2.webp` (pool length 3).
+   * Six listing cards: sliders cycle the three `/images/...` assets above (pool length 3).
    */
   window.APARTMENTS_DATA = [
     {
