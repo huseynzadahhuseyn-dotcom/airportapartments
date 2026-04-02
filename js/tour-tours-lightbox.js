@@ -1,29 +1,28 @@
 /**
  * City tour cards (Sedan, Vito, BMW X5): programmatic GLightbox with fixed story order —
- * experience / city slides first, vehicle slide(s) last (see markup). Always opens on slide 0
- * (first experience). Thumbnail DOM order should match that sequence.
+ * experience / city slides first, vehicle slide(s) last (data-tour-slide="vehicle"). Opens on
+ * slide 0 (first experience). Card preview uses the same slider markup for all three tours.
  */
 (function () {
   "use strict";
 
   var CONFIG = [
     {
-      root: ".tour-card-media--sedan-gallery",
+      root: ".tour-card-media--sedan-tour",
       link: "a.tour-sedan-glightbox",
       isVehicle: function (anchor) {
-        var fig = anchor.closest(".gallery-item");
-        return fig && fig.classList.contains("baku-tour-gallery__item--vehicle");
+        return anchor.getAttribute("data-tour-slide") === "vehicle";
       },
     },
     {
-      root: ".tour-card-media--vito-slider",
+      root: ".tour-card-media--vito-tour",
       link: "a.tour-vito-lightbox",
       isVehicle: function (anchor) {
         return anchor.getAttribute("data-tour-slide") === "vehicle";
       },
     },
     {
-      root: ".tour-card-media--x5-gallery",
+      root: ".tour-card-media--x5-tour",
       link: "a.tour-x5-lightbox",
       isVehicle: function (anchor) {
         return anchor.getAttribute("data-tour-slide") === "vehicle";
