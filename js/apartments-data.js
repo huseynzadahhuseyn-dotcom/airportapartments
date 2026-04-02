@@ -16,7 +16,68 @@
   window.POSTIMG_GALLERY_IMAGES = SITE_GALLERY_IMAGES;
 
   /**
-   * Six listing cards: sliders cycle the three `/images/...` assets above (pool length 3).
+   * Horizon Apartment — 13 photos, order matches:
+   * tYv1GvX8, yDJD1hdp, k2V2JNGn, 4YKYfvdM, 21q1kd6t, mPcPL3D5, k2V2JN4k,
+   * RW3WS1hr, HrJrY0nm, 4YKYfvym, DSWSvQ0z, rDdDVGsm, dh7hsR33 (postimg.cc).
+   */
+  /**
+   * Airport Layover Studio — 12 photos only (postimg.cc order: 64GrGs6g … mhcNn9Nx).
+   */
+  var EXPRESS_STUDIO_IMAGES = [
+    "/images/express-01.png",
+    "/images/express-02.png",
+    "/images/express-03.png",
+    "/images/express-04.png",
+    "/images/express-05.png",
+    "/images/express-06.png",
+    "/images/express-07.png",
+    "/images/express-08.png",
+    "/images/express-09.png",
+    "/images/express-10.png",
+    "/images/express-11.png",
+    "/images/express-12.png",
+  ];
+
+  /**
+   * Spacious Family Apartment — 16 photos only (postimg.cc order: KKgBHDFv … qz1JCNY9).
+   */
+  var FAMILY_APARTMENT_IMAGES = [
+    "/images/family-01.jpg",
+    "/images/family-02.png",
+    "/images/family-03.jpg",
+    "/images/family-04.jpg",
+    "/images/family-05.jpg",
+    "/images/family-06.jpg",
+    "/images/family-07.png",
+    "/images/family-08.png",
+    "/images/family-09.jpg",
+    "/images/family-10.jpg",
+    "/images/family-11.jpg",
+    "/images/family-12.jpg",
+    "/images/family-13.jpg",
+    "/images/family-14.jpg",
+    "/images/family-15.jpg",
+    "/images/family-16.jpg",
+  ];
+
+  var HORIZON_APARTMENT_IMAGES = [
+    "/images/horizon-01.jpg",
+    "/images/horizon-02.jpg",
+    "/images/horizon-03.jpg",
+    "/images/horizon-04.jpg",
+    "/images/horizon-05.jpg",
+    "/images/horizon-06.jpg",
+    "/images/horizon-07.jpg",
+    "/images/horizon-08.jpg",
+    "/images/horizon-09.jpg",
+    "/images/horizon-10.jpg",
+    "/images/horizon-11.jpg",
+    "/images/horizon-12.jpg",
+    "/images/horizon-13.jpg",
+  ];
+
+  /**
+   * Six listing cards: most use SITE_GALLERY_IMAGES; Horizon uses `images: HORIZON_APARTMENT_IMAGES`.
    */
   window.APARTMENTS_DATA = [
     {
@@ -73,8 +134,7 @@
       waSuffixKey: "wa_suffix_horizon",
       otaAriaKey: "aria_book_horizon_ota",
       altMode: "horizon",
-      imgCount: 3,
-      imgStart: 2,
+      images: HORIZON_APARTMENT_IMAGES,
     },
     {
       id: "express",
@@ -86,8 +146,7 @@
       waSuffixKey: "wa_suffix_express",
       otaAriaKey: "aria_book_express_ota",
       altMode: "express",
-      imgCount: 3,
-      imgStart: 0,
+      images: EXPRESS_STUDIO_IMAGES,
     },
     {
       id: "family",
@@ -99,8 +158,16 @@
       waSuffixKey: "wa_suffix_family",
       otaAriaKey: "aria_book_family_ota",
       altMode: "family",
-      imgCount: 3,
-      imgStart: 1,
+      images: FAMILY_APARTMENT_IMAGES,
     },
   ];
+
+  window.getApartmentSlideAltKey = function (apt, slideIndex) {
+    var m = apt.altMode;
+    if (m === "comfort") return "comfort_residence_alt_" + (slideIndex + 1);
+    if (m === "horizon") return "horizon_apartment_alt_" + (slideIndex + 1);
+    if (m === "express") return "apt_slide_express_" + (slideIndex + 1);
+    if (m === "family") return "spacious_family_alt_" + (slideIndex + 1);
+    return "apt_slide_alt_generic_" + ((slideIndex % 4) + 1);
+  };
 })();

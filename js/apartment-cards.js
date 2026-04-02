@@ -12,15 +12,16 @@
   }
 
   function altKeyFor(apt, slideIndex) {
-    var m = apt.altMode;
-    if (m === "comfort") return "comfort_residence_alt_" + (slideIndex + 1);
-    if (m === "horizon") return "horizon_apartment_alt_" + (slideIndex + 1);
-    if (m === "express") return "apt_slide_express_" + (slideIndex + 1);
-    if (m === "family") return "apt_slide_family_" + (slideIndex + 1);
-    return "apt_slide_alt_generic_" + ((slideIndex % 4) + 1);
+    if (typeof window.getApartmentSlideAltKey === "function") {
+      return window.getApartmentSlideAltKey(apt, slideIndex);
+    }
+    return "apt_slide_alt_generic_1";
   }
 
   function slideUrls(apt, pool) {
+    if (apt.images && Array.isArray(apt.images) && apt.images.length) {
+      return apt.images.slice();
+    }
     var out = [];
     var len = pool.length;
     if (!len) return out;
@@ -181,7 +182,7 @@
       }
 
       var det = el("a", "apt-card-details-link", {
-        href: "#contact",
+        href: "apartment-detail.html?apt=" + encodeURIComponent(apt.id),
         "data-i18n": "view_details",
       });
       body.appendChild(det);
