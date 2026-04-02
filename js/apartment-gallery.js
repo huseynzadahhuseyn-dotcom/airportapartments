@@ -42,18 +42,20 @@
 
   function buildGalleryItems() {
     var urls = window.SITE_GALLERY_IMAGES || window.POSTIMG_GALLERY_IMAGES || [];
+    var meta = window.SITE_GALLERY_IMAGE_META || [];
     return urls.map(function (url, i) {
+      var logical = meta[i] && meta[i].logical ? meta[i].logical : url;
       var idx = i + 1;
       var isFirst = idx === 1;
-      var isCozy = typeof url === "string" && url.indexOf("/images/cozy-") !== -1;
+      var isCozy = typeof logical === "string" && logical.indexOf("/images/cozy-") !== -1;
       return {
         gallery: GALLERY_NAME,
-        altKey: altKeyForGalleryUrl(url),
+        altKey: altKeyForGalleryUrl(logical),
         photoIndex: idx,
         captionKey: isFirst ? (isCozy ? "gallery_caption_cozy_1" : "gallery_caption_1") : null,
         captionIsHtml: isFirst,
         captionSimple: !isFirst,
-        captionNameKey: listingNameKeyForUrl(url),
+        captionNameKey: listingNameKeyForUrl(logical),
         imageUrl: url,
       };
     });

@@ -71,6 +71,13 @@
     return cfg[key];
   }
 
+  function resolveImg(u) {
+    if (typeof window.resolveListingImageUrl === "function") {
+      return window.resolveListingImageUrl(u);
+    }
+    return u;
+  }
+
   function apply() {
     var rows = window.APARTMENTS_DATA;
     if (!Array.isArray(rows)) return;
@@ -82,9 +89,10 @@
       var cover = pick(cfg, "coverImage");
       if (typeof cover === "string" && cover.trim()) {
         cover = cover.trim();
-        imgs = [cover].concat(
+        var coverR = resolveImg(cover);
+        imgs = [coverR].concat(
           imgs.filter(function (u) {
-            return u !== cover;
+            return u !== coverR;
           })
         );
       }

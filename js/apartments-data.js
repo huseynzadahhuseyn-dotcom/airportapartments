@@ -1,17 +1,29 @@
 /**
- * Gallery + apartment sliders: runtime URLs must be root-relative `/images/<file>` only (never `/public/images/`,
- * `./images/`, or `public/images/` in strings). Source assets may live in `public/images/`; copy to `images/` before
- * deploy: `node scripts/sync-public-images.js` (or `scripts/sync-public-images.ps1` on Windows).
- * Static hosting serves `/images/*` from the `images/` folder at the repo root; keep it in sync with `public/images/` when you add files.
+ * Gallery + apartment sliders: logical paths are `/images/<file>` (files live in `public/images/`, sync to root `images/` via
+ * `node scripts/sync-public-images.js`). `js/apartment-image-sources.js` maps these to HTTPS when `SITE_APARTMENT_IMAGE_STRATEGY`
+ * is `"remote"` so photos load before you add files. Use `"local"` + real files for production.
+ *
+ * Do not use postimg.cc *page* URLs as src — only direct file URLs or `/images/…`.
  *
  * When `SITE_USE_IMAGE_PLACEHOLDER` is true, only URLs under known listing prefixes (cozy/haven/premium/horizon/express/family)
- * keep their real paths; anything else becomes `/images/placeholder.svg`. Missing files still fall back via `apt-image-utils` on `<img>` error.
+ * keep their real paths; anything else becomes `/images/placeholder.svg`.
  */
 (function () {
   "use strict";
 
   var SITE_IMAGE_PLACEHOLDER = "/images/placeholder.svg";
   var SITE_USE_IMAGE_PLACEHOLDER = false;
+
+  function mapResolvedUrls(arr) {
+    if (!arr || !arr.length) return arr;
+    var fn = window.resolveListingImageUrl;
+    if (typeof fn !== "function") return arr.slice();
+    var out = [];
+    for (var i = 0; i < arr.length; i++) {
+      out.push(fn(arr[i]));
+    }
+    return out;
+  }
 
   function keepsRealPath(u) {
     return (
@@ -48,10 +60,8 @@
   var BOOKING_HOUSE_NEAR_BOS =
     "https://www.booking.com/hotel/az/house-near-baku-airport-and-bos.ru.html";
 
-  /**
-   * Airport Layover Studio — 12 photos only (postimg.cc order: 64GrGs6g … mhcNn9Nx).
-   */
-  var EXPRESS_STUDIO_IMAGES = [
+  /** Airport Layover Studio — 12 photos (`express-NN` in public/images). */
+  var EXPRESS_STUDIO_PATHS = [
     "/images/express-01.png",
     "/images/express-02.png",
     "/images/express-03.png",
@@ -65,11 +75,10 @@
     "/images/express-11.png",
     "/images/express-12.png",
   ];
+  var EXPRESS_STUDIO_IMAGES = mapResolvedUrls(EXPRESS_STUDIO_PATHS);
 
-  /**
-   * Spacious Family Apartment — 16 photos only (postimg.cc order: KKgBHDFv … qz1JCNY9).
-   */
-  var FAMILY_APARTMENT_IMAGES = [
+  /** Spacious Family Apartment — 16 photos (`family-NN` in public/images). */
+  var FAMILY_APARTMENT_PATHS = [
     "/images/family-01.jpg",
     "/images/family-02.png",
     "/images/family-03.jpg",
@@ -87,11 +96,10 @@
     "/images/family-15.jpg",
     "/images/family-16.jpg",
   ];
+  var FAMILY_APARTMENT_IMAGES = mapResolvedUrls(FAMILY_APARTMENT_PATHS);
 
-  /**
-   * Horizon Apartment — 13 photos (postimg: tYv1GvX8 … dh7hsR33).
-   */
-  var HORIZON_APARTMENT_IMAGES = [
+  /** Horizon Apartment — 13 photos (`horizon-NN` in public/images). */
+  var HORIZON_APARTMENT_PATHS = [
     "/images/horizon-01.jpg",
     "/images/horizon-02.jpg",
     "/images/horizon-03.jpg",
@@ -106,9 +114,10 @@
     "/images/horizon-12.jpg",
     "/images/horizon-13.jpg",
   ];
+  var HORIZON_APARTMENT_IMAGES = mapResolvedUrls(HORIZON_APARTMENT_PATHS);
 
-  /** Premium Residence (listing `bina`) — 14 photos; postimg: PL8YRQhW … LJjPpBhC. */
-  var PREMIUM_RESIDENCE_IMAGES = [
+  /** Premium Residence (listing `bina`) — 14 photos (`premium-NN` in public/images). */
+  var PREMIUM_RESIDENCE_PATHS = [
     "/images/premium-01.jpg",
     "/images/premium-02.jpg",
     "/images/premium-03.jpg",
@@ -124,9 +133,10 @@
     "/images/premium-13.jpg",
     "/images/premium-14.jpg",
   ];
+  var PREMIUM_RESIDENCE_IMAGES = mapResolvedUrls(PREMIUM_RESIDENCE_PATHS);
 
-  /** Comfort Residence (`haven`) — 18 photos; postimg: Z9ypMxZT … s1n96cZG. */
-  var HAVEN_COMFORT_IMAGES = [
+  /** Comfort Residence (`haven`) — 18 photos (`haven-NN` in public/images). */
+  var HAVEN_COMFORT_PATHS = [
     "/images/haven-01.jpg",
     "/images/haven-02.jpg",
     "/images/haven-03.jpg",
@@ -146,12 +156,10 @@
     "/images/haven-17.jpg",
     "/images/haven-18.jpg",
   ];
+  var HAVEN_COMFORT_IMAGES = mapResolvedUrls(HAVEN_COMFORT_PATHS);
 
-  /**
-   * Cozy Airport Studio (`avia`) — 26 photos, local `/images/cozy-NN.jpg`.
-   * Source gallery pages: postimg.cc s1wWLYjg … Cz2qhwn6 (imported Jan 2026).
-   */
-  var AVIA_COZY_IMAGES = [
+  /** Cozy Airport Studio (`avia`) — 26 photos (`cozy-NN.jpg` in public/images). */
+  var AVIA_COZY_PATHS = [
     "/images/cozy-01.jpg",
     "/images/cozy-02.jpg",
     "/images/cozy-03.jpg",
@@ -179,12 +187,15 @@
     "/images/cozy-25.jpg",
     "/images/cozy-26.jpg",
   ];
+  var AVIA_COZY_IMAGES = mapResolvedUrls(AVIA_COZY_PATHS);
 
-  /** Homepage #gallery: mix of Cozy, Haven, and Premium listing photos (all local `/images/*`). */
-  var SITE_GALLERY_IMAGES = []
-    .concat(AVIA_COZY_IMAGES.slice(0, 8))
-    .concat(HAVEN_COMFORT_IMAGES.slice(0, 8))
-    .concat(PREMIUM_RESIDENCE_IMAGES.slice(0, 8));
+  /** Homepage #gallery: logical paths (same order as resolved `SITE_GALLERY_IMAGES`) for alt text. */
+  var SITE_GALLERY_PATHS = []
+    .concat(AVIA_COZY_PATHS.slice(0, 8))
+    .concat(HAVEN_COMFORT_PATHS.slice(0, 8))
+    .concat(PREMIUM_RESIDENCE_PATHS.slice(0, 8));
+
+  var SITE_GALLERY_IMAGES = mapResolvedUrls(SITE_GALLERY_PATHS);
 
   /**
    * Listings: dedicated `images` arrays per apartment; only shared pool where no `images` is set.
@@ -292,6 +303,9 @@
     },
   ];
 
+  window.SITE_GALLERY_IMAGE_META = SITE_GALLERY_PATHS.map(function (logical) {
+    return { logical: logical };
+  });
   window.SITE_GALLERY_IMAGES = mapListingImages(SITE_GALLERY_IMAGES);
   /** @deprecated Use SITE_GALLERY_IMAGES */
   window.POSTIMG_GALLERY_IMAGES = window.SITE_GALLERY_IMAGES;

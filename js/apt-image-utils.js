@@ -54,6 +54,8 @@
   function applyImgFallback(img) {
     if (!img || img.tagName !== "IMG") return;
     if (img.getAttribute("data-no-img-fallback") === "true") return;
+    var cls = img.getAttribute("class") || "";
+    if (/\bapt-slider-img\b/.test(cls) || /\bgallery-img\b/.test(cls)) return;
     if (img.getAttribute("data-img-fallback-once") === "1") return;
     var src = img.getAttribute("src") || "";
     if (!src || src.indexOf(IMAGE_PLACEHOLDER) !== -1) return;

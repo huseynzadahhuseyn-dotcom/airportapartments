@@ -2,6 +2,8 @@
 /**
  * Copy public/images/* → images/ so static hosts serve assets at /images/* (site root).
  * Run from repo root: node scripts/sync-public-images.js
+ *
+ * Optional: node scripts/download-apartment-photos.cjs fills public/images/ with stand-ins, then sync.
  */
 const fs = require("fs");
 const path = require("path");
