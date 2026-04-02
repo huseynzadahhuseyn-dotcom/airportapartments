@@ -3,19 +3,31 @@
  * `./images/`, or `public/images/` in strings). Source assets may live in `public/images/`; copy to `images/` before
  * deploy: `node scripts/sync-public-images.js` (or `scripts/sync-public-images.ps1` on Windows).
  * Vercel: `vercel.json` runs `npm run build`, which copies `public/images/*` → `images/` so `/images/*` URLs resolve.
+ *
+ * When `SITE_USE_IMAGE_PLACEHOLDER` is true, every listing/gallery URL is replaced with `/images/placeholder.svg`
+ * so the site stays usable if photo binaries are not deployed. Set to false and run `npm run verify-images` once
+ * all files from the paths below exist under `public/images/` (then `npm run build`).
  */
 (function () {
   "use strict";
+
+  var SITE_IMAGE_PLACEHOLDER = "/images/placeholder.svg";
+  var SITE_USE_IMAGE_PLACEHOLDER = true;
+
+  function mapListingImages(arr) {
+    if (!SITE_USE_IMAGE_PLACEHOLDER || !arr || !arr.length) return arr;
+    var out = [];
+    for (var i = 0; i < arr.length; i++) {
+      out.push(SITE_IMAGE_PLACEHOLDER);
+    }
+    return out;
+  }
 
   var SITE_GALLERY_IMAGES = [
     "/images/1.jpg",
     "/images/room1.png",
     "/images/apartment2.webp",
   ];
-
-  window.SITE_GALLERY_IMAGES = SITE_GALLERY_IMAGES;
-  /** @deprecated Use SITE_GALLERY_IMAGES */
-  window.POSTIMG_GALLERY_IMAGES = SITE_GALLERY_IMAGES;
 
   /** Fallback when no property-specific Booking URL is set (bina); replace in data if you add a listing. */
   var BOOKING_SEARCH_NEAR_GYD =
@@ -166,7 +178,7 @@
   /**
    * Listings: dedicated `images` arrays per apartment; only shared pool where no `images` is set.
    */
-  window.APARTMENTS_DATA = [
+  var APARTMENTS_DATA = [
     {
       id: "haven",
       premium: true,
@@ -266,6 +278,22 @@
       images: FAMILY_APARTMENT_IMAGES,
     },
   ];
+
+  window.SITE_GALLERY_IMAGES = mapListingImages(SITE_GALLERY_IMAGES);
+  /** @deprecated Use SITE_GALLERY_IMAGES */
+  window.POSTIMG_GALLERY_IMAGES = window.SITE_GALLERY_IMAGES;
+  window.APARTMENTS_DATA = APARTMENTS_DATA.map(function (apt) {
+    var o = {};
+    for (var k in apt) {
+      if (Object.prototype.hasOwnProperty.call(apt, k)) {
+        o[k] = apt[k];
+      }
+    }
+    o.images = mapListingImages(apt.images);
+    return o;
+  });
+  window.SITE_USE_IMAGE_PLACEHOLDER = SITE_USE_IMAGE_PLACEHOLDER;
+  window.SITE_IMAGE_PLACEHOLDER = SITE_IMAGE_PLACEHOLDER;
 
   window.getApartmentSlideAltKey = function (apt, slideIndex) {
     var m = apt.altMode;

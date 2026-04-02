@@ -41,6 +41,9 @@
   }
 
   function normHref(h) {
+    if (window.SITE_USE_IMAGE_PLACEHOLDER === true && window.SITE_IMAGE_PLACEHOLDER) {
+      return window.SITE_IMAGE_PLACEHOLDER;
+    }
     if (window.AptImageUtils && typeof window.AptImageUtils.normalizeSiteImageUrl === "function") {
       return window.AptImageUtils.normalizeSiteImageUrl(h) || h;
     }

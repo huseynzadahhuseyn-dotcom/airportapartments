@@ -968,7 +968,7 @@ a:hover {
 .hero-bg__image {
   position: absolute;
   inset: -8%;
-  background-image: url("/images/1.jpg");
+  background-image: url("/images/placeholder.svg");
   background-size: cover;
   background-position: center 40%;
   filter: blur(14px) saturate(1.05);
