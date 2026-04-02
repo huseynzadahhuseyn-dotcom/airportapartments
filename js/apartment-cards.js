@@ -1,8 +1,8 @@
 /**
  * Renders #apartments-grid and #book-apartments-grid — booking-style cards (hero slider, WhatsApp, OTAs).
  *
- * #book-apartments-grid: slides use **only** `apt.images` (same order, one slide per entry). No gallery pool,
- * no `placeholder.svg` in src, `data-no-img-fallback` on imgs. Arrows when length > 1.
+ * #book-apartments-grid: prefers `apt.images` (one slide per URL). If missing/invalid, uses stable Unsplash demo
+ * URLs so the section is never blank. `data-no-img-fallback` only when using real listing URLs.
  *
  * Data source (first match wins):
  * 1. `APARTMENT_CARDS_DATA` + `normalizeApartmentCardEntry` (see apartment-cards-data.js) when that array is non-empty
@@ -12,6 +12,80 @@
   "use strict";
 
   var PLACEHOLDER_IMAGE = "/images/placeholder.svg";
+
+  /** Remote demo interiors (Unsplash) — temporary until real photos are wired; each listing gets a distinct slice. */
+  var BOOK_DEMO_QS = "?auto=format&fit=crop&w=1600&q=82";
+  var BOOK_STAY_DEMO_URLS = [
+    "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267" + BOOK_DEMO_QS,
+    "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688" + BOOK_DEMO_QS,
+    "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2" + BOOK_DEMO_QS,
+    "https://images.unsplash.com/photo-1484154218962-a197022b5858" + BOOK_DEMO_QS,
+    "https://images.unsplash.com/photo-1554995207-c18c203602cb" + BOOK_DEMO_QS,
+    "https://images.unsplash.com/photo-1586023492125-27b2c045efd7" + BOOK_DEMO_QS,
+    "https://images.unsplash.com/photo-1560185893-a8d9366a4890" + BOOK_DEMO_QS,
+    "https://images.unsplash.com/photo-1616594039964-ae9021a400a0" + BOOK_DEMO_QS,
+    "https://images.unsplash.com/photo-1631679706909-1844bbd07221" + BOOK_DEMO_QS,
+    "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c" + BOOK_DEMO_QS,
+    "https://images.unsplash.com/photo-1600566753190-9aa6c8c8218c" + BOOK_DEMO_QS,
+    "https://images.unsplash.com/photo-1600573472550-8090bdc5bab9" + BOOK_DEMO_QS,
+    "https://images.unsplash.com/photo-1512918728675-ac5fa6b613d1" + BOOK_DEMO_QS,
+    "https://images.unsplash.com/photo-1493809842364-78817add7ffb" + BOOK_DEMO_QS,
+    "https://images.unsplash.com/photo-1600210492493-0946911123ea" + BOOK_DEMO_QS,
+    "https://images.unsplash.com/photo-1600585154340-be6161a56a0c" + BOOK_DEMO_QS,
+  ];
+
+  /** Stable starting index per known listing so cards don’t all look identical. */
+  var BOOK_DEMO_START_BY_ID = {
+    haven: 0,
+    avia: 2,
+    bina: 4,
+    horizon: 6,
+    express: 8,
+    family: 10,
+  };
+
+  var BOOK_DEMO_SLIDE_COUNT = 4;
+
+  function getBookStayDemoUrls(apt) {
+    var pool = BOOK_STAY_DEMO_URLS;
+    if (!pool.length) return [];
+    var id = String((apt && apt.id) || "");
+    var start = Object.prototype.hasOwnProperty.call(BOOK_DEMO_START_BY_ID, id)
+      ? BOOK_DEMO_START_BY_ID[id]
+      : 0;
+    if (!Object.prototype.hasOwnProperty.call(BOOK_DEMO_START_BY_ID, id)) {
+      var h = 0;
+      for (var c = 0; c < id.length; c++) {
+        h = (h * 31 + id.charCodeAt(c)) >>> 0;
+      }
+      start = h % pool.length;
+    }
+    var out = [];
+    for (var j = 0; j < BOOK_DEMO_SLIDE_COUNT; j++) {
+      out.push(pool[(start + j) % pool.length]);
+    }
+    return out;
+  }
+
+  /**
+   * @param {boolean} directUrls — true = urlList is already https demo URLs (use as-is)
+   */
+  function assembleBookSlidesPayload(apt, urlList, directUrls) {
+    var payload = [];
+    if (!urlList || !urlList.length) {
+      return { payload: payload, ok: false };
+    }
+    for (var i = 0; i < urlList.length; i++) {
+      var src = directUrls
+        ? String(urlList[i]).trim()
+        : bookCardImgSrc(urlList[i]) || String(urlList[i]).trim();
+      if (!src || isPlaceholderImageUrl(src)) {
+        return { payload: [], ok: false };
+      }
+      payload.push({ src: src, altIndex: i });
+    }
+    return { payload: payload, ok: true };
+  }
 
   function normImgUrl(u) {
     if (window.AptImageUtils && typeof window.AptImageUtils.normalizeSiteImageUrl === "function") {
@@ -135,24 +209,33 @@
     grid.setAttribute("role", "list");
 
     data.forEach(function (apt) {
-      var urls = slideUrls(apt, pool, { bookListingImagesOnly: bookGrid });
-      if (!urls.length) return;
-
       var slidesPayload = [];
+      var usedBookDemo = false;
+
       if (bookGrid) {
-        for (var bi = 0; bi < urls.length; bi++) {
-          var rawBook = urls[bi];
-          var bookSrc = bookCardImgSrc(rawBook) || String(rawBook).trim();
-          slidesPayload.push({ src: bookSrc, altIndex: bi });
+        var listingUrls = slideUrls(apt, pool, { bookListingImagesOnly: true });
+        var bookPack = assembleBookSlidesPayload(apt, listingUrls, false);
+        if (!bookPack.ok || !bookPack.payload.length) {
+          bookPack = assembleBookSlidesPayload(apt, getBookStayDemoUrls(apt), true);
+          usedBookDemo = true;
         }
+        if (!bookPack.payload.length) {
+          bookPack = assembleBookSlidesPayload(apt, [BOOK_STAY_DEMO_URLS[0]], true);
+          usedBookDemo = true;
+        }
+        slidesPayload = bookPack.payload;
       } else {
+        var urls = slideUrls(apt, pool, { bookListingImagesOnly: false });
+        if (!urls.length) return;
         for (var ui = 0; ui < urls.length; ui++) {
           var resolvedSrc = cardSliderSrc(urls[ui]);
           if (resolvedSrc) {
             slidesPayload.push({ src: resolvedSrc, altIndex: ui });
           }
         }
+        if (!slidesPayload.length) return;
       }
+
       if (!slidesPayload.length) return;
 
       var art = el(
@@ -193,7 +276,9 @@
           decoding: "async",
         });
         if (idx === 0) img.setAttribute("fetchpriority", "high");
-        if (bookGrid) img.setAttribute("data-no-img-fallback", "true");
+        if (bookGrid && !usedBookDemo) {
+          img.setAttribute("data-no-img-fallback", "true");
+        }
         slide.appendChild(img);
         track.appendChild(slide);
       });
