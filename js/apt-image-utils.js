@@ -55,10 +55,22 @@
   function applyImgFallback(img) {
     if (!img || img.tagName !== "IMG") return;
     if (img.getAttribute("data-no-img-fallback") === "true") return;
-    var cls = img.getAttribute("class") || "";
-    if (/\bapt-slider-img\b/.test(cls) || /\bgallery-img\b/.test(cls) || /\bgallery-apt-img\b/.test(cls))
-      return;
     if (img.getAttribute("data-img-fallback-once") === "1") return;
+
+    var cls = img.getAttribute("class") || "";
+    var isSliderImg = /\bapt-slider-img\b/.test(cls);
+    var isDetailThumb = /\bapt-detail-thumb-img\b/.test(cls);
+    if (isSliderImg || isDetailThumb) {
+      var s0 = img.getAttribute("src") || "";
+      if (!s0 || s0.indexOf(IMAGE_PLACEHOLDER) !== -1) return;
+      img.setAttribute("data-img-fallback-once", "1");
+      img.removeAttribute("srcset");
+      img.src = IMAGE_PLACEHOLDER;
+      img.classList.add("img-placeholder-active");
+      return;
+    }
+    if (/\bgallery-img\b/.test(cls) || /\bgallery-apt-img\b/.test(cls)) return;
+
     var src = img.getAttribute("src") || "";
     if (!src || src.indexOf(IMAGE_PLACEHOLDER) !== -1) return;
     if (src.indexOf("/images/") === -1) return;

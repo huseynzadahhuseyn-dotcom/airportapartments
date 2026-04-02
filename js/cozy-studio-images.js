@@ -30,6 +30,6 @@
     "https://i.postimg.cc/gcMzgcP0/IMG-20241028-WA0006.jpg",
     "https://i.postimg.cc/fTJwp4wb/IMG-20241028-WA0007.jpg",
     "https://i.postimg.cc/CLzFXyF5/IMG-20241028-WA0009.jpg",
-    "https://i.postimg.cc/fTJwp4wT/Whats-App-Image-2026-01-28-at-00-58-11.jpg",
+    "https://i.postimg.cc/fTJwp4wT/Whats-App-Image-2026-01-28-at-00-58-11.jpg"
   ];
 })();

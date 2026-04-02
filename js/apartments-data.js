@@ -47,6 +47,25 @@
     return out;
   }
 
+  function urlsOrLegacy(globalArr, legacyArr) {
+    if (Array.isArray(globalArr) && globalArr.length) return globalArr.slice();
+    return legacyArr.slice();
+  }
+
+  /** Listing `bina`: `PREMIUM_RESIDENCE_IMAGE_URLS` then `BINA_RESIDENCE_IMAGE_URLS`, or legacy `/images/premium-*.jpg`. */
+  function mergePremiumBina(legacyPremium) {
+    var p =
+      Array.isArray(window.PREMIUM_RESIDENCE_IMAGE_URLS) && window.PREMIUM_RESIDENCE_IMAGE_URLS.length
+        ? window.PREMIUM_RESIDENCE_IMAGE_URLS.slice()
+        : [];
+    var b =
+      Array.isArray(window.BINA_RESIDENCE_IMAGE_URLS) && window.BINA_RESIDENCE_IMAGE_URLS.length
+        ? window.BINA_RESIDENCE_IMAGE_URLS.slice()
+        : [];
+    if (p.length || b.length) return p.concat(b);
+    return legacyPremium.slice();
+  }
+
   /** Booking.com property links (short URLs; add tracking params in `apartment-listings-config` if needed). */
   var BOOKING_HOUSE_NEAR_EXPO_CENTER =
     "https://www.booking.com/hotel/az/house-near-airport-and-baku-expo-center.ru.html?label=gen173bo-10CAsoEUInaG91c2UtbmVhci1haXJwb3J0LWFuZC1iYWt1LWV4cG8tY2VudGVySDNYA2gRiAEBmAEzuAEXyAEM2AED6AEB-AEBiAIBmAIGqAIBuALuxLnOBsACAdICJDMyMDY4ZGMyLTUyZTEtNDRjNC1iMzNiLWY3OTY5NTJjMGNmZtgCAeACAQ&sid=050bd510d0756cc961ebf1977517a667&dist=0&group_adults=2&group_children=0&no_rooms=1&sb_price_type=total&type=total&";
@@ -77,8 +96,8 @@
   ];
   var EXPRESS_STUDIO_IMAGES = mapResolvedUrls(EXPRESS_STUDIO_PATHS);
 
-  /** Spacious Family Apartment — 16 photos (`family-NN` in public/images). */
-  var FAMILY_APARTMENT_PATHS = [
+  /** Spacious Family Apartment — `js/family-residence-images.js` or local `family-*`. */
+  var FAMILY_APARTMENT_LEGACY = [
     "/images/family-01.jpg",
     "/images/family-02.png",
     "/images/family-03.jpg",
@@ -96,10 +115,11 @@
     "/images/family-15.jpg",
     "/images/family-16.jpg",
   ];
+  var FAMILY_APARTMENT_PATHS = urlsOrLegacy(window.FAMILY_RESIDENCE_IMAGE_URLS, FAMILY_APARTMENT_LEGACY);
   var FAMILY_APARTMENT_IMAGES = mapResolvedUrls(FAMILY_APARTMENT_PATHS);
 
-  /** Horizon Apartment — 13 photos (`horizon-NN` in public/images). */
-  var HORIZON_APARTMENT_PATHS = [
+  /** Horizon Apartment — `js/horizon-apartment-images.js` or local `horizon-*`. */
+  var HORIZON_APARTMENT_LEGACY = [
     "/images/horizon-01.jpg",
     "/images/horizon-02.jpg",
     "/images/horizon-03.jpg",
@@ -114,10 +134,11 @@
     "/images/horizon-12.jpg",
     "/images/horizon-13.jpg",
   ];
+  var HORIZON_APARTMENT_PATHS = urlsOrLegacy(window.HORIZON_APARTMENT_IMAGE_URLS, HORIZON_APARTMENT_LEGACY);
   var HORIZON_APARTMENT_IMAGES = mapResolvedUrls(HORIZON_APARTMENT_PATHS);
 
-  /** Premium Residence (listing `bina`) — 14 photos (`premium-NN` in public/images). */
-  var PREMIUM_RESIDENCE_PATHS = [
+  /** Premium Residence listing (`bina`) — `premium-residence-images.js` + `bina-residence-images.js` or local `premium-*`. */
+  var PREMIUM_RESIDENCE_LEGACY = [
     "/images/premium-01.jpg",
     "/images/premium-02.jpg",
     "/images/premium-03.jpg",
@@ -133,10 +154,11 @@
     "/images/premium-13.jpg",
     "/images/premium-14.jpg",
   ];
+  var PREMIUM_RESIDENCE_PATHS = mergePremiumBina(PREMIUM_RESIDENCE_LEGACY);
   var PREMIUM_RESIDENCE_IMAGES = mapResolvedUrls(PREMIUM_RESIDENCE_PATHS);
 
-  /** Comfort Residence (`haven`) — 18 photos (`haven-NN` in public/images). */
-  var HAVEN_COMFORT_PATHS = [
+  /** Airport Haven (`haven`) — `js/airport-haven-images.js` or local `haven-*`. */
+  var HAVEN_COMFORT_LEGACY = [
     "/images/haven-01.jpg",
     "/images/haven-02.jpg",
     "/images/haven-03.jpg",
@@ -156,10 +178,11 @@
     "/images/haven-17.jpg",
     "/images/haven-18.jpg",
   ];
+  var HAVEN_COMFORT_PATHS = urlsOrLegacy(window.AIRPORT_HAVEN_IMAGE_URLS, HAVEN_COMFORT_LEGACY);
   var HAVEN_COMFORT_IMAGES = mapResolvedUrls(HAVEN_COMFORT_PATHS);
 
-  /** Cozy Airport Studio (`avia`) — URLs from `js/cozy-studio-images.js`, or local `/images/cozy-NN.jpg` fallback. */
-  var AVIA_COZY_PATHS = Array.isArray(window.COZY_AIRPORT_STUDIO_IMAGE_URLS)
+  /** Cozy Airport Studio (`avia`) — `js/cozy-studio-images.js` or local `/images/cozy-NN.jpg`. */
+  var AVIA_COZY_PATHS = Array.isArray(window.COZY_AIRPORT_STUDIO_IMAGE_URLS) && window.COZY_AIRPORT_STUDIO_IMAGE_URLS.length
     ? window.COZY_AIRPORT_STUDIO_IMAGE_URLS.slice()
     : [
         "/images/cozy-01.jpg",

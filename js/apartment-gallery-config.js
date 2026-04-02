@@ -15,24 +15,40 @@
     return a;
   }
 
+  function urlsOrLegacy(globalArr, legacyArr) {
+    if (Array.isArray(globalArr) && globalArr.length) return globalArr.slice();
+    return legacyArr.slice();
+  }
+
+  function mergePremiumBinaGallery() {
+    var p =
+      Array.isArray(window.PREMIUM_RESIDENCE_IMAGE_URLS) && window.PREMIUM_RESIDENCE_IMAGE_URLS.length
+        ? window.PREMIUM_RESIDENCE_IMAGE_URLS.slice()
+        : [];
+    var b =
+      Array.isArray(window.BINA_RESIDENCE_IMAGE_URLS) && window.BINA_RESIDENCE_IMAGE_URLS.length
+        ? window.BINA_RESIDENCE_IMAGE_URLS.slice()
+        : [];
+    if (p.length || b.length) return p.concat(b);
+    return seq("premium", 24).concat(seq("bina", 24));
+  }
+
   window.SITE_GALLERY_GROUPS = [
     {
       titleKey: "gallery_group_premium",
-      images: seq("premium", 24).concat(seq("bina", 24)),
+      images: mergePremiumBinaGallery(),
     },
     {
       titleKey: "gallery_group_cozy",
-      images: Array.isArray(window.COZY_AIRPORT_STUDIO_IMAGE_URLS)
-        ? window.COZY_AIRPORT_STUDIO_IMAGE_URLS.slice()
-        : seq("cozy", 24),
+      images: urlsOrLegacy(window.COZY_AIRPORT_STUDIO_IMAGE_URLS, seq("cozy", 24)),
     },
     {
       titleKey: "gallery_group_haven",
-      images: seq("haven", 24),
+      images: urlsOrLegacy(window.AIRPORT_HAVEN_IMAGE_URLS, seq("haven", 24)),
     },
     {
       titleKey: "gallery_group_horizon",
-      images: seq("horizon", 24),
+      images: urlsOrLegacy(window.HORIZON_APARTMENT_IMAGE_URLS, seq("horizon", 24)),
     },
     {
       titleKey: "gallery_group_express",
@@ -40,7 +56,7 @@
     },
     {
       titleKey: "gallery_group_family",
-      images: seq("family", 24),
+      images: urlsOrLegacy(window.FAMILY_RESIDENCE_IMAGE_URLS, seq("family", 24)),
     },
   ];
 })();
