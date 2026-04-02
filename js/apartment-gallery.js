@@ -1,5 +1,5 @@
 /**
- * Homepage #gallery: one cover image; tap opens GLightbox with full POSTIMG_GALLERY_IMAGES
+ * Homepage #gallery: one cover image; tap opens GLightbox with full POSTIMG_GALLERY_IMAGES (`/images/*` URLs).
  * (prev/next controls, keyboard, swipe on touch).
  */
 (function () {
