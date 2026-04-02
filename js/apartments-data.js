@@ -1,6 +1,8 @@
 /**
- * Gallery + apartment sliders: only absolute paths `/images/<file>` (source files in `public/images/`,
- * mirrored to root `images/` so static hosts resolve `/images/*` from site root).
+ * Gallery + apartment sliders: runtime URLs must be root-relative `/images/<file>` only (never `/public/images/`,
+ * `./images/`, or `public/images/` in strings). Source assets may live in `public/images/`; copy to `images/` before
+ * deploy: `node scripts/sync-public-images.js` (or `scripts/sync-public-images.ps1` on Windows).
+ * Vercel: `vercel.json` runs `npm run build`, which copies `public/images/*` → `images/` so `/images/*` URLs resolve.
  */
 (function () {
   "use strict";

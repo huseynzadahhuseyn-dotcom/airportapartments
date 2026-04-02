@@ -40,11 +40,18 @@
     return experience.concat(vehicle);
   }
 
+  function normHref(h) {
+    if (window.AptImageUtils && typeof window.AptImageUtils.normalizeSiteImageUrl === "function") {
+      return window.AptImageUtils.normalizeSiteImageUrl(h) || h;
+    }
+    return h;
+  }
+
   function buildElements(links) {
     return links.map(function (anchor) {
       var img = anchor.querySelector("img");
       return {
-        href: anchor.getAttribute("href") || "",
+        href: normHref(anchor.getAttribute("href") || ""),
         type: "image",
         alt: img ? img.getAttribute("alt") || "" : "",
       };
@@ -60,7 +67,7 @@
     if (main && thumb) {
       var im = thumb.querySelector("img");
       if (im) {
-        main.src = im.src;
+        main.src = normHref(im.getAttribute("src") || im.src);
         main.alt = im.alt;
       }
     }

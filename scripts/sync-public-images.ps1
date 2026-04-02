@@ -1,4 +1,6 @@
 # After adding or changing files under public/images/, run from repo root:
+#   node scripts/sync-public-images.js
+#   — or —
 #   powershell -ExecutionPolicy Bypass -File scripts/sync-public-images.ps1
 $root = Split-Path $PSScriptRoot -Parent
 if (-not (Test-Path "$root/public/images")) { exit 1 }

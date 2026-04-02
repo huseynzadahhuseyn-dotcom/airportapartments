@@ -4,6 +4,13 @@
 (function () {
   "use strict";
 
+  function normImgUrl(u) {
+    if (window.AptImageUtils && typeof window.AptImageUtils.normalizeSiteImageUrl === "function") {
+      return window.AptImageUtils.normalizeSiteImageUrl(u);
+    }
+    return u;
+  }
+
   function t(key) {
     if (window.I18N && typeof window.I18N.t === "function") {
       return window.I18N.t(key) || "";
@@ -81,7 +88,7 @@
       urls.forEach(function (url, si) {
         var slide = el("div", "apt-slider-slide");
         var img = el("img", "apt-slider-img", {
-          src: url,
+          src: normImgUrl(url),
           alt: t(altKeyFor(apt, si)),
           loading: si === 0 ? "eager" : "lazy",
           decoding: "async",
@@ -144,7 +151,7 @@
         }
         var elements = galleryUrls.map(function (url, si) {
           return {
-            href: url,
+            href: normImgUrl(url),
             type: "image",
             alt: t(altKeyFor(aptRef, si)),
           };

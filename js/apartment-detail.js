@@ -4,6 +4,13 @@
 (function () {
   "use strict";
 
+  function normImgUrl(u) {
+    if (window.AptImageUtils && typeof window.AptImageUtils.normalizeSiteImageUrl === "function") {
+      return window.AptImageUtils.normalizeSiteImageUrl(u);
+    }
+    return u;
+  }
+
   function t(key, vars) {
     if (window.I18N && typeof window.I18N.t === "function") {
       return window.I18N.t(key, vars) || "";
@@ -51,7 +58,7 @@
       slide.className = "apt-slider-slide";
       var img = document.createElement("img");
       img.className = "apt-slider-img";
-      img.src = url;
+      img.src = normImgUrl(url);
       img.alt =
         typeof window.getApartmentSlideAltKey === "function"
           ? t(window.getApartmentSlideAltKey(apt, si))
@@ -104,7 +111,7 @@
           ? t(window.getApartmentSlideAltKey(apt, i))
           : "";
       return {
-        href: url,
+        href: normImgUrl(url),
         type: "image",
         alt: alt,
       };
@@ -131,7 +138,7 @@
         alt + " — " + t("gallery_open_full_set_a11y")
       );
       var img = document.createElement("img");
-      img.src = url;
+      img.src = normImgUrl(url);
       img.alt = alt;
       img.loading = i < 4 ? "eager" : "lazy";
       img.decoding = "async";

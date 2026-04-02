@@ -35,7 +35,11 @@
   }
 
   function resolveFullUrl(item) {
-    return item.imageUrl || "";
+    var u = item.imageUrl || "";
+    if (window.AptImageUtils && typeof window.AptImageUtils.normalizeSiteImageUrl === "function") {
+      return window.AptImageUtils.normalizeSiteImageUrl(u);
+    }
+    return u;
   }
 
   function resolveThumbUrl(item) {
