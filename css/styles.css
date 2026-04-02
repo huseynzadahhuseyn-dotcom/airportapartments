@@ -2865,6 +2865,12 @@ a:hover {
   color: var(--ink-muted);
 }
 
+.payment-page-crumb {
+  margin-top: 1.75rem;
+  margin-bottom: 0;
+  text-align: center;
+}
+
 /* City tours */
 .tours-grid {
   list-style: none;

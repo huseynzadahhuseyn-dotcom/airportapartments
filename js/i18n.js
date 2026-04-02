@@ -44,15 +44,19 @@
   }
 
   function applyMeta() {
+    var html = document.documentElement;
+    var titleKey = html.getAttribute("data-i18n-page-title") || "page_title";
+    var metaKey = html.getAttribute("data-i18n-meta-description") || "meta_description";
+
     var titleEl = document.getElementById("page-title");
-    if (titleEl) titleEl.textContent = t("page_title");
+    if (titleEl) titleEl.textContent = t(titleKey);
 
     var md = document.getElementById("meta-description");
-    if (md) md.setAttribute("content", t("meta_description"));
+    if (md) md.setAttribute("content", t(metaKey));
 
     var base = window.location.href.split("#")[0];
-    var ogTitle = t("page_title");
-    var ogDesc = t("meta_description");
+    var ogTitle = t(titleKey);
+    var ogDesc = t(metaKey);
 
     function setMeta(id, attr, val) {
       var el = document.getElementById(id);
