@@ -1,11 +1,7 @@
 {
   "name": "airport-apartments-site",
   "private": true,
-  "engines": {
-    "node": ">=18"
-  },
   "scripts": {
-    "build": "node scripts/sync-public-images.js",
     "sync-images": "node scripts/sync-public-images.js",
     "verify-images": "node scripts/verify-site-images.js"
   }

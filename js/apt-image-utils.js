@@ -6,6 +6,24 @@
 
   var IMAGE_PLACEHOLDER = "/images/placeholder.svg";
 
+  /** Root-relative `/images/...` prefixes that use committed listing photos (not swapped to placeholder when site placeholder mode is on). */
+  var LOCAL_LISTING_URL_PREFIXES = [
+    "/images/cozy-",
+    "/images/haven-",
+    "/images/premium-",
+    "/images/horizon-",
+    "/images/express-",
+    "/images/family-",
+  ];
+
+  function isLocalListingImageUrl(u) {
+    if (typeof u !== "string") return false;
+    for (var i = 0; i < LOCAL_LISTING_URL_PREFIXES.length; i++) {
+      if (u.indexOf(LOCAL_LISTING_URL_PREFIXES[i]) === 0) return true;
+    }
+    return false;
+  }
+
   /**
    * Force in-app URLs onto `/images/...` (root-relative). Leaves http(s), data:, and protocol-relative URLs unchanged.
    * @param {string|null|undefined} raw
@@ -62,6 +80,7 @@
     logImageLoadFailure: logImageLoadFailure,
     imagePlaceholder: IMAGE_PLACEHOLDER,
     applyImgFallback: applyImgFallback,
+    isLocalListingImageUrl: isLocalListingImageUrl,
     bindGalleryImages: function () {},
   };
 })();

@@ -12,9 +12,6 @@ const re = /["']\/images\/([^"']+)["']/g;
 
 const skipDir = new Set(["node_modules", ".git", "images", "public"]);
 
-/** When true in `js/apartments-data.js`, runtime uses `/images/placeholder.svg` for listings; skip path extraction there. */
-const APARTMENTS_PLACEHOLDER_MODE_RE = /var\s+SITE_USE_IMAGE_PLACEHOLDER\s*=\s*true\b/;
-
 function walk(dir, out) {
   let names;
   try {
@@ -46,27 +43,11 @@ const needed = new Set();
 
 for (const filePath of files) {
   const text = fs.readFileSync(filePath, "utf8");
-  const relPosix = path.relative(root, filePath).split(path.sep).join("/");
-  if (relPosix === "js/apartments-data.js" && APARTMENTS_PLACEHOLDER_MODE_RE.test(text)) {
-    continue;
-  }
   let m;
   re.lastIndex = 0;
   while ((m = re.exec(text)) !== null) {
     needed.add(m[1]);
   }
-}
-
-const apartmentsDataPath = path.join(root, "js", "apartments-data.js");
-try {
-  const aptSrc = fs.readFileSync(apartmentsDataPath, "utf8");
-  if (aptSrc.includes("/images/cozy-01.jpg")) {
-    for (let n = 1; n <= 26; n++) {
-      needed.add(`cozy-${String(n).padStart(2, "0")}.jpg`);
-    }
-  }
-} catch {
-  /* ignore */
 }
 
 const missing = [];

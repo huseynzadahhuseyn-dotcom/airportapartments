@@ -4,8 +4,8 @@
  * deploy: `node scripts/sync-public-images.js` (or `scripts/sync-public-images.ps1` on Windows).
  * Static hosting serves `/images/*` from the `images/` folder at the repo root; keep it in sync with `public/images/` when you add files.
  *
- * When `SITE_USE_IMAGE_PLACEHOLDER` is true, every listing/gallery URL is replaced with `/images/placeholder.svg`
- * so the site stays usable if photo binaries are not deployed. Set to false once real files exist under `images/`.
+ * When `SITE_USE_IMAGE_PLACEHOLDER` is true, only URLs under known listing prefixes (cozy/haven/premium/horizon/express/family)
+ * keep their real paths; anything else becomes `/images/placeholder.svg`. Missing files still fall back via `apt-image-utils` on `<img>` error.
  */
 (function () {
   "use strict";
@@ -13,13 +13,20 @@
   var SITE_IMAGE_PLACEHOLDER = "/images/placeholder.svg";
   var SITE_USE_IMAGE_PLACEHOLDER = true;
 
-  function mapListingImages(arr, aptId) {
-    if (aptId === "avia") return arr;
+  function keepsRealPath(u) {
+    return (
+      window.AptImageUtils &&
+      typeof window.AptImageUtils.isLocalListingImageUrl === "function" &&
+      window.AptImageUtils.isLocalListingImageUrl(u)
+    );
+  }
+
+  function mapListingImages(arr) {
     if (!SITE_USE_IMAGE_PLACEHOLDER || !arr || !arr.length) return arr;
     var out = [];
     for (var i = 0; i < arr.length; i++) {
       var u = arr[i];
-      if (typeof u === "string" && u.indexOf("/images/cozy-") === 0) {
+      if (typeof u === "string" && keepsRealPath(u)) {
         out.push(u);
       } else {
         out.push(SITE_IMAGE_PLACEHOLDER);
@@ -177,14 +184,8 @@
     "/images/cozy-26.jpg",
   ];
 
-  /**
-   * Homepage #gallery + card fallback pool: Cozy (real) first, then legacy hero shots (may be placeholder).
-   */
-  var SITE_GALLERY_IMAGES = AVIA_COZY_IMAGES.concat([
-    "/images/1.jpg",
-    "/images/room1.png",
-    "/images/apartment2.webp",
-  ]);
+  /** Homepage #gallery + card fallback pool: same set as Cozy listing (no legacy tail — avoids placeholder slots). */
+  var SITE_GALLERY_IMAGES = AVIA_COZY_IMAGES.slice();
 
   /**
    * Listings: dedicated `images` arrays per apartment; only shared pool where no `images` is set.
@@ -290,7 +291,7 @@
     },
   ];
 
-  window.SITE_GALLERY_IMAGES = mapListingImages(SITE_GALLERY_IMAGES, null);
+  window.SITE_GALLERY_IMAGES = mapListingImages(SITE_GALLERY_IMAGES);
   /** @deprecated Use SITE_GALLERY_IMAGES */
   window.POSTIMG_GALLERY_IMAGES = window.SITE_GALLERY_IMAGES;
   window.APARTMENTS_DATA = APARTMENTS_DATA.map(function (apt) {
@@ -300,7 +301,7 @@
         o[k] = apt[k];
       }
     }
-    o.images = mapListingImages(apt.images, apt.id);
+    o.images = mapListingImages(apt.images);
     return o;
   });
   window.SITE_USE_IMAGE_PLACEHOLDER = SITE_USE_IMAGE_PLACEHOLDER;

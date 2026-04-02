@@ -41,13 +41,20 @@
   }
 
   function normHref(h) {
-    if (window.SITE_USE_IMAGE_PLACEHOLDER === true && window.SITE_IMAGE_PLACEHOLDER) {
-      return window.SITE_IMAGE_PLACEHOLDER;
+    var n =
+      window.AptImageUtils && typeof window.AptImageUtils.normalizeSiteImageUrl === "function"
+        ? window.AptImageUtils.normalizeSiteImageUrl(h) || h
+        : h;
+    if (window.SITE_USE_IMAGE_PLACEHOLDER !== true) return n;
+    if (typeof n === "string" && n.indexOf("/images/placeholder.svg") !== -1) return n;
+    if (
+      window.AptImageUtils &&
+      typeof window.AptImageUtils.isLocalListingImageUrl === "function" &&
+      window.AptImageUtils.isLocalListingImageUrl(n)
+    ) {
+      return n;
     }
-    if (window.AptImageUtils && typeof window.AptImageUtils.normalizeSiteImageUrl === "function") {
-      return window.AptImageUtils.normalizeSiteImageUrl(h) || h;
-    }
-    return h;
+    return window.SITE_IMAGE_PLACEHOLDER || n;
   }
 
   function buildElements(links) {
