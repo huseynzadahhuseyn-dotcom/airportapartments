@@ -16,11 +16,6 @@
   window.POSTIMG_GALLERY_IMAGES = SITE_GALLERY_IMAGES;
 
   /**
-   * Horizon Apartment — 13 photos, order matches:
-   * tYv1GvX8, yDJD1hdp, k2V2JNGn, 4YKYfvdM, 21q1kd6t, mPcPL3D5, k2V2JN4k,
-   * RW3WS1hr, HrJrY0nm, 4YKYfvym, DSWSvQ0z, rDdDVGsm, dh7hsR33 (postimg.cc).
-   */
-  /**
    * Airport Layover Studio — 12 photos only (postimg.cc order: 64GrGs6g … mhcNn9Nx).
    */
   var EXPRESS_STUDIO_IMAGES = [
@@ -60,6 +55,9 @@
     "/images/family-16.jpg",
   ];
 
+  /**
+   * Horizon Apartment — 13 photos (postimg: tYv1GvX8 … dh7hsR33).
+   */
   var HORIZON_APARTMENT_IMAGES = [
     "/images/horizon-01.jpg",
     "/images/horizon-02.jpg",
@@ -76,8 +74,78 @@
     "/images/horizon-13.jpg",
   ];
 
+  /** Premium Residence (listing `bina`) — 14 photos; postimg: PL8YRQhW … LJjPpBhC. */
+  var PREMIUM_RESIDENCE_IMAGES = [
+    "/images/premium-01.jpg",
+    "/images/premium-02.jpg",
+    "/images/premium-03.jpg",
+    "/images/premium-04.jpg",
+    "/images/premium-05.jpg",
+    "/images/premium-06.jpg",
+    "/images/premium-07.jpg",
+    "/images/premium-08.jpg",
+    "/images/premium-09.jpg",
+    "/images/premium-10.jpg",
+    "/images/premium-11.jpg",
+    "/images/premium-12.jpg",
+    "/images/premium-13.jpg",
+    "/images/premium-14.jpg",
+  ];
+
+  /** Comfort Residence (`haven`) — 18 photos; postimg: Z9ypMxZT … s1n96cZG. */
+  var HAVEN_COMFORT_IMAGES = [
+    "/images/haven-01.jpg",
+    "/images/haven-02.jpg",
+    "/images/haven-03.jpg",
+    "/images/haven-04.jpg",
+    "/images/haven-05.jpg",
+    "/images/haven-06.jpg",
+    "/images/haven-07.jpg",
+    "/images/haven-08.jpg",
+    "/images/haven-09.jpg",
+    "/images/haven-10.jpg",
+    "/images/haven-11.jpg",
+    "/images/haven-12.jpg",
+    "/images/haven-13.jpg",
+    "/images/haven-14.jpg",
+    "/images/haven-15.jpg",
+    "/images/haven-16.jpg",
+    "/images/haven-17.jpg",
+    "/images/haven-18.jpg",
+  ];
+
+  /** Cozy Airport Studio (`avia`) — 26 photos; postimg: cK8wbBZd … bdFNFDY1. */
+  var AVIA_COZY_IMAGES = [
+    "/images/avia-01.jpg",
+    "/images/avia-02.jpg",
+    "/images/avia-03.jpg",
+    "/images/avia-04.jpg",
+    "/images/avia-05.jpg",
+    "/images/avia-06.jpg",
+    "/images/avia-07.jpg",
+    "/images/avia-08.jpg",
+    "/images/avia-09.jpg",
+    "/images/avia-10.jpg",
+    "/images/avia-11.jpg",
+    "/images/avia-12.jpg",
+    "/images/avia-13.jpg",
+    "/images/avia-14.jpg",
+    "/images/avia-15.jpg",
+    "/images/avia-16.jpg",
+    "/images/avia-17.jpg",
+    "/images/avia-18.jpg",
+    "/images/avia-19.jpg",
+    "/images/avia-20.jpg",
+    "/images/avia-21.jpg",
+    "/images/avia-22.jpg",
+    "/images/avia-23.jpg",
+    "/images/avia-24.jpg",
+    "/images/avia-25.jpg",
+    "/images/avia-26.jpg",
+  ];
+
   /**
-   * Six listing cards: most use SITE_GALLERY_IMAGES; Horizon uses `images: HORIZON_APARTMENT_IMAGES`.
+   * Listings: dedicated `images` arrays per apartment; only shared pool where no `images` is set.
    */
   window.APARTMENTS_DATA = [
     {
@@ -95,8 +163,7 @@
         airbnb: "https://www.airbnb.com/h/airporth",
       },
       altMode: "comfort",
-      imgCount: 3,
-      imgStart: 0,
+      images: HAVEN_COMFORT_IMAGES,
     },
     {
       id: "avia",
@@ -107,9 +174,8 @@
       priceFrom: 85,
       waSuffixKey: "wa_suffix_avia",
       otaAriaKey: "aria_book_avia_ota",
-      altMode: "generic",
-      imgCount: 3,
-      imgStart: 0,
+      altMode: "cozy",
+      images: AVIA_COZY_IMAGES,
     },
     {
       id: "bina",
@@ -120,9 +186,8 @@
       priceFrom: 120,
       waSuffixKey: "wa_suffix_bina",
       otaAriaKey: "aria_book_bina_ota",
-      altMode: "generic",
-      imgCount: 3,
-      imgStart: 1,
+      altMode: "premium",
+      images: PREMIUM_RESIDENCE_IMAGES,
     },
     {
       id: "horizon",
@@ -165,6 +230,8 @@
   window.getApartmentSlideAltKey = function (apt, slideIndex) {
     var m = apt.altMode;
     if (m === "comfort") return "comfort_residence_alt_" + (slideIndex + 1);
+    if (m === "cozy") return "cozy_studio_alt_" + (slideIndex + 1);
+    if (m === "premium") return "premium_residence_alt_" + (slideIndex + 1);
     if (m === "horizon") return "horizon_apartment_alt_" + (slideIndex + 1);
     if (m === "express") return "apt_slide_express_" + (slideIndex + 1);
     if (m === "family") return "spacious_family_alt_" + (slideIndex + 1);
