@@ -11,7 +11,7 @@
     p.className = "apartments-fallback";
     p.style.cssText = "text-align:center;margin:1rem 0;";
     var a = document.createElement("a");
-    a.href = "apartments.html";
+    a.href = "index.html#apartments";
     a.className = "btn btn-lg btn-primary";
     a.setAttribute("data-i18n", "book_cta_browse_apartments");
     p.appendChild(a);
