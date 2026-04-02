@@ -1832,6 +1832,107 @@ a:hover {
   max-width: min(100%, 52rem);
 }
 
+#gallery:has(.gallery-grid--by-apartment) .container {
+  max-width: min(100%, 72rem);
+}
+
+/* Grouped apartment gallery — 1 col mobile, 3 col desktop */
+.gallery-grid.gallery-grid--by-apartment {
+  display: block;
+  width: 100%;
+  max-width: min(100%, 72rem);
+  margin-inline: auto;
+}
+
+.gallery-apartment-block {
+  margin-bottom: clamp(1.75rem, 4vw, 2.5rem);
+}
+
+.gallery-apartment-block:last-child {
+  margin-bottom: 0;
+}
+
+.gallery-apartment-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.05rem, 2.4vw, 1.28rem);
+  font-weight: 700;
+  margin: 0 0 0.85rem;
+  padding-bottom: 0.35rem;
+  border-bottom: 1px solid var(--border);
+  color: var(--ink);
+  letter-spacing: -0.02em;
+}
+
+.gallery-apartment-grid {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 768px) {
+  .gallery-apartment-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.85rem;
+  }
+}
+
+.gallery-apt-item {
+  margin: 0;
+  min-width: 0;
+}
+
+.gallery-apt-item.is-broken {
+  display: none !important;
+}
+
+.gallery-apt-thumb {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  padding: 0;
+  margin: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  cursor: zoom-in;
+  background: var(--bg-alt);
+  aspect-ratio: 4 / 3;
+  position: relative;
+  transition:
+    box-shadow 0.22s ease,
+    border-color 0.22s ease,
+    transform 0.22s ease;
+  text-align: left;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.gallery-apt-thumb:hover {
+  border-color: rgba(13, 110, 110, 0.35);
+  box-shadow: var(--shadow);
+  transform: translateY(-2px);
+}
+
+.gallery-apt-thumb:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.gallery-apt-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.gallery-empty {
+  text-align: center;
+  color: var(--ink-muted);
+  margin: 1.25rem 0;
+  font-size: 0.95rem;
+}
+
 #gallery .section-head {
   margin-bottom: 0.55rem;
 }

@@ -76,6 +76,12 @@
   function resolveListingImageUrl(path) {
     if (path == null || path === "") return path;
     var p = String(path).trim();
+    if (p.indexOf("/images/apartments/") === 0) {
+      if (window.AptImageUtils && typeof window.AptImageUtils.normalizeSiteImageUrl === "function") {
+        return window.AptImageUtils.normalizeSiteImageUrl(p);
+      }
+      return p.indexOf("/") === 0 ? p : "/images/" + p.replace(/^\/+/, "");
+    }
     if (/^https?:\/\//i.test(p)) {
       if (/postimg\.cc\//i.test(p) && !/i\.postimg\.cc\//i.test(p)) {
         console.warn(

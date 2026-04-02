@@ -18,6 +18,7 @@
 
   function isLocalListingImageUrl(u) {
     if (typeof u !== "string") return false;
+    if (u.indexOf("/images/apartments/") === 0) return true;
     for (var i = 0; i < LOCAL_LISTING_URL_PREFIXES.length; i++) {
       if (u.indexOf(LOCAL_LISTING_URL_PREFIXES[i]) === 0) return true;
     }
@@ -55,7 +56,8 @@
     if (!img || img.tagName !== "IMG") return;
     if (img.getAttribute("data-no-img-fallback") === "true") return;
     var cls = img.getAttribute("class") || "";
-    if (/\bapt-slider-img\b/.test(cls) || /\bgallery-img\b/.test(cls)) return;
+    if (/\bapt-slider-img\b/.test(cls) || /\bgallery-img\b/.test(cls) || /\bgallery-apt-img\b/.test(cls))
+      return;
     if (img.getAttribute("data-img-fallback-once") === "1") return;
     var src = img.getAttribute("src") || "";
     if (!src || src.indexOf(IMAGE_PLACEHOLDER) !== -1) return;

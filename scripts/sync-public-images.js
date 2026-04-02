@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Copy public/images/* → images/ so static hosts serve assets at /images/* (site root).
+ * Copy public/images/** → images/ (recursive) so static hosts serve assets at /images/* (site root).
  * Run from repo root: node scripts/sync-public-images.js
  *
  * Optional: node scripts/download-apartment-photos.cjs fills public/images/ with stand-ins, then sync.
@@ -17,15 +17,23 @@ if (!fs.existsSync(srcDir)) {
   process.exit(1);
 }
 
-fs.mkdirSync(destDir, { recursive: true });
-
-const names = fs.readdirSync(srcDir);
 let n = 0;
-for (const name of names) {
-  const from = path.join(srcDir, name);
-  if (!fs.statSync(from).isFile()) continue;
-  fs.copyFileSync(from, path.join(destDir, name));
-  n += 1;
+
+function copyRecursive(from, to) {
+  fs.mkdirSync(to, { recursive: true });
+  const names = fs.readdirSync(from);
+  for (const name of names) {
+    const srcPath = path.join(from, name);
+    const destPath = path.join(to, name);
+    if (fs.statSync(srcPath).isDirectory()) {
+      copyRecursive(srcPath, destPath);
+    } else {
+      fs.copyFileSync(srcPath, destPath);
+      n += 1;
+    }
+  }
 }
 
-console.log("sync-public-images: copied", n, "file(s) to", path.relative(root, destDir) + "/");
+copyRecursive(srcDir, destDir);
+
+console.log("sync-public-images: copied", n, "file(s) recursively to", path.relative(root, destDir) + "/");

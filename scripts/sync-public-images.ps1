@@ -3,7 +3,19 @@
 #   — or —
 #   powershell -ExecutionPolicy Bypass -File scripts/sync-public-images.ps1
 $root = Split-Path $PSScriptRoot -Parent
-if (-not (Test-Path "$root/public/images")) { exit 1 }
-New-Item -ItemType Directory -Force -Path "$root/images" | Out-Null
-Copy-Item -Path "$root/public/images/*" -Destination "$root/images/" -Force
-Write-Host "Synced public/images -> images/ ($((Get-ChildItem $root/images).Count) files)."
+$src = Join-Path $root "public/images"
+$dst = Join-Path $root "images"
+if (-not (Test-Path $src)) { exit 1 }
+New-Item -ItemType Directory -Force -Path $dst | Out-Null
+$n = 0
+Get-ChildItem -Path $src -Recurse -File | ForEach-Object {
+  $rel = $_.FullName.Substring((Resolve-Path $src).Path.Length).TrimStart("\", "/")
+  $destPath = Join-Path $dst $rel
+  $dir = Split-Path $destPath -Parent
+  if (-not (Test-Path $dir)) {
+    New-Item -ItemType Directory -Path $dir -Force | Out-Null
+  }
+  Copy-Item $_.FullName -Destination $destPath -Force
+  $n++
+}
+Write-Host "sync-public-images: copied $n file(s) recursively to images/"

@@ -3,8 +3,8 @@
  * Ensure every /images/<file> referenced in site source exists under images/.
  * Run from repo root: node scripts/verify-site-images.js
  *
- * With js/apartment-image-sources.js STRATEGY "remote", the browser loads HTTPS URLs instead;
- * apartment JPGs may be missing here until you add files (see scripts/download-apartment-photos.cjs).
+ * With js/apartment-image-sources.js STRATEGY "remote", listing JPGs may resolve to remote URLs;
+ * gallery files under /images/apartments/ are always local — run sync-public-images after adding them.
  */
 const fs = require("fs");
 const path = require("path");
