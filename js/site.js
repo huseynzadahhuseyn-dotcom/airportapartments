@@ -28,6 +28,10 @@
       var msg = defaultMsg;
       if (window.I18N && typeof window.I18N.t === "function") {
         msg = window.I18N.t("whatsapp_message") || msg;
+        var sk = a.getAttribute("data-wa-suffix-key");
+        if (sk) {
+          msg = msg + (window.I18N.t(sk) || "");
+        }
       }
       a.setAttribute("href", WA_BASE + "?text=" + encode(msg));
     });
