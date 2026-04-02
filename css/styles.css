@@ -2739,6 +2739,32 @@ a:hover {
   outline-offset: 2px;
 }
 
+.apt-booking-details-btn--disabled {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 48px;
+  padding: 0.65rem 1rem;
+  font-size: 0.94rem;
+  font-weight: 650;
+  text-align: center;
+  color: var(--ink-muted);
+  background: var(--bg-alt);
+  border: 2px dashed var(--border);
+  border-radius: 14px;
+  cursor: not-allowed;
+  pointer-events: none;
+  opacity: 0.72;
+}
+
+.apt-booking-price--plain {
+  font-size: 1.08rem;
+  font-weight: 750;
+  line-height: 1.4;
+  color: var(--accent-hover);
+}
+
 .apt-booking-ota-row {
   display: grid;
   grid-template-columns: 1fr 1fr;

@@ -37,16 +37,20 @@
     return (apt.bookingLink || (apt.ota && apt.ota.booking) || "").trim();
   }
 
-  function allApartmentRows() {
-    return []
+  function findApt(id) {
+    var data = []
       .concat(window.APARTMENTS_DATA || [])
       .concat(window.APARTMENTS_BOOKING_EXTRA || []);
-  }
-
-  function findApt(id) {
-    var data = allApartmentRows();
     for (var i = 0; i < data.length; i++) {
       if (data[i].id === id) return data[i];
+    }
+    var simple = window.APARTMENT_CARDS_DATA;
+    if (Array.isArray(simple) && typeof window.normalizeApartmentCardEntry === "function") {
+      for (var j = 0; j < simple.length; j++) {
+        if (String(simple[j].id) === id) {
+          return window.normalizeApartmentCardEntry(simple[j]);
+        }
+      }
     }
     return null;
   }
@@ -69,8 +73,9 @@
       var img = document.createElement("img");
       img.className = "apt-slider-img";
       img.src = normImgUrl(url);
-      img.alt =
-        typeof window.getApartmentSlideAltKey === "function"
+      img.alt = apt._plain
+        ? (apt.plainTitle ? apt.plainTitle + " — " + (si + 1) : "")
+        : typeof window.getApartmentSlideAltKey === "function"
           ? t(window.getApartmentSlideAltKey(apt, si))
           : "";
       img.loading = si === 0 ? "eager" : "lazy";
@@ -116,8 +121,9 @@
   function openLightbox(urls, apt, startAt) {
     if (typeof window.openComfortImageLightbox !== "function") return;
     var elements = urls.map(function (url, i) {
-      var alt =
-        typeof window.getApartmentSlideAltKey === "function"
+      var alt = apt._plain
+        ? (apt.plainTitle ? apt.plainTitle + " — " + (i + 1) : "")
+        : typeof window.getApartmentSlideAltKey === "function"
           ? t(window.getApartmentSlideAltKey(apt, i))
           : "";
       return {
@@ -139,8 +145,9 @@
       var btn = document.createElement("button");
       btn.type = "button";
       btn.className = "apt-detail-thumb" + (i === 0 ? " is-active" : "");
-      var alt =
-        typeof window.getApartmentSlideAltKey === "function"
+      var alt = apt._plain
+        ? (apt.plainTitle ? apt.plainTitle + " — " + (i + 1) : "")
+        : typeof window.getApartmentSlideAltKey === "function"
           ? t(window.getApartmentSlideAltKey(apt, i))
           : "";
       btn.setAttribute(
@@ -230,24 +237,37 @@
     errEl.hidden = true;
     contentEl.hidden = false;
 
-    if (titleEl) {
-      titleEl.setAttribute("data-i18n", apt.titleKey);
-    }
-    if (descEl) {
-      descEl.setAttribute("data-i18n", "apt_detail_desc_" + apt.id);
-    }
-
-    if (priceEl) {
-      priceEl.innerHTML =
-        '<span class="apt-price-cur">' +
-        t("price_from") +
-        '</span> <span class="apt-price-num">' +
-        apt.priceFrom +
-        '</span> <span class="apt-price-cur">' +
-        t("currency_azn") +
-        '</span> <span class="apt-price-per">' +
-        t("price_per_night") +
-        "</span>";
+    if (apt._plain) {
+      if (titleEl) {
+        titleEl.removeAttribute("data-i18n");
+        titleEl.textContent = apt.plainTitle;
+      }
+      if (descEl) {
+        descEl.removeAttribute("data-i18n");
+        descEl.textContent = apt.plainDesc;
+      }
+      if (priceEl) {
+        priceEl.textContent = apt.plainPrice;
+      }
+    } else {
+      if (titleEl) {
+        titleEl.setAttribute("data-i18n", apt.titleKey);
+      }
+      if (descEl) {
+        descEl.setAttribute("data-i18n", "apt_detail_desc_" + apt.id);
+      }
+      if (priceEl) {
+        priceEl.innerHTML =
+          '<span class="apt-price-cur">' +
+          t("price_from") +
+          '</span> <span class="apt-price-num">' +
+          apt.priceFrom +
+          '</span> <span class="apt-price-cur">' +
+          t("currency_azn") +
+          '</span> <span class="apt-price-per">' +
+          t("price_per_night") +
+          "</span>";
+      }
     }
 
     if (sliderHost) {
@@ -262,8 +282,8 @@
 
     if (otaHost) {
       otaHost.textContent = "";
-      var hasBooking = !!resolveBookingUrl(apt);
-      var hasAirbnb = apt.ota && apt.ota.airbnb;
+      var hasBooking = apt._plain ? !!apt.cardBookingUrl : !!resolveBookingUrl(apt);
+      var hasAirbnb = apt._plain ? !!apt.cardAirbnbUrl : !!(apt.ota && apt.ota.airbnb);
       if (hasBooking || hasAirbnb) {
         var ota = document.createElement("div");
         ota.className =
@@ -273,7 +293,7 @@
         if (hasBooking) {
           var bk = document.createElement("a");
           bk.className = "btn btn-ota btn-booking";
-          bk.href = resolveBookingUrl(apt);
+          bk.href = apt._plain ? apt.cardBookingUrl : resolveBookingUrl(apt);
           bk.target = "_blank";
           bk.rel = "noopener noreferrer";
           bk.setAttribute("data-i18n", "book_on_booking_com");
@@ -282,7 +302,7 @@
         if (hasAirbnb) {
           var ab = document.createElement("a");
           ab.className = "btn btn-ota btn-airbnb-ota";
-          ab.href = apt.ota.airbnb;
+          ab.href = apt._plain ? apt.cardAirbnbUrl : apt.ota.airbnb;
           ab.target = "_blank";
           ab.rel = "noopener noreferrer";
           ab.setAttribute("data-i18n", "brand_airbnb");
@@ -292,14 +312,35 @@
       }
     }
 
-    if (waBtn && apt.waSuffixKey) {
-      waBtn.setAttribute("data-wa-suffix-key", apt.waSuffixKey);
+    if (waBtn) {
+      waBtn.removeAttribute("data-wa-suffix-key");
+      waBtn.removeAttribute("data-wa-body");
+      if (apt._plain) {
+        if (apt.whatsappIsUrl) {
+          waBtn.setAttribute("href", apt.whatsappRaw);
+          waBtn.removeAttribute("data-wa-prefill");
+        } else {
+          waBtn.setAttribute("href", "#");
+          waBtn.setAttribute("data-wa-prefill", "");
+          if (apt.waMessage) waBtn.setAttribute("data-wa-body", apt.waMessage);
+          if (apt.waSuffixKey) waBtn.setAttribute("data-wa-suffix-key", apt.waSuffixKey);
+        }
+      } else {
+        waBtn.setAttribute("href", "#");
+        waBtn.setAttribute("data-wa-prefill", "");
+        if (apt.waSuffixKey) waBtn.setAttribute("data-wa-suffix-key", apt.waSuffixKey);
+      }
     }
 
-    var docTitle = t("apartment_page_title", { name: t(apt.titleKey) });
-    document.title = docTitle;
     var pt = document.getElementById("page-title");
-    if (pt) pt.textContent = docTitle;
+    if (apt._plain) {
+      document.title = apt.plainTitle || id;
+      if (pt) pt.textContent = document.title;
+    } else {
+      var docTitle = t("apartment_page_title", { name: t(apt.titleKey) });
+      document.title = docTitle;
+      if (pt) pt.textContent = docTitle;
+    }
 
     if (window.I18N && typeof window.I18N.apply === "function") {
       window.I18N.apply(contentEl);

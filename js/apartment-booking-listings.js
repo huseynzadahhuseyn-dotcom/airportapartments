@@ -2,6 +2,9 @@
  * Optional extra apartments for the homepage #apartments-grid (booking-style cards).
  * Loaded before `apartment-listings-config.js` so the same link/cover rules apply.
  *
+ * If `js/apartment-cards-data.js` sets a non-empty `APARTMENT_CARDS_DATA`, the grid uses
+ * only that list instead of `APARTMENTS_DATA` + this extra array.
+ *
  * Each row should mirror entries in `js/apartments-data.js` plus merged card fields
  * from `apartment-listings-config.js` (cardBookingUrl, cardAirbnbUrl, …).
  *

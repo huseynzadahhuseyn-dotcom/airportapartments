@@ -1,6 +1,9 @@
 /**
  * Renders #apartments-grid — booking-style cards (hero slider, WhatsApp primary, OTA row).
- * Data: window.APARTMENTS_DATA + window.APARTMENTS_BOOKING_EXTRA (see apartment-booking-listings.js).
+ *
+ * Data source (first match wins):
+ * 1. `APARTMENT_CARDS_DATA` + `normalizeApartmentCardEntry` (see apartment-cards-data.js) when that array is non-empty
+ * 2. Otherwise `APARTMENTS_DATA` + `APARTMENTS_BOOKING_EXTRA`
  */
 (function () {
   "use strict";
@@ -48,6 +51,18 @@
     return out;
   }
 
+  function imgAltFor(apt, si) {
+    if (apt._plain) {
+      return apt.plainTitle ? apt.plainTitle + " — " + (si + 1) : t("apt_slide_alt_generic_1");
+    }
+    return t(altKeyFor(apt, si));
+  }
+
+  function detailSliderHref(apt) {
+    if (apt._plain) return apt.detailHref || "";
+    return "apartment-detail.html?apt=" + encodeURIComponent(apt.id);
+  }
+
   function el(tag, cls, attrs) {
     var node = document.createElement(tag);
     if (cls) node.className = cls;
@@ -92,10 +107,10 @@
       );
       sliderRoot.setAttribute("data-apt-slider", "");
       sliderRoot.setAttribute("tabindex", "0");
-      sliderRoot.setAttribute(
-        "data-apt-detail-href",
-        "apartment-detail.html?apt=" + encodeURIComponent(apt.id)
-      );
+      var dHref = detailSliderHref(apt);
+      if (dHref) {
+        sliderRoot.setAttribute("data-apt-detail-href", dHref);
+      }
 
       var viewport = el("div", "apt-slider-viewport apt-booking-slider-viewport");
       var track = el("div", "apt-slider-track apt-slider-track--smooth");
@@ -104,7 +119,7 @@
         var slide = el("div", "apt-slider-slide");
         var img = el("img", "apt-slider-img", {
           src: normImgUrl(url),
-          alt: t(altKeyFor(apt, si)),
+          alt: imgAltFor(apt, si),
           loading: si === 0 ? "eager" : "lazy",
           decoding: "async",
         });
@@ -136,50 +151,94 @@
 
       var body = el("div", "apt-booking-body");
 
-      body.appendChild(el("h3", "apt-booking-title", { "data-i18n": apt.titleKey }));
+      if (apt._plain) {
+        body.appendChild(el("h3", "apt-booking-title", { text: apt.plainTitle }));
 
-      body.appendChild(el("p", "apt-booking-desc", { "data-i18n": apt.blurbKey }));
+        body.appendChild(el("p", "apt-booking-desc", { text: apt.plainDesc }));
 
-      var guestsRow = el("div", "apt-booking-guests");
-      guestsRow.appendChild(el("span", "apt-booking-guests-ic", { "aria-hidden": "true", text: "👥" }));
-      var gSpan = el("span", "apt-booking-guests-text");
-      gSpan.setAttribute("data-i18n", apt.guestsKey);
-      guestsRow.appendChild(gSpan);
-      body.appendChild(guestsRow);
+        var guestsRowP = el("div", "apt-booking-guests");
+        guestsRowP.appendChild(el("span", "apt-booking-guests-ic", { "aria-hidden": "true", text: "👥" }));
+        guestsRowP.appendChild(el("span", "apt-booking-guests-text", { text: apt.plainGuests }));
+        body.appendChild(guestsRowP);
 
-      var priceRow = el("div", "apt-booking-price");
-      if (apt.cardPriceOnRequest) {
-        var pr = el("span", "apt-booking-price-text");
-        pr.setAttribute("data-i18n", "price_on_request");
-        priceRow.appendChild(pr);
-      } else {
-        priceRow.innerHTML =
-          '<span class="apt-booking-price-from" data-i18n="price_from"></span> ' +
-          '<strong class="apt-booking-price-num">' +
-          apt.priceFrom +
-          "</strong> " +
-          '<span class="apt-booking-price-cur" data-i18n="currency_azn"></span>' +
-          '<span class="apt-booking-price-per" data-i18n="price_per_night"></span>';
-      }
-      body.appendChild(priceRow);
+        body.appendChild(el("div", "apt-booking-price apt-booking-price--plain", { text: apt.plainPrice }));
 
-      body.appendChild(
-        el("a", "btn btn-lg btn-wa-card apt-booking-wa", {
-          href: "#",
+        var waP = el("a", "btn btn-lg btn-wa-card apt-booking-wa", {
           target: "_blank",
           rel: "noopener noreferrer",
-          "data-wa-prefill": "",
-          "data-wa-suffix-key": apt.waSuffixKey || "",
           "data-i18n": "apt_btn_reserve_whatsapp",
-        })
-      );
+        });
+        if (apt.whatsappIsUrl) {
+          waP.setAttribute("href", apt.whatsappRaw);
+        } else {
+          waP.setAttribute("href", "#");
+          waP.setAttribute("data-wa-prefill", "");
+          if (apt.waMessage) waP.setAttribute("data-wa-body", apt.waMessage);
+          if (apt.waSuffixKey) waP.setAttribute("data-wa-suffix-key", apt.waSuffixKey);
+        }
+        body.appendChild(waP);
 
-      body.appendChild(
-        el("a", "apt-booking-details-btn", {
-          href: "apartment-detail.html?apt=" + encodeURIComponent(apt.id),
-          "data-i18n": "view_details",
-        })
-      );
+        if (apt.detailHref) {
+          body.appendChild(
+            el("a", "apt-booking-details-btn", {
+              href: apt.detailHref,
+              "data-i18n": "view_details",
+            })
+          );
+        } else {
+          body.appendChild(
+            el("span", "apt-booking-details-btn apt-booking-details-btn--disabled", {
+              "data-i18n": "view_details",
+              "aria-disabled": "true",
+            })
+          );
+        }
+      } else {
+        body.appendChild(el("h3", "apt-booking-title", { "data-i18n": apt.titleKey }));
+
+        body.appendChild(el("p", "apt-booking-desc", { "data-i18n": apt.blurbKey }));
+
+        var guestsRow = el("div", "apt-booking-guests");
+        guestsRow.appendChild(el("span", "apt-booking-guests-ic", { "aria-hidden": "true", text: "👥" }));
+        var gSpan = el("span", "apt-booking-guests-text");
+        gSpan.setAttribute("data-i18n", apt.guestsKey);
+        guestsRow.appendChild(gSpan);
+        body.appendChild(guestsRow);
+
+        var priceRow = el("div", "apt-booking-price");
+        if (apt.cardPriceOnRequest) {
+          var pr = el("span", "apt-booking-price-text");
+          pr.setAttribute("data-i18n", "price_on_request");
+          priceRow.appendChild(pr);
+        } else {
+          priceRow.innerHTML =
+            '<span class="apt-booking-price-from" data-i18n="price_from"></span> ' +
+            '<strong class="apt-booking-price-num">' +
+            apt.priceFrom +
+            "</strong> " +
+            '<span class="apt-booking-price-cur" data-i18n="currency_azn"></span>' +
+            '<span class="apt-booking-price-per" data-i18n="price_per_night"></span>';
+        }
+        body.appendChild(priceRow);
+
+        body.appendChild(
+          el("a", "btn btn-lg btn-wa-card apt-booking-wa", {
+            href: "#",
+            target: "_blank",
+            rel: "noopener noreferrer",
+            "data-wa-prefill": "",
+            "data-wa-suffix-key": apt.waSuffixKey || "",
+            "data-i18n": "apt_btn_reserve_whatsapp",
+          })
+        );
+
+        body.appendChild(
+          el("a", "apt-booking-details-btn", {
+            href: "apartment-detail.html?apt=" + encodeURIComponent(apt.id),
+            "data-i18n": "view_details",
+          })
+        );
+      }
 
       var bookingUrl = (apt.cardBookingUrl || "").trim();
       var airbnbUrl = (apt.cardAirbnbUrl || "").trim();
@@ -255,11 +314,15 @@
   function tryRender() {
     var grid = document.getElementById("apartments-grid");
     if (!grid) return;
-    var base = window.APARTMENTS_DATA;
-    var extra = window.APARTMENTS_BOOKING_EXTRA;
-    var data = []
-      .concat(Array.isArray(base) ? base : [])
-      .concat(Array.isArray(extra) ? extra : []);
+    var simple = window.APARTMENT_CARDS_DATA;
+    var data;
+    if (Array.isArray(simple) && simple.length && typeof window.normalizeApartmentCardEntry === "function") {
+      data = simple.map(window.normalizeApartmentCardEntry).filter(Boolean);
+    } else {
+      data = []
+        .concat(Array.isArray(window.APARTMENTS_DATA) ? window.APARTMENTS_DATA : [])
+        .concat(Array.isArray(window.APARTMENTS_BOOKING_EXTRA) ? window.APARTMENTS_BOOKING_EXTRA : []);
+    }
     if (data.length) {
       buildApartmentCards(grid, data);
       return;

@@ -25,12 +25,18 @@
 
     document.querySelectorAll("a[data-wa-prefill]").forEach(function (a) {
       if (a.hasAttribute("data-wa-full-key")) return;
-      var msg = defaultMsg;
-      if (window.I18N && typeof window.I18N.t === "function") {
-        msg = window.I18N.t("whatsapp_message") || msg;
-        var sk = a.getAttribute("data-wa-suffix-key");
-        if (sk) {
-          msg = msg + (window.I18N.t(sk) || "");
+      var bodyOnly = a.getAttribute("data-wa-body");
+      var msg;
+      if (bodyOnly !== null && bodyOnly !== "") {
+        msg = bodyOnly;
+      } else {
+        msg = defaultMsg;
+        if (window.I18N && typeof window.I18N.t === "function") {
+          msg = window.I18N.t("whatsapp_message") || msg;
+          var sk = a.getAttribute("data-wa-suffix-key");
+          if (sk) {
+            msg = msg + (window.I18N.t(sk) || "");
+          }
         }
       }
       a.setAttribute("href", WA_BASE + "?text=" + encode(msg));
