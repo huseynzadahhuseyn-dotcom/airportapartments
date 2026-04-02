@@ -98,6 +98,11 @@
 
     var startAt = Math.max(0, Math.min(startIndex, elements.length - 1));
 
+    if (typeof window.openComfortImageLightbox === "function") {
+      window.openComfortImageLightbox(elements, startAt);
+      return;
+    }
+
     var lb = GLightbox({
       elements: elements,
       startAt: startAt,
@@ -218,6 +223,7 @@
       } catch (e) {}
       gbInstance = null;
     }
+    if (!document.querySelector(".glightbox")) return;
     gbInstance = GLightbox({
       selector: ".glightbox",
       touchNavigation: true,
