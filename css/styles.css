@@ -3666,76 +3666,6 @@ a:hover {
   text-decoration: underline;
 }
 
-/* Rates */
-.rate-grid {
-  display: grid;
-  gap: 1.25rem;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-}
-
-.rate-card {
-  position: relative;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  padding: 1.75rem;
-}
-
-.rate-card-featured {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 1px var(--accent), var(--shadow);
-}
-
-.badge {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  margin: 0;
-  padding: 0.25rem 0.6rem;
-  font-size: 0.7rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  background: var(--accent-soft);
-  color: var(--accent-hover);
-  border-radius: 999px;
-}
-
-.rate-price {
-  font-size: 1rem;
-  color: var(--ink-muted);
-  margin-bottom: 0.75rem;
-}
-
-.rate-price strong {
-  font-size: 2rem;
-  font-family: var(--font-display);
-  color: var(--ink);
-  letter-spacing: -0.02em;
-}
-
-.currency {
-  font-weight: 600;
-  color: var(--ink);
-}
-
-.rate-note {
-  font-size: 0.9rem;
-}
-
-.rate-card p:last-child {
-  margin: 0;
-  color: var(--ink-muted);
-  font-size: 0.95rem;
-}
-
-.disclaimer {
-  margin: 2rem 0 0;
-  font-size: 0.85rem;
-  color: var(--ink-muted);
-  max-width: 48rem;
-}
-
 /* Contact */
 .contact-actions {
   margin: 1.5rem 0 1rem;
@@ -4747,10 +4677,6 @@ button,
   .contact-actions-inner .btn-lg {
     flex: 1 1 100%;
     max-width: 100%;
-  }
-
-  .rate-grid {
-    grid-template-columns: 1fr;
   }
 
   .map-embed-wrap {
