@@ -65,6 +65,12 @@
         closeDropdown();
       }
     });
+
+    document.addEventListener("keydown", function (e) {
+      if (e.key !== "Escape") return;
+      closeDropdown();
+      if (toggle && toggle.checked) toggle.checked = false;
+    });
   }
 
   if (document.readyState === "loading") {
