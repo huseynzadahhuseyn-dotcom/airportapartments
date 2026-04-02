@@ -4,7 +4,8 @@
  * - "local": src is /images/cozy-01.jpg etc. (add files, then run: node scripts/sync-public-images.js)
  * - "remote": curated direct Unsplash CDN URLs (not postimg pages) so the site works before files exist
  *
- * After downloading your own photos into public/images/, set STRATEGY to "local".
+ * `/images/apartments/…`: in **remote** mode, Unsplash previews are used until you add files; set **local** (or
+ * `SITE_APARTMENT_IMAGE_STRATEGY_INIT`) to serve only real files from `public/images/apartments/` after sync.
  */
 (function () {
   "use strict";
@@ -54,7 +55,7 @@
     "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688" + PARAMS,
   ];
 
-  var LISTING_SEED = { cozy: 0, haven: 4, premium: 9, horizon: 2, express: 6, family: 11 };
+  var LISTING_SEED = { cozy: 0, haven: 4, premium: 9, bina: 13, horizon: 2, express: 6, family: 11 };
 
   function basename(path) {
     if (typeof path !== "string") return "";
@@ -73,14 +74,31 @@
     return POOL.length ? slot % POOL.length : 0;
   }
 
+  /** e.g. /images/apartments/cozy/7.jpg → stable pool slot (remote preview until real files exist). */
+  function poolIndexForApartmentsPath(p) {
+    var m = String(p).match(/\/images\/apartments\/([a-z0-9]+)\/(\d+)\./i);
+    if (!m) return 0;
+    var folder = m[1].toLowerCase();
+    var n = parseInt(m[2], 10) || 0;
+    var seed = Object.prototype.hasOwnProperty.call(LISTING_SEED, folder) ? LISTING_SEED[folder] : 5;
+    var slot = seed * 37 + n * 7 + folder.length * 3;
+    return POOL.length ? slot % POOL.length : 0;
+  }
+
   function resolveListingImageUrl(path) {
     if (path == null || path === "") return path;
     var p = String(path).trim();
     if (p.indexOf("/images/apartments/") === 0) {
+      var normalized = p;
       if (window.AptImageUtils && typeof window.AptImageUtils.normalizeSiteImageUrl === "function") {
-        return window.AptImageUtils.normalizeSiteImageUrl(p);
+        normalized = window.AptImageUtils.normalizeSiteImageUrl(p);
+      } else if (p.indexOf("/") !== 0) {
+        normalized = "/images/" + p.replace(/^\/+/, "");
       }
-      return p.indexOf("/") === 0 ? p : "/images/" + p.replace(/^\/+/, "");
+      if (STRATEGY === "local") {
+        return normalized;
+      }
+      return POOL[poolIndexForApartmentsPath(p)];
     }
     if (/^https?:\/\//i.test(p)) {
       if (/postimg\.cc\//i.test(p) && !/i\.postimg\.cc\//i.test(p)) {
