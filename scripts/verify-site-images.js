@@ -57,6 +57,18 @@ for (const filePath of files) {
   }
 }
 
+const apartmentsDataPath = path.join(root, "js", "apartments-data.js");
+try {
+  const aptSrc = fs.readFileSync(apartmentsDataPath, "utf8");
+  if (aptSrc.includes("/images/cozy-01.jpg")) {
+    for (let n = 1; n <= 26; n++) {
+      needed.add(`cozy-${String(n).padStart(2, "0")}.jpg`);
+    }
+  }
+} catch {
+  /* ignore */
+}
+
 const missing = [];
 for (const rel of needed) {
   const full = path.join(imagesDir, rel);

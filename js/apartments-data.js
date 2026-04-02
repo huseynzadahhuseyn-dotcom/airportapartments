@@ -14,7 +14,8 @@
   var SITE_IMAGE_PLACEHOLDER = "/images/placeholder.svg";
   var SITE_USE_IMAGE_PLACEHOLDER = true;
 
-  function mapListingImages(arr) {
+  function mapListingImages(arr, aptId) {
+    if (aptId === "avia") return arr;
     if (!SITE_USE_IMAGE_PLACEHOLDER || !arr || !arr.length) return arr;
     var out = [];
     for (var i = 0; i < arr.length; i++) {
@@ -145,34 +146,37 @@
     "/images/haven-18.jpg",
   ];
 
-  /** Cozy Airport Studio (`avia`) — 26 photos; postimg: cK8wbBZd … bdFNFDY1. */
+  /**
+   * Cozy Airport Studio (`avia`) — 26 photos, local `/images/cozy-NN.jpg`.
+   * Source gallery pages: postimg.cc s1wWLYjg … Cz2qhwn6 (imported Jan 2026).
+   */
   var AVIA_COZY_IMAGES = [
-    "/images/avia-01.jpg",
-    "/images/avia-02.jpg",
-    "/images/avia-03.jpg",
-    "/images/avia-04.jpg",
-    "/images/avia-05.jpg",
-    "/images/avia-06.jpg",
-    "/images/avia-07.jpg",
-    "/images/avia-08.jpg",
-    "/images/avia-09.jpg",
-    "/images/avia-10.jpg",
-    "/images/avia-11.jpg",
-    "/images/avia-12.jpg",
-    "/images/avia-13.jpg",
-    "/images/avia-14.jpg",
-    "/images/avia-15.jpg",
-    "/images/avia-16.jpg",
-    "/images/avia-17.jpg",
-    "/images/avia-18.jpg",
-    "/images/avia-19.jpg",
-    "/images/avia-20.jpg",
-    "/images/avia-21.jpg",
-    "/images/avia-22.jpg",
-    "/images/avia-23.jpg",
-    "/images/avia-24.jpg",
-    "/images/avia-25.jpg",
-    "/images/avia-26.jpg",
+    "/images/cozy-01.jpg",
+    "/images/cozy-02.jpg",
+    "/images/cozy-03.jpg",
+    "/images/cozy-04.jpg",
+    "/images/cozy-05.jpg",
+    "/images/cozy-06.jpg",
+    "/images/cozy-07.jpg",
+    "/images/cozy-08.jpg",
+    "/images/cozy-09.jpg",
+    "/images/cozy-10.jpg",
+    "/images/cozy-11.jpg",
+    "/images/cozy-12.jpg",
+    "/images/cozy-13.jpg",
+    "/images/cozy-14.jpg",
+    "/images/cozy-15.jpg",
+    "/images/cozy-16.jpg",
+    "/images/cozy-17.jpg",
+    "/images/cozy-18.jpg",
+    "/images/cozy-19.jpg",
+    "/images/cozy-20.jpg",
+    "/images/cozy-21.jpg",
+    "/images/cozy-22.jpg",
+    "/images/cozy-23.jpg",
+    "/images/cozy-24.jpg",
+    "/images/cozy-25.jpg",
+    "/images/cozy-26.jpg",
   ];
 
   /**
@@ -279,7 +283,7 @@
     },
   ];
 
-  window.SITE_GALLERY_IMAGES = mapListingImages(SITE_GALLERY_IMAGES);
+  window.SITE_GALLERY_IMAGES = mapListingImages(SITE_GALLERY_IMAGES, null);
   /** @deprecated Use SITE_GALLERY_IMAGES */
   window.POSTIMG_GALLERY_IMAGES = window.SITE_GALLERY_IMAGES;
   window.APARTMENTS_DATA = APARTMENTS_DATA.map(function (apt) {
@@ -289,7 +293,7 @@
         o[k] = apt[k];
       }
     }
-    o.images = mapListingImages(apt.images);
+    o.images = mapListingImages(apt.images, apt.id);
     return o;
   });
   window.SITE_USE_IMAGE_PLACEHOLDER = SITE_USE_IMAGE_PLACEHOLDER;
