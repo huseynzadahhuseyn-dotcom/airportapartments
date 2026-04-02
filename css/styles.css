@@ -3596,6 +3596,79 @@ a:hover {
   margin: 1.5rem 0 1rem;
 }
 
+.contact-info-box {
+  margin: 1.25rem 0 1rem;
+  padding: 1rem 1.15rem 1.05rem;
+  background: rgba(13, 110, 110, 0.07);
+  border: 1px solid rgba(13, 110, 110, 0.14);
+  border-radius: var(--radius);
+  max-width: 36rem;
+}
+
+.contact-info-box__title {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin: 0 0 0.65rem;
+  color: var(--ink);
+}
+
+.contact-info-brand {
+  margin: 0 0 0.75rem;
+  font-size: 1rem;
+  color: var(--ink);
+}
+
+.contact-info-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.contact-info-list li {
+  font-size: 0.93rem;
+  line-height: 1.5;
+  color: var(--ink);
+}
+
+.contact-info-list a {
+  color: var(--accent);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.contact-info-list a:hover {
+  text-decoration: underline;
+}
+
+.footer-contact-details-inner {
+  font-size: 0.88rem;
+  line-height: 1.45;
+  color: var(--ink-muted);
+}
+
+.footer-contact-details-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.footer-contact-details-inner a {
+  color: var(--accent);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.footer-contact-details-inner a:hover {
+  text-decoration: underline;
+}
+
 .fine-print {
   font-size: 0.8rem;
   color: var(--ink-muted);
