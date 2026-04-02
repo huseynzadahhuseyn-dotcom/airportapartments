@@ -1,7 +1,6 @@
 /**
- * City tour cards (Sedan, Vito, BMW X5): programmatic GLightbox with fixed story order —
- * experience / city slides first, vehicle slide(s) last (data-tour-slide="vehicle"). Opens on
- * slide 0 (first experience). Card preview uses the same slider markup for all three tours.
+ * City tour cards: hero + thumbnails open GLightbox at the chosen index (no navigation).
+ * Slide order matches apartments story: experience images first, vehicle slide(s) last.
  */
 (function () {
   "use strict";
@@ -52,48 +51,77 @@
     });
   }
 
-  function openTourGallery(root, cfg) {
-    if (typeof GLightbox === "undefined") return;
+  function syncHeroPreview(gal, start) {
+    if (!gal) return;
+    var main = gal.querySelector(".tour-hero-gallery__main .tour-hero-gallery__img");
+    var thumb = gal.querySelector(
+      '.tour-hero-gallery__thumb[data-tour-lb-start="' + start + '"]'
+    );
+    if (main && thumb) {
+      var im = thumb.querySelector("img");
+      if (im) {
+        main.src = im.src;
+        main.alt = im.alt;
+      }
+    }
+    gal.querySelectorAll(".tour-hero-gallery__thumb").forEach(function (t) {
+      var ti = parseInt(t.getAttribute("data-tour-lb-start"), 10);
+      t.classList.toggle("is-active", ti === start);
+    });
+  }
+
+  function resolvePack(el) {
+    for (var i = 0; i < CONFIG.length; i++) {
+      var cfg = CONFIG[i];
+      var root = el.closest(cfg.root);
+      if (root) return { root: root, cfg: cfg };
+    }
+    return null;
+  }
+
+  function openTourGallery(root, cfg, startAt) {
     var links = orderedLinks(root, cfg).filter(function (a) {
       return (a.getAttribute("href") || "").length;
     });
     var elements = buildElements(links);
     if (!elements.length) return;
-
-    var lb = GLightbox({
-      elements: elements,
-      startAt: 0,
-      touchNavigation: true,
-      touchFollowAxis: true,
-      loop: true,
-      closeOnOutsideClick: true,
-      keyboardNavigation: true,
-      closeButton: true,
-      zoomable: true,
-      draggable: true,
-      dragAutoSnap: true,
-      openEffect: "fade",
-      closeEffect: "fade",
-      slideEffect: "slide",
-      preload: true,
-    });
-    lb.open();
+    var start = Math.max(0, Math.min(startAt || 0, elements.length - 1));
+    if (typeof window.openComfortImageLightbox === "function") {
+      window.openComfortImageLightbox(elements, start);
+    } else if (typeof GLightbox !== "undefined") {
+      GLightbox({
+        elements: elements,
+        startAt: start,
+        touchNavigation: true,
+        loop: true,
+        closeOnOutsideClick: true,
+        keyboardNavigation: true,
+        closeButton: true,
+        zoomable: true,
+        draggable: true,
+        dragAutoSnap: true,
+        openEffect: "fade",
+        closeEffect: "fade",
+        slideEffect: "slide",
+        preload: true,
+      }).open();
+    }
   }
 
   document.addEventListener(
     "click",
     function (e) {
-      for (var i = 0; i < CONFIG.length; i++) {
-        var cfg = CONFIG[i];
-        var anchor = e.target.closest(cfg.link);
-        if (!anchor) continue;
-        var root = anchor.closest(cfg.root);
-        if (!root) continue;
-        e.preventDefault();
-        e.stopPropagation();
-        openTourGallery(root, cfg);
-        return;
-      }
+      var trigger = e.target.closest("[data-tour-lb-start]");
+      if (!trigger) return;
+      var pack = resolvePack(trigger);
+      if (!pack) return;
+      e.preventDefault();
+      e.stopPropagation();
+      var start = parseInt(trigger.getAttribute("data-tour-lb-start"), 10);
+      if (isNaN(start)) start = 0;
+      var gal = trigger.closest("[data-tour-hero-gallery]");
+      syncHeroPreview(gal, start);
+      openTourGallery(pack.root, pack.cfg, start);
     },
     true
   );

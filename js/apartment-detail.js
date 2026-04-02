@@ -36,7 +36,7 @@
 
   function buildSliderMarkup(urls, apt) {
     var wrap = document.createElement("div");
-    wrap.className = "apt-card-slider apt-detail-slider";
+    wrap.className = "apt-card-slider apt-detail-slider apt-detail-slider--hero";
     wrap.setAttribute("data-apt-slider", "");
     wrap.setAttribute("tabindex", "0");
 
@@ -97,7 +97,7 @@
   }
 
   function openLightbox(urls, apt, startAt) {
-    if (typeof GLightbox === "undefined") return;
+    if (typeof window.openComfortImageLightbox !== "function") return;
     var elements = urls.map(function (url, i) {
       var alt =
         typeof window.getApartmentSlideAltKey === "function"
@@ -109,31 +109,19 @@
         alt: alt,
       };
     });
-    GLightbox({
-      elements: elements,
-      startAt: Math.max(0, Math.min(startAt || 0, elements.length - 1)),
-      touchNavigation: true,
-      loop: true,
-      closeOnOutsideClick: true,
-      keyboardNavigation: true,
-      closeButton: true,
-      zoomable: true,
-      draggable: true,
-      dragAutoSnap: true,
-      openEffect: "fade",
-      closeEffect: "fade",
-      slideEffect: "slide",
-      preload: true,
-    }).open();
+    window.openComfortImageLightbox(
+      elements,
+      Math.max(0, Math.min(startAt || 0, elements.length - 1))
+    );
   }
 
-  function buildThumbs(urls, apt) {
+  function buildThumbs(urls, apt, sliderHost) {
     var grid = document.createElement("div");
     grid.className = "apt-detail-thumb-grid";
     urls.forEach(function (url, i) {
       var btn = document.createElement("button");
       btn.type = "button";
-      btn.className = "apt-detail-thumb";
+      btn.className = "apt-detail-thumb" + (i === 0 ? " is-active" : "");
       var alt =
         typeof window.getApartmentSlideAltKey === "function"
           ? t(window.getApartmentSlideAltKey(apt, i))
@@ -150,11 +138,40 @@
       img.className = "apt-detail-thumb-img";
       btn.appendChild(img);
       btn.addEventListener("click", function () {
+        var slider = sliderHost && sliderHost.querySelector("[data-apt-slider]");
+        if (slider) {
+          slider.dispatchEvent(
+            new CustomEvent("apt-slider-goto", { detail: { index: i } })
+          );
+        }
         openLightbox(urls, apt, i);
       });
       grid.appendChild(btn);
     });
     return grid;
+  }
+
+  function wireThumbSliderSync(sliderHost, thumbsHost) {
+    if (!sliderHost || !thumbsHost) return;
+    var slider = sliderHost.querySelector("[data-apt-slider]");
+    var thumbs = thumbsHost.querySelectorAll(".apt-detail-thumb");
+    if (!slider || !thumbs.length) return;
+    function setThumbActive(idx) {
+      thumbs.forEach(function (tb, ti) {
+        tb.classList.toggle("is-active", ti === idx);
+      });
+    }
+    slider.addEventListener("apt-slider-changed", function (ev) {
+      var idx = ev.detail && ev.detail.index;
+      if (typeof idx !== "number") return;
+      setThumbActive(idx);
+    });
+    var dots = slider.querySelectorAll(".apt-slider-dot");
+    var initial = 0;
+    dots.forEach(function (d, di) {
+      if (d.classList.contains("is-active")) initial = di;
+    });
+    setThumbActive(initial);
   }
 
   function render() {
@@ -223,7 +240,7 @@
 
     if (thumbsHost) {
       thumbsHost.textContent = "";
-      thumbsHost.appendChild(buildThumbs(urls, apt));
+      thumbsHost.appendChild(buildThumbs(urls, apt, sliderHost));
     }
 
     if (otaHost) {
@@ -266,6 +283,7 @@
     if (typeof window.initApartmentSliders === "function") {
       window.initApartmentSliders();
     }
+    wireThumbSliderSync(sliderHost, thumbsHost);
   }
 
   window.addEventListener("i18n:applied", render);

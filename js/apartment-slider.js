@@ -24,6 +24,9 @@
       dots.forEach(function (d, di) {
         d.classList.toggle("is-active", di === i);
       });
+      root.dispatchEvent(
+        new CustomEvent("apt-slider-changed", { detail: { index: i, slides: n } })
+      );
     }
 
     function go(idx) {
@@ -31,11 +34,26 @@
       setActive();
     }
 
+    root.addEventListener("apt-slider-goto", function (e) {
+      var idx = e.detail && e.detail.index;
+      if (typeof idx === "number" && !isNaN(idx)) go(idx);
+    });
+
     if (prev) prev.addEventListener("click", function () { go(i - 1); });
     if (next) next.addEventListener("click", function () { go(i + 1); });
     dots.forEach(function (d, di) {
       d.addEventListener("click", function () { go(di); });
     });
+
+    var detailHref = root.getAttribute("data-apt-detail-href");
+    if (detailHref) {
+      viewport.addEventListener("click", function (e) {
+        if (e.target.closest(".apt-slider-nav")) return;
+        if (e.target.closest(".apt-slider-dots")) return;
+        if (e.target.closest(".apt-card-view-photos")) return;
+        window.location.href = detailHref;
+      });
+    }
 
     var startX = 0;
     viewport.addEventListener(

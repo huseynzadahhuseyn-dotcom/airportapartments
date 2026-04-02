@@ -59,6 +59,7 @@
       var art = el("article", "apt-card" + (apt.premium ? " apt-card--premium" : ""));
       art.setAttribute("role", "listitem");
       art.setAttribute("data-apt-id", apt.id);
+      art.setAttribute("data-apt-gallery", urls.join("|"));
 
       if (apt.featured) {
         var badge = el("span", "apt-card-badge");
@@ -69,6 +70,10 @@
       var sliderRoot = el("div", "apt-card-slider");
       sliderRoot.setAttribute("data-apt-slider", "");
       sliderRoot.setAttribute("tabindex", "0");
+      sliderRoot.setAttribute(
+        "data-apt-detail-href",
+        "apartment-detail.html?apt=" + encodeURIComponent(apt.id)
+      );
 
       var viewport = el("div", "apt-slider-viewport");
       var track = el("div", "apt-slider-track");
@@ -114,6 +119,39 @@
         dotsWrap.appendChild(dot);
       });
       sliderRoot.appendChild(dotsWrap);
+
+      var viewPhotos = el("button", "apt-card-view-photos", {
+        type: "button",
+        "data-i18n": "apt_card_view_photos",
+      });
+      viewPhotos.addEventListener("click", function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var raw = art.getAttribute("data-apt-gallery") || "";
+        var galleryUrls = raw.split("|").filter(Boolean);
+        if (!galleryUrls.length || typeof window.openComfortImageLightbox !== "function") return;
+        var aptRef = apt;
+        var sliderEl = art.querySelector("[data-apt-slider]");
+        var startIdx = 0;
+        if (sliderEl) {
+          var dotList = sliderEl.querySelectorAll(".apt-slider-dot");
+          for (var di = 0; di < dotList.length; di++) {
+            if (dotList[di].classList.contains("is-active")) {
+              startIdx = di;
+              break;
+            }
+          }
+        }
+        var elements = galleryUrls.map(function (url, si) {
+          return {
+            href: url,
+            type: "image",
+            alt: t(altKeyFor(aptRef, si)),
+          };
+        });
+        window.openComfortImageLightbox(elements, startIdx);
+      });
+      sliderRoot.appendChild(viewPhotos);
 
       art.appendChild(sliderRoot);
 
