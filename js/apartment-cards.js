@@ -1,5 +1,8 @@
 /**
- * Renders #apartments-grid — booking-style cards (hero slider, WhatsApp primary, OTA row).
+ * Renders #apartments-grid and #book-apartments-grid — booking-style cards (hero slider, WhatsApp, OTAs).
+ *
+ * #book-apartments-grid: slides use **only** `apt.images` (same order, one slide per entry). No gallery pool,
+ * no `placeholder.svg` in src, `data-no-img-fallback` on imgs. Arrows when length > 1.
  *
  * Data source (first match wins):
  * 1. `APARTMENT_CARDS_DATA` + `normalizeApartmentCardEntry` (see apartment-cards-data.js) when that array is non-empty
@@ -32,6 +35,21 @@
     }
     var out = normImgUrl(u);
     return out == null ? "" : String(out);
+  }
+
+  /**
+   * #book-apartments-grid: one slide per `apt.images` entry — never placeholder.svg, never gallery URLs.
+   * Uses resolve + normalize; falls back to the raw listing string so slide count always matches the array.
+   */
+  function bookCardImgSrc(raw) {
+    var s = String(raw).trim();
+    if (!s || isPlaceholderImageUrl(s)) return "";
+    var primary = cardSliderSrc(s);
+    if (primary && !isPlaceholderImageUrl(primary)) return primary;
+    var fb = normImgUrl(s);
+    var fbs = fb == null ? "" : String(fb).trim();
+    if (fbs && !isPlaceholderImageUrl(fbs)) return fbs;
+    return s;
   }
 
   function t(key) {
@@ -121,10 +139,18 @@
       if (!urls.length) return;
 
       var slidesPayload = [];
-      for (var ui = 0; ui < urls.length; ui++) {
-        var resolvedSrc = cardSliderSrc(urls[ui]);
-        if (resolvedSrc) {
-          slidesPayload.push({ src: resolvedSrc, altIndex: ui });
+      if (bookGrid) {
+        for (var bi = 0; bi < urls.length; bi++) {
+          var rawBook = urls[bi];
+          var bookSrc = bookCardImgSrc(rawBook) || String(rawBook).trim();
+          slidesPayload.push({ src: bookSrc, altIndex: bi });
+        }
+      } else {
+        for (var ui = 0; ui < urls.length; ui++) {
+          var resolvedSrc = cardSliderSrc(urls[ui]);
+          if (resolvedSrc) {
+            slidesPayload.push({ src: resolvedSrc, altIndex: ui });
+          }
         }
       }
       if (!slidesPayload.length) return;
