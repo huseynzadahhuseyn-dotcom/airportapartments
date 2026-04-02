@@ -1,4 +1,4 @@
 node_modules/
 .vercel/
 
-# Do not ignore /images/ or /public/images/ — both must be deployable (Vercel runs `npm run build` to sync public → images).
+# Do not ignore /images/ or /public/images/ — static hosts serve /images/* from repo-root `images/`; keep assets committed there.

@@ -19,16 +19,32 @@
 
   function buildGalleryItems() {
     var urls = window.SITE_GALLERY_IMAGES || window.POSTIMG_GALLERY_IMAGES || [];
+    var nCozy = 0;
+    for (var ci = 0; ci < urls.length; ci++) {
+      if (typeof urls[ci] === "string" && /\/images\/cozy-\d+\.jpg$/.test(urls[ci])) {
+        nCozy++;
+      }
+    }
     return urls.map(function (url, i) {
       var idx = i + 1;
       var isFirst = idx === 1;
+      var cozyMatch = typeof url === "string" ? url.match(/\/images\/cozy-(\d+)\.jpg$/) : null;
+      var altKey;
+      if (cozyMatch) {
+        altKey = "cozy_studio_alt_" + parseInt(cozyMatch[1], 10);
+      } else {
+        var legSlot = idx - nCozy;
+        altKey = "gallery_alt_" + Math.min(Math.max(legSlot, 1), 13);
+      }
+      var isCozy = !!cozyMatch;
       return {
         gallery: GALLERY_NAME,
-        altKey: "gallery_alt_" + idx,
+        altKey: altKey,
         photoIndex: idx,
-        captionKey: isFirst ? "gallery_caption_1" : null,
+        captionKey: isFirst ? (isCozy ? "gallery_caption_cozy_1" : "gallery_caption_1") : null,
         captionIsHtml: isFirst,
         captionSimple: !isFirst,
+        captionNameKey: isCozy ? "listing_name_avia" : "gallery_listing_name",
         imageUrl: url,
       };
     });
@@ -50,7 +66,7 @@
     if (item.captionKey && item.captionIsHtml) return t(item.captionKey);
     if (item.captionSimple) {
       return t("gallery_caption_simple", {
-        name: t("gallery_listing_name"),
+        name: t(item.captionNameKey || "gallery_listing_name"),
         n: item.photoIndex,
       });
     }

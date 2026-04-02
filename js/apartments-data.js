@@ -2,11 +2,10 @@
  * Gallery + apartment sliders: runtime URLs must be root-relative `/images/<file>` only (never `/public/images/`,
  * `./images/`, or `public/images/` in strings). Source assets may live in `public/images/`; copy to `images/` before
  * deploy: `node scripts/sync-public-images.js` (or `scripts/sync-public-images.ps1` on Windows).
- * Vercel: `vercel.json` runs `npm run build`, which copies `public/images/*` → `images/` so `/images/*` URLs resolve.
+ * Static hosting serves `/images/*` from the `images/` folder at the repo root; keep it in sync with `public/images/` when you add files.
  *
  * When `SITE_USE_IMAGE_PLACEHOLDER` is true, every listing/gallery URL is replaced with `/images/placeholder.svg`
- * so the site stays usable if photo binaries are not deployed. Set to false and run `npm run verify-images` once
- * all files from the paths below exist under `public/images/` (then `npm run build`).
+ * so the site stays usable if photo binaries are not deployed. Set to false once real files exist under `images/`.
  */
 (function () {
   "use strict";
@@ -19,16 +18,15 @@
     if (!SITE_USE_IMAGE_PLACEHOLDER || !arr || !arr.length) return arr;
     var out = [];
     for (var i = 0; i < arr.length; i++) {
-      out.push(SITE_IMAGE_PLACEHOLDER);
+      var u = arr[i];
+      if (typeof u === "string" && u.indexOf("/images/cozy-") === 0) {
+        out.push(u);
+      } else {
+        out.push(SITE_IMAGE_PLACEHOLDER);
+      }
     }
     return out;
   }
-
-  var SITE_GALLERY_IMAGES = [
-    "/images/1.jpg",
-    "/images/room1.png",
-    "/images/apartment2.webp",
-  ];
 
   /** Fallback when no property-specific Booking URL is set (bina); replace in data if you add a listing. */
   var BOOKING_SEARCH_NEAR_GYD =
@@ -178,6 +176,15 @@
     "/images/cozy-25.jpg",
     "/images/cozy-26.jpg",
   ];
+
+  /**
+   * Homepage #gallery + card fallback pool: Cozy (real) first, then legacy hero shots (may be placeholder).
+   */
+  var SITE_GALLERY_IMAGES = AVIA_COZY_IMAGES.concat([
+    "/images/1.jpg",
+    "/images/room1.png",
+    "/images/apartment2.webp",
+  ]);
 
   /**
    * Listings: dedicated `images` arrays per apartment; only shared pool where no `images` is set.
