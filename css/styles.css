@@ -1836,12 +1836,44 @@ a:hover {
   max-width: min(100%, 72rem);
 }
 
+#gallery:has(.gallery-grid--single-hero) .container {
+  max-width: min(100%, 58rem);
+}
+
 /* Grouped apartment gallery — 1 col mobile, 3 col desktop */
 .gallery-grid.gallery-grid--by-apartment {
   display: block;
   width: 100%;
   max-width: min(100%, 72rem);
   margin-inline: auto;
+}
+
+.gallery-grid--single-hero {
+  max-width: min(100%, 58rem);
+}
+
+/* One large centered cover — full library opens in lightbox */
+.gallery-single-wrap {
+  width: 100%;
+  max-width: min(100%, 56rem);
+  margin: 0 auto;
+}
+
+.gallery-single-wrap .gallery-apt-item {
+  margin: 0;
+}
+
+.gallery-single-wrap .gallery-global-hero.gallery-hero-open,
+.gallery-single-wrap .gallery-apt-thumb.gallery-hero-open {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  min-height: clamp(13.5rem, 42vw, 22rem);
+  max-height: min(70vh, 34rem);
+  border-radius: var(--radius-lg);
+  border-width: 1px;
+  box-shadow:
+    0 16px 48px rgba(26, 31, 46, 0.12),
+    0 6px 20px rgba(13, 110, 110, 0.1);
 }
 
 .gallery-apartment-block {
@@ -1893,18 +1925,6 @@ a:hover {
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 0.85rem;
   }
-}
-
-/* One cover per group — tap opens full set */
-.gallery-apt-thumb.gallery-hero-open {
-  aspect-ratio: 16 / 10;
-  min-height: 11rem;
-  max-height: 22rem;
-  border-radius: var(--radius-lg);
-  border-width: 1px;
-  box-shadow:
-    0 12px 36px rgba(26, 31, 46, 0.1),
-    0 4px 12px rgba(13, 110, 110, 0.08);
 }
 
 .gallery-hero-count {
@@ -2746,10 +2766,10 @@ a:hover {
 .apt-booking-hero-img {
   display: block;
   width: 100%;
-  aspect-ratio: 16 / 10;
-  min-height: 11.5rem;
-  max-height: 20rem;
+  aspect-ratio: 4 / 3;
+  min-height: 12rem;
   object-fit: cover;
+  object-position: center;
   vertical-align: middle;
 }
 
@@ -2792,7 +2812,7 @@ a:hover {
 .apt-booking-icon-row {
   display: flex;
   flex-wrap: nowrap;
-  gap: 0.5rem;
+  gap: 0.45rem;
   margin-top: 0.65rem;
   justify-content: stretch;
 }
@@ -2802,57 +2822,82 @@ a:hover {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 48px;
+  min-height: 52px;
   min-width: 0;
-  border-radius: 12px;
+  padding: 0.35rem;
+  border-radius: 14px;
   text-decoration: none;
-  border: none;
+  border: 1px solid rgba(255, 255, 255, 0.22);
   cursor: pointer;
   transition:
-    transform 0.18s ease,
-    filter 0.18s ease,
-    box-shadow 0.18s ease;
+    transform 0.2s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.2s ease,
+    filter 0.2s ease;
+}
+
+.apt-booking-icon-mark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.45),
+    0 2px 10px rgba(0, 0, 0, 0.12);
 }
 
 .apt-booking-icon-tile:hover:not(.apt-booking-icon-tile--disabled) {
-  transform: translateY(-2px);
-  filter: brightness(1.06);
+  transform: translateY(-3px);
+  filter: saturate(1.08) brightness(1.04);
 }
 
 .apt-booking-icon-tile:focus-visible {
-  outline: 2px solid #fff;
-  outline-offset: 2px;
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
 }
 
 .apt-booking-icon-tile--disabled {
   cursor: not-allowed;
-  opacity: 0.38;
-  filter: grayscale(0.4);
+  opacity: 0.42;
+  filter: grayscale(0.35);
   pointer-events: none;
 }
 
 .apt-booking-icon-tile--booking {
-  background: #003580;
   color: #fff;
-  box-shadow: 0 4px 14px rgba(0, 53, 128, 0.35);
+  background: linear-gradient(165deg, #004494 0%, #00224d 48%, #001a3d 100%);
+  box-shadow:
+    0 6px 18px rgba(0, 34, 77, 0.38),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
 }
 
 .apt-booking-icon-tile--airbnb {
-  background: #ff385c;
   color: #fff;
-  box-shadow: 0 4px 14px rgba(255, 56, 92, 0.35);
+  background: linear-gradient(165deg, #ff5a7d 0%, #e31c5f 52%, #c41e5c 100%);
+  box-shadow:
+    0 6px 18px rgba(227, 28, 95, 0.38),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
 }
 
 .apt-booking-icon-tile--wa {
-  background: #25d366;
   color: #fff;
-  box-shadow: 0 4px 14px rgba(37, 211, 102, 0.38);
+  background: linear-gradient(165deg, #34e27b 0%, #20bd5a 45%, #128c7e 100%);
+  box-shadow:
+    0 6px 18px rgba(18, 140, 126, 0.38),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
 }
 
 .apt-booking-icon-svg {
-  width: 1.55rem;
-  height: 1.55rem;
+  width: 1.42rem;
+  height: 1.42rem;
   display: block;
+}
+
+.apt-booking-icon-svg text {
+  user-select: none;
+  pointer-events: none;
 }
 
 .apt-booking-body {
@@ -3080,9 +3125,8 @@ a:hover {
 }
 
 .apartments-grid--premium .apt-card--booking .apt-booking-hero-img {
-  aspect-ratio: 5 / 3;
-  min-height: 13.75rem;
-  max-height: 22rem;
+  aspect-ratio: 4 / 3;
+  min-height: 12.5rem;
 }
 
 .apt-card-slider--single .apt-slider-nav {

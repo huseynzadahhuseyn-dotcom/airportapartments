@@ -319,7 +319,7 @@
   "apt_slide_family_3": "GYD yaxınlığında geniş ailə mənzili — yataq və ya istirahət zonası",
   "apt_slide_family_4": "GYD yaxınlığında geniş ailə mənzili — fasad və ya xarici görünüş",
   "gallery_title": "Qalereya",
-  "gallery_intro": "Şəkillər mənzilə görə qruplaşdırılıb. <strong>Əsas şəkilə toxunun</strong> — bütün fotolar tam ekran (mobildə sürüşdürmə ilə keçid).",
+  "gallery_intro": "<strong>Tək ön şəkil</strong> — toxunun, bütün mənzil fotoları tam ekran açılsın (mobildə sürüşdürmə ilə keçid).",
   "gallery_apt_photo_alt": "{name} — foto {n}",
   "gallery_empty_apartments": "Şəkilləri public/images/apartments/ altına əlavə edin (məs. cozy/1.jpg, premium/1.jpg), sonra node scripts/sync-public-images.js işlədin.",
   "gallery_group_premium": "Premium rezidensiya",

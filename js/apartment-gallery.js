@@ -1,6 +1,6 @@
 /**
- * Homepage #gallery: one cover image per apartment group; extra photos stay off-screen for lightbox.
- * Tap cover → GLightbox with the full set. Broken files hidden (no placeholders).
+ * Homepage #gallery: one large centered cover; all listing photos live in a hidden vault for GLightbox.
+ * Tap cover → full set (all groups, in order). Broken files hidden (no placeholders).
  */
 (function () {
   "use strict";
@@ -36,9 +36,40 @@
     return node;
   }
 
-  function collectLightboxPayloadFromBlock(block, clickedBtn) {
-    if (!block) return { elements: [], startAt: 0 };
-    var figures = block.querySelectorAll(".gallery-apt-item:not(.is-broken)");
+  function queryOrderedFigures(container) {
+    return container.querySelectorAll(
+      ".gallery-single-wrap .gallery-apt-item:not(.is-broken), .gallery-vault .gallery-apt-item:not(.is-broken)"
+    );
+  }
+
+  function updateHeroChrome(container) {
+    var figures = queryOrderedFigures(container);
+    var n = figures.length;
+    var badge = container.querySelector(".gallery-single-wrap .gallery-hero-count");
+    var hint = container.querySelector(".gallery-single-wrap .gallery-hero-hint");
+    if (badge) badge.textContent = String(n);
+    if (hint) {
+      if (n > 1) hint.removeAttribute("hidden");
+      else hint.setAttribute("hidden", "");
+    }
+  }
+
+  function decorateHeroButton(btn, withExtras) {
+    btn.classList.add("gallery-hero-open", "gallery-global-hero");
+    btn.setAttribute("data-i18n-aria-label", "apt_hero_open_gallery_a11y");
+    btn.setAttribute("aria-label", "");
+    var existing = btn.querySelector(".gallery-hero-count, .gallery-hero-hint");
+    if (existing) return;
+    if (withExtras) {
+      btn.appendChild(el("span", { className: "gallery-hero-count", textContent: "0" }));
+      var hint = el("span", { className: "gallery-hero-hint" });
+      hint.setAttribute("data-i18n", "apt_hero_more_photos");
+      btn.appendChild(hint);
+    }
+  }
+
+  function collectLightboxPayloadFromGallery(container, clickedBtn) {
+    var figures = queryOrderedFigures(container);
     var elements = [];
     var startAt = 0;
     for (var i = 0; i < figures.length; i++) {
@@ -60,8 +91,8 @@
     return { elements: elements, startAt: startAt };
   }
 
-  function openLightbox(block, clickedBtn) {
-    var payload = collectLightboxPayloadFromBlock(block, clickedBtn);
+  function openLightbox(container, clickedBtn) {
+    var payload = collectLightboxPayloadFromGallery(container, clickedBtn);
     if (!payload.elements.length) return;
     if (typeof window.openComfortImageLightbox === "function") {
       window.openComfortImageLightbox(payload.elements, payload.startAt);
@@ -95,22 +126,8 @@
       var btn = ev.target.closest("button.gallery-apt-thumb");
       if (!btn || !container.contains(btn)) return;
       ev.preventDefault();
-      var block = btn.closest(".gallery-apartment-block");
-      if (!block) return;
-      openLightbox(block, btn);
+      openLightbox(container, btn);
     });
-  }
-
-  function refreshApartmentBlock(block) {
-    if (!block || !block.classList.contains("gallery-apartment-block")) return;
-    var n = block.querySelectorAll(".gallery-apt-item:not(.is-broken)").length;
-    if (n === 0) {
-      block.setAttribute("hidden", "");
-      block.setAttribute("aria-hidden", "true");
-    } else {
-      block.removeAttribute("hidden");
-      block.removeAttribute("aria-hidden");
-    }
   }
 
   function checkGalleryHasPhotos(container) {
@@ -130,28 +147,49 @@
     }
   }
 
-  function onThumbError(img) {
+  function promoteGalleryHero(container) {
+    var wrap = container.querySelector(".gallery-single-wrap");
+    var vault = container.querySelector(".gallery-vault");
+    if (!wrap || !vault) return;
+    wrap.textContent = "";
+    var next = vault.querySelector(".gallery-apt-item:not(.is-broken)");
+    if (!next) {
+      wrap.setAttribute("hidden", "");
+      wrap.setAttribute("aria-hidden", "true");
+      return;
+    }
+    wrap.removeAttribute("hidden");
+    wrap.removeAttribute("aria-hidden");
+    next.classList.add("gallery-apt-item--hero-global");
+    var btn = next.querySelector("button.gallery-apt-thumb");
+    if (btn) {
+      var totalSlots = container.querySelectorAll(".gallery-apt-item").length;
+      decorateHeroButton(btn, totalSlots > 1);
+    }
+    wrap.appendChild(next);
+    updateHeroChrome(container);
+  }
+
+  function onThumbError(img, container) {
     var wrap = img.closest(".gallery-apt-item");
     if (!wrap) return;
     wrap.classList.add("is-broken");
     wrap.setAttribute("hidden", "");
     wrap.setAttribute("aria-hidden", "true");
-    var block = img.closest(".gallery-apartment-block");
-    if (block && wrap.classList.contains("gallery-apt-item--hero")) {
-      var extras = block.querySelector(".gallery-apartment-grid--extras");
-      if (extras) {
-        extras.classList.remove("gallery-apartment-grid--extras");
-        extras.classList.add("gallery-apartment-grid--fallback");
-      }
+
+    var inHeroSlot = img.closest(".gallery-single-wrap");
+    if (inHeroSlot) {
+      promoteGalleryHero(container);
     }
-    refreshApartmentBlock(block);
-    checkGalleryHasPhotos(img.closest("#gallery-grid"));
+
+    checkGalleryHasPhotos(container);
+    updateHeroChrome(container);
   }
 
   function renderGallery(container) {
     if (!container) return;
     container.textContent = "";
-    container.className = "gallery-grid gallery-grid--by-apartment";
+    container.className = "gallery-grid gallery-grid--by-apartment gallery-grid--single-hero";
 
     var groups = window.SITE_GALLERY_GROUPS;
     if (!groups || !groups.length) {
@@ -165,16 +203,10 @@
     }
 
     var globalSlot = 0;
+    var allFigures = [];
 
     groups.forEach(function (group) {
       if (!group || !group.images || !group.images.length) return;
-
-      var block = el("section", { className: "gallery-apartment-block" });
-      var head = el("h3", { className: "gallery-apartment-title" });
-      head.setAttribute("data-i18n", group.titleKey || "gallery_listing_name");
-      block.appendChild(head);
-
-      var figures = [];
 
       group.images.forEach(function (rawUrl, idxInGroup) {
         var url = normUrl(rawUrl);
@@ -190,27 +222,20 @@
           "aria-label": alt + " — " + t("gallery_open_full_set_a11y"),
         });
 
-        if (idxInGroup === 0) {
-          figure.classList.add("gallery-apt-item--hero");
-          btn.classList.add("gallery-hero-open");
-          btn.setAttribute("data-i18n-aria-label", "apt_hero_open_gallery_a11y");
-          btn.setAttribute("aria-label", "");
-        }
-
         var img = el("img", {
           className: "gallery-apt-img",
           src: url,
           alt: alt,
-          width: "800",
-          height: "600",
-          sizes: "(max-width: 767px) 100vw, 90vw",
+          width: "1200",
+          height: "900",
+          sizes: "(max-width: 767px) 100vw, min(56rem, 90vw)",
           decoding: "async",
         });
         img.setAttribute("data-no-img-fallback", "true");
-        if (globalSlot < 15) {
+        if (globalSlot < 20) {
           img.setAttribute("loading", "eager");
-          if (globalSlot < 8) img.setAttribute("fetchpriority", "high");
-          if (globalSlot < 3) img.setAttribute("decoding", "sync");
+          if (globalSlot < 6) img.setAttribute("fetchpriority", "high");
+          if (globalSlot < 2) img.setAttribute("decoding", "sync");
         } else {
           img.setAttribute("loading", "lazy");
         }
@@ -219,7 +244,7 @@
         img.addEventListener(
           "load",
           function () {
-            refreshApartmentBlock(img.closest(".gallery-apartment-block"));
+            updateHeroChrome(container);
           },
           { once: true }
         );
@@ -227,41 +252,46 @@
         img.addEventListener(
           "error",
           function () {
-            onThumbError(img);
+            onThumbError(img, container);
           },
           { once: true }
         );
 
         btn.appendChild(img);
         figure.appendChild(btn);
-        figures.push(figure);
+        allFigures.push(figure);
       });
-
-      if (!figures.length) return;
-
-      var heroFig = figures[0];
-      block.appendChild(heroFig);
-
-      if (figures.length > 1) {
-        var extras = el("div", { className: "gallery-apartment-grid gallery-apartment-grid--extras" });
-        for (var fi = 1; fi < figures.length; fi++) {
-          extras.appendChild(figures[fi]);
-        }
-        block.appendChild(extras);
-
-        var heroBtn = heroFig.querySelector("button.gallery-hero-open");
-        if (heroBtn) {
-          heroBtn.appendChild(
-            el("span", { className: "gallery-hero-count", textContent: String(figures.length) })
-          );
-          var hint = el("span", { className: "gallery-hero-hint" });
-          hint.setAttribute("data-i18n", "apt_hero_more_photos");
-          heroBtn.appendChild(hint);
-        }
-      }
-
-      container.appendChild(block);
     });
+
+    if (!allFigures.length) {
+      var empty2 = el("p", { className: "gallery-empty" });
+      empty2.setAttribute("data-i18n", "gallery_empty_apartments");
+      container.appendChild(empty2);
+      if (window.I18N && typeof window.I18N.apply === "function") {
+        window.I18N.apply(container);
+      }
+      return;
+    }
+
+    var wrap = el("div", { className: "gallery-single-wrap" });
+    var vault = el("div", { className: "gallery-vault gallery-apartment-grid--extras" });
+
+    var heroFig = allFigures[0];
+    heroFig.classList.add("gallery-apt-item--hero-global");
+    var heroBtn = heroFig.querySelector("button.gallery-apt-thumb");
+    if (heroBtn) {
+      decorateHeroButton(heroBtn, allFigures.length > 1);
+    }
+    wrap.appendChild(heroFig);
+
+    for (var i = 1; i < allFigures.length; i++) {
+      vault.appendChild(allFigures[i]);
+    }
+
+    container.appendChild(wrap);
+    container.appendChild(vault);
+
+    updateHeroChrome(container);
 
     attachDelegate(container);
 
@@ -275,6 +305,7 @@
 
     window.requestAnimationFrame(function () {
       checkGalleryHasPhotos(container);
+      updateHeroChrome(container);
     });
   }
 

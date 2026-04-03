@@ -319,7 +319,7 @@
   "apt_slide_family_3": "Просторные семейные апартаменты у GYD — спальня или зона отдыха",
   "apt_slide_family_4": "Просторные семейные апартаменты у GYD — фасад или экстерьер",
   "gallery_title": "Галерея",
-  "gallery_intro": "Фото сгруппированы по апартаментам. <strong>Нажмите на обложку</strong>, чтобы открыть весь набор на весь экран (на телефоне листайте свайпом).",
+  "gallery_intro": "<strong>Одно превью</strong> — нажмите, чтобы открыть <strong>все фото апартаментов</strong> на весь экран (на телефоне листайте свайпом).",
   "gallery_apt_photo_alt": "{name} — фото {n}",
   "gallery_empty_apartments": "Добавьте фото в public/images/apartments/ (например cozy/1.jpg, premium/1.jpg), затем выполните node scripts/sync-public-images.js.",
   "gallery_group_premium": "Премиум-резиденция",

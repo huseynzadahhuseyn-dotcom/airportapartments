@@ -203,22 +203,36 @@
     return wrap.firstChild;
   }
 
+  /** Stylised marks (not official logos) — readable at small sizes */
   function iconSvgBooking() {
     return svgNs(
-      '<svg class="apt-booking-icon-svg" viewBox="0 0 24 24" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M19 3h-1V1h-2v2H8V1H6v2H5a2 2 0 0 0-2 2v14c0 1.1.9 2 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm0 16H5V10h14v9zM5 8V5h14v3H5z"/></svg>'
+      '<svg class="apt-booking-icon-svg" viewBox="0 0 24 24" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">' +
+        '<text x="6.2" y="16.8" font-family="system-ui,-apple-system,BlinkMacSystemFont,\'Segoe UI\',Roboto,sans-serif" font-weight="800" font-size="14" fill="currentColor">B</text>' +
+        '<circle cx="18.2" cy="8.4" r="1.85" fill="currentColor"/>' +
+      "</svg>"
     );
   }
 
   function iconSvgAirbnb() {
     return svgNs(
-      '<svg class="apt-booking-icon-svg" viewBox="0 0 24 24" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M10 20v-6h4v6h5v-12h3L12 3 2 8h3v12h5z"/></svg>'
+      '<svg class="apt-booking-icon-svg" viewBox="0 0 24 24" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">' +
+        '<path fill="currentColor" d="M12 17.2c-.9-1.6-1.8-3.6-2.4-5.2-.4-1.1-.6-2-.6-2.8 0-1.4.8-2.4 1.9-2.4.9 0 1.5.5 2.1 1.3.6-.8 1.2-1.3 2.1-1.3 1.1 0 1.9 1 1.9 2.4 0 .8-.2 1.7-.6 2.8-.6 1.6-1.5 3.6-2.4 5.2-.3.6-.7.9-1.2.9s-.9-.3-1.2-.9z"/>' +
+      "</svg>"
     );
   }
 
   function iconSvgWhatsApp() {
     return svgNs(
-      '<svg class="apt-booking-icon-svg" viewBox="0 0 24 24" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M12 2C6.5 2 2 5.58 2 9.5c0 2.05 1.05 3.9 2.7 5.2L3 22l7.6-2.4c.8.2 1.6.4 2.4.4 5.5 0 10-3.58 10-7.5S17.5 2 12 2zm0 13.5c-.5 0-1-.1-1.5-.2l-.3-.1-3.1 1 1.1-2.9-.2-.3c-.7-1.1-1-2.4-1-3.7 0-3.3 2.9-6 6.5-6s6.5 2.7 6.5 6-2.9 6-6.5 6z"/></svg>'
+      '<svg class="apt-booking-icon-svg" viewBox="0 0 24 24" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">' +
+        '<path fill="currentColor" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.63-.01c-.22 0-.457.095-.657.293-.21.196-.866.844-.866 2.004 0 1.168.848 2.294.968 2.448.122.154.68 1.084 1.637 1.9C11.5 16.13 13.5 17 14.9 17.3c.7.14 1.24.18 1.66.15.536-.05 1.66-.676 1.903-1.33.203-.557.203-1.03.15-1.134-.053-.104-.171-.214-.335-.362zM12.05 3.5c-5.06 0-9.91 4.01-9.91 8.94 0 1.58.44 3.08 1.2 4.45L2.05 22l4.23-1.22a9.86 9.86 0 0 0 4.77 1.22h.01c5.06 0 9.91-4.01 9.91-8.94S17.12 3.5 12.05 3.5z"/>' +
+      "</svg>"
     );
+  }
+
+  function wrapIconMark(tile, svgNode) {
+    var mark = el("span", "apt-booking-icon-mark");
+    mark.appendChild(svgNode.cloneNode(true));
+    tile.appendChild(mark);
   }
 
   function openApartmentLightbox(apt, slidesPayload) {
@@ -237,15 +251,15 @@
     row.setAttribute("data-i18n-aria-label", "apt_booking_icons_group_a11y");
     row.setAttribute("aria-label", "");
 
-    function addTile(tag, cls, innerNode, attrs) {
+    function addTile(tag, cls, iconFactory, attrs) {
       var node = el(tag, cls, attrs || {});
-      node.appendChild(innerNode.cloneNode(true));
+      wrapIconMark(node, iconFactory());
       row.appendChild(node);
       return node;
     }
 
     if (bookingUrl) {
-      var b = addTile("a", "apt-booking-icon-tile apt-booking-icon-tile--booking", iconSvgBooking(), {
+      var b = addTile("a", "apt-booking-icon-tile apt-booking-icon-tile--booking", iconSvgBooking, {
         href: bookingUrl,
         target: "_blank",
         rel: "noopener noreferrer",
@@ -253,13 +267,13 @@
       b.setAttribute("data-i18n-title", "apt_icon_booking_title");
       b.setAttribute("data-i18n-aria-label", "apt_icon_booking_title");
     } else {
-      var bs = addTile("span", "apt-booking-icon-tile apt-booking-icon-tile--booking apt-booking-icon-tile--disabled", iconSvgBooking());
+      var bs = addTile("span", "apt-booking-icon-tile apt-booking-icon-tile--booking apt-booking-icon-tile--disabled", iconSvgBooking);
       bs.setAttribute("data-i18n-title", "apt_icon_unavailable");
       bs.setAttribute("data-i18n-aria-label", "apt_cta_unavailable");
     }
 
     if (airbnbUrl) {
-      var a = addTile("a", "apt-booking-icon-tile apt-booking-icon-tile--airbnb", iconSvgAirbnb(), {
+      var a = addTile("a", "apt-booking-icon-tile apt-booking-icon-tile--airbnb", iconSvgAirbnb, {
         href: airbnbUrl,
         target: "_blank",
         rel: "noopener noreferrer",
@@ -267,13 +281,13 @@
       a.setAttribute("data-i18n-title", "apt_icon_airbnb_title");
       a.setAttribute("data-i18n-aria-label", "apt_icon_airbnb_title");
     } else {
-      var as = addTile("span", "apt-booking-icon-tile apt-booking-icon-tile--airbnb apt-booking-icon-tile--disabled", iconSvgAirbnb());
+      var as = addTile("span", "apt-booking-icon-tile apt-booking-icon-tile--airbnb apt-booking-icon-tile--disabled", iconSvgAirbnb);
       as.setAttribute("data-i18n-title", "apt_icon_unavailable");
       as.setAttribute("data-i18n-aria-label", "apt_cta_unavailable");
     }
 
     var wa = el("a", "apt-booking-icon-tile apt-booking-icon-tile--wa");
-    wa.appendChild(iconSvgWhatsApp());
+    wrapIconMark(wa, iconSvgWhatsApp());
     wa.setAttribute("target", "_blank");
     wa.setAttribute("rel", "noopener noreferrer");
     wa.setAttribute("data-i18n-title", "apt_icon_whatsapp_title");
