@@ -55,7 +55,7 @@
     "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688" + PARAMS,
   ];
 
-  var LISTING_SEED = { cozy: 0, haven: 4, premium: 9, bina: 13, horizon: 2, express: 6, family: 11 };
+  var LISTING_SEED = { cozy: 0, premium: 9, bina: 13, horizon: 2 };
 
   function basename(path) {
     if (typeof path !== "string") return "";

@@ -29,11 +29,11 @@
  * {
  *   id: "my-new-apt",
  *   premium: false,
- *   titleKey: "listing_name_haven",
- *   blurbKey: "apt_card_blurb_haven",
- *   guestsKey: "apt_card_guests_haven",
- *   priceFrom: 95,
- *   waSuffixKey: "wa_suffix_haven",
+ *   titleKey: "listing_name_avia",
+ *   blurbKey: "apt_card_blurb_avia",
+ *   guestsKey: "apt_card_guests_avia",
+ *   priceFrom: 85,
+ *   waSuffixKey: "wa_suffix_avia",
  *   images: ["/images/placeholder.svg", "/images/placeholder.svg"],
  *   bookingLink: "https://www.booking.com/...",
  *   ota: { airbnb: "https://www.airbnb.com/..." },
@@ -44,14 +44,12 @@
 
   window.APARTMENTS_BOOKING_EXTRA = window.APARTMENTS_BOOKING_EXTRA || [];
 
-  /* Six skeleton examples (same shape as real rows). Replace keys/urls/images for new listings.
+  /* Skeleton examples (same shape as real rows). Replace keys/urls/images for new listings.
 
-  { id: "example-1", premium: true,  titleKey: "listing_name_haven",     blurbKey: "apt_card_blurb_haven",     guestsKey: "apt_card_guests_haven",     priceFrom: 95,  waSuffixKey: "wa_suffix_haven",     images: ["/images/placeholder.svg"] },
-  { id: "example-2", premium: false, titleKey: "listing_name_avia",      blurbKey: "apt_card_blurb_avia",      guestsKey: "apt_card_guests_avia",      priceFrom: 85,  waSuffixKey: "wa_suffix_avia",      images: ["/images/placeholder.svg"] },
-  { id: "example-3", premium: false, titleKey: "listing_name_bina",      blurbKey: "apt_card_blurb_bina",      guestsKey: "apt_card_guests_bina",      priceFrom: 120, waSuffixKey: "wa_suffix_bina",      images: ["/images/placeholder.svg"] },
-  { id: "example-4", premium: false, titleKey: "listing_name_horizon",   blurbKey: "apt_card_blurb_horizon",   guestsKey: "apt_card_guests_horizon",   priceFrom: 90,  waSuffixKey: "wa_suffix_horizon",   images: ["/images/placeholder.svg"] },
-  { id: "example-5", premium: false, titleKey: "apt_name_express",       blurbKey: "apt_card_blurb_express",   guestsKey: "apt_card_guests_express",   priceFrom: 70,  waSuffixKey: "wa_suffix_express",   images: ["/images/placeholder.svg"] },
-  { id: "example-6", premium: true,  titleKey: "apt_name_family",        blurbKey: "apt_card_blurb_family",    guestsKey: "apt_card_guests_family",    priceFrom: 110, waSuffixKey: "wa_suffix_family",    images: ["/images/placeholder.svg"] },
+  { id: "example-1", premium: false, titleKey: "listing_name_avia",      blurbKey: "apt_card_blurb_avia",      guestsKey: "apt_card_guests_avia",      priceFrom: 85,  waSuffixKey: "wa_suffix_avia",      images: ["/images/placeholder.svg"] },
+  { id: "example-2", premium: false, titleKey: "listing_name_bina",      blurbKey: "apt_card_blurb_bina",      guestsKey: "apt_card_guests_bina",      priceFrom: 120, waSuffixKey: "wa_suffix_bina",      images: ["/images/placeholder.svg"] },
+  { id: "example-3", premium: false, titleKey: "listing_name_horizon",   blurbKey: "apt_card_blurb_horizon",   guestsKey: "apt_card_guests_horizon",   priceFrom: 90,  waSuffixKey: "wa_suffix_horizon",   images: ["/images/placeholder.svg"] },
+  { id: "example-4", premium: false, titleKey: "listing_name_layover",   blurbKey: "apt_card_blurb_layover",   guestsKey: "apt_card_guests_layover",   priceFrom: 70,  waSuffixKey: "wa_suffix_layover",   images: ["/images/placeholder.svg"] },
 
   */
 })();

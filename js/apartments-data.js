@@ -2,8 +2,8 @@
  * Gallery + apartment sliders: same image pipeline as Cozy (`js/cozy-studio-images.js`).
  *
  * Per-listing URL arrays (load before this file, after `apartment-image-sources.js`):
- *   `COZY_AIRPORT_STUDIO_IMAGE_URLS`, `AIRPORT_HAVEN_IMAGE_URLS`, `HORIZON_APARTMENT_IMAGE_URLS`,
- *   `LAYOVER_STUDIO_IMAGE_URLS`, `FAMILY_RESIDENCE_IMAGE_URLS`,
+ *   `COZY_AIRPORT_STUDIO_IMAGE_URLS`, `HORIZON_APARTMENT_IMAGE_URLS`,
+ *   `LAYOVER_STUDIO_IMAGE_URLS`,
  *   `PREMIUM_RESIDENCE_IMAGE_URLS`,
  *   `BINA_RESIDENCE_IMAGE_URLS` (listing `bina` = premium then bina).
  * If a global array is missing or empty, legacy `/images/<listing>-NN.*` paths are used.
@@ -80,50 +80,8 @@
   var BOOKING_FIVE_MINUTE_FROM_AIRPORT =
     "https://www.booking.com/hotel/az/5-minute-from-airport.en-gb.html";
 
-  var BOOKING_AIRPORT_HAVEN =
-    "https://www.booking.com/hotel/az/airport-haven-cozy-and-convenient.ru.html";
-
   var BOOKING_HOUSE_NEAR_BOS =
     "https://www.booking.com/hotel/az/house-near-baku-airport-and-bos.ru.html";
-
-  /** Airport Layover Studio — 12 photos (`express-NN` in public/images). */
-  var EXPRESS_STUDIO_PATHS = [
-    "/images/express-01.png",
-    "/images/express-02.png",
-    "/images/express-03.png",
-    "/images/express-04.png",
-    "/images/express-05.png",
-    "/images/express-06.png",
-    "/images/express-07.png",
-    "/images/express-08.png",
-    "/images/express-09.png",
-    "/images/express-10.png",
-    "/images/express-11.png",
-    "/images/express-12.png",
-  ];
-  var EXPRESS_STUDIO_IMAGES = mapResolvedUrls(EXPRESS_STUDIO_PATHS);
-
-  /** Spacious Family Apartment — `js/family-residence-images.js` or local `family-*`. */
-  var FAMILY_APARTMENT_LEGACY = [
-    "/images/family-01.jpg",
-    "/images/family-02.png",
-    "/images/family-03.jpg",
-    "/images/family-04.jpg",
-    "/images/family-05.jpg",
-    "/images/family-06.jpg",
-    "/images/family-07.png",
-    "/images/family-08.png",
-    "/images/family-09.jpg",
-    "/images/family-10.jpg",
-    "/images/family-11.jpg",
-    "/images/family-12.jpg",
-    "/images/family-13.jpg",
-    "/images/family-14.jpg",
-    "/images/family-15.jpg",
-    "/images/family-16.jpg",
-  ];
-  var FAMILY_APARTMENT_PATHS = urlsOrLegacy(window.FAMILY_RESIDENCE_IMAGE_URLS, FAMILY_APARTMENT_LEGACY);
-  var FAMILY_APARTMENT_IMAGES = mapResolvedUrls(FAMILY_APARTMENT_PATHS);
 
   /** Horizon Apartment — `js/horizon-apartment-images.js` or local `horizon-*`. */
   var HORIZON_APARTMENT_LEGACY = [
@@ -168,30 +126,6 @@
   var PREMIUM_RESIDENCE_PATHS = mergePremiumBina(PREMIUM_RESIDENCE_LEGACY);
   var PREMIUM_RESIDENCE_IMAGES = mapResolvedUrls(PREMIUM_RESIDENCE_PATHS);
 
-  /** Airport Haven (`haven`) — `js/airport-haven-images.js` or local `haven-*`. */
-  var HAVEN_COMFORT_LEGACY = [
-    "/images/haven-01.jpg",
-    "/images/haven-02.jpg",
-    "/images/haven-03.jpg",
-    "/images/haven-04.jpg",
-    "/images/haven-05.jpg",
-    "/images/haven-06.jpg",
-    "/images/haven-07.jpg",
-    "/images/haven-08.jpg",
-    "/images/haven-09.jpg",
-    "/images/haven-10.jpg",
-    "/images/haven-11.jpg",
-    "/images/haven-12.jpg",
-    "/images/haven-13.jpg",
-    "/images/haven-14.jpg",
-    "/images/haven-15.jpg",
-    "/images/haven-16.jpg",
-    "/images/haven-17.jpg",
-    "/images/haven-18.jpg",
-  ];
-  var HAVEN_COMFORT_PATHS = urlsOrLegacy(window.AIRPORT_HAVEN_IMAGE_URLS, HAVEN_COMFORT_LEGACY);
-  var HAVEN_COMFORT_IMAGES = mapResolvedUrls(HAVEN_COMFORT_PATHS);
-
   /** Cozy Airport Studio (`avia`) — `js/cozy-studio-images.js` or local `/images/cozy-NN.jpg`. */
   var AVIA_COZY_PATHS = Array.isArray(window.COZY_AIRPORT_STUDIO_IMAGE_URLS) && window.COZY_AIRPORT_STUDIO_IMAGE_URLS.length
     ? window.COZY_AIRPORT_STUDIO_IMAGE_URLS.slice()
@@ -228,8 +162,8 @@
   /** Homepage #gallery: logical paths (same order as resolved `SITE_GALLERY_IMAGES`) for alt text. */
   var SITE_GALLERY_PATHS = []
     .concat(AVIA_COZY_PATHS.slice(0, 8))
-    .concat(HAVEN_COMFORT_PATHS.slice(0, 8))
-    .concat(PREMIUM_RESIDENCE_PATHS.slice(0, 8));
+    .concat(PREMIUM_RESIDENCE_PATHS.slice(0, 8))
+    .concat(HORIZON_APARTMENT_PATHS.slice(0, 8));
 
   var SITE_GALLERY_IMAGES = mapResolvedUrls(SITE_GALLERY_PATHS);
 
@@ -237,27 +171,6 @@
    * Listings: dedicated `images` arrays per apartment; only shared pool where no `images` is set.
    */
   var APARTMENTS_DATA = [
-    {
-      id: "haven",
-      premium: true,
-      featured: true,
-      titleKey: "listing_name_haven",
-      typeKey: "apt_card_type_haven",
-      amenitiesLineKey: "apt_amenities_haven",
-      perksKey: "apt_perks_haven",
-      blurbKey: "apt_card_blurb_haven",
-      guestsKey: "apt_card_guests_haven",
-      priceFrom: 95,
-      waSuffixKey: "wa_suffix_haven",
-      otaAriaKey: "aria_book_haven_ota",
-      bookingLink: BOOKING_AIRPORT_HAVEN,
-      ota: {
-        booking: BOOKING_AIRPORT_HAVEN,
-        airbnb: "https://www.airbnb.com/h/airporth",
-      },
-      altMode: "comfort",
-      images: HAVEN_COMFORT_IMAGES,
-    },
     {
       id: "avia",
       premium: false,
@@ -318,25 +231,6 @@
       images: HORIZON_APARTMENT_IMAGES,
     },
     {
-      id: "express",
-      premium: false,
-      titleKey: "apt_name_express",
-      typeKey: "apt_card_type_express",
-      amenitiesLineKey: "apt_amenities_express",
-      perksKey: "apt_perks_express",
-      blurbKey: "apt_card_blurb_express",
-      guestsKey: "apt_card_guests_express",
-      priceFrom: 70,
-      waSuffixKey: "wa_suffix_express",
-      otaAriaKey: "aria_book_express_ota",
-      bookingLink: BOOKING_FIVE_MINUTE_FROM_AIRPORT,
-      ota: {
-        booking: BOOKING_FIVE_MINUTE_FROM_AIRPORT,
-      },
-      altMode: "express",
-      images: EXPRESS_STUDIO_IMAGES,
-    },
-    {
       id: "layover",
       premium: false,
       titleKey: "listing_name_layover",
@@ -354,25 +248,6 @@
       },
       altMode: "layover",
       images: LAYOVER_STUDIO_IMAGES,
-    },
-    {
-      id: "family",
-      premium: true,
-      titleKey: "apt_name_family",
-      typeKey: "apt_card_type_family",
-      amenitiesLineKey: "apt_amenities_family",
-      perksKey: "apt_perks_family",
-      blurbKey: "apt_card_blurb_family",
-      guestsKey: "apt_card_guests_family",
-      priceFrom: 110,
-      waSuffixKey: "wa_suffix_family",
-      otaAriaKey: "aria_book_family_ota",
-      bookingLink: BOOKING_HOUSE_NEAR_BOS,
-      ota: {
-        booking: BOOKING_HOUSE_NEAR_BOS,
-      },
-      altMode: "family",
-      images: FAMILY_APARTMENT_IMAGES,
     },
   ];
 
@@ -397,13 +272,10 @@
 
   window.getApartmentSlideAltKey = function (apt, slideIndex) {
     var m = apt.altMode;
-    if (m === "comfort") return "comfort_residence_alt_" + (slideIndex + 1);
     if (m === "cozy") return "cozy_studio_alt_" + (slideIndex + 1);
     if (m === "premium") return "premium_residence_alt_" + (slideIndex + 1);
     if (m === "horizon") return "horizon_apartment_alt_" + (slideIndex + 1);
-    if (m === "express") return "apt_slide_express_" + (slideIndex + 1);
     if (m === "layover") return "layover_studio_alt_" + (slideIndex + 1);
-    if (m === "family") return "spacious_family_alt_" + (slideIndex + 1);
     return "apt_slide_alt_generic_" + ((slideIndex % 4) + 1);
   };
 })();
