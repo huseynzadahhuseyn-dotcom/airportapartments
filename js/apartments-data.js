@@ -3,7 +3,9 @@
  *
  * Per-listing URL arrays (load before this file, after `apartment-image-sources.js`):
  *   `COZY_AIRPORT_STUDIO_IMAGE_URLS`, `AIRPORT_HAVEN_IMAGE_URLS`, `HORIZON_APARTMENT_IMAGE_URLS`,
- *   `FAMILY_RESIDENCE_IMAGE_URLS`, `PREMIUM_RESIDENCE_IMAGE_URLS`, `BINA_RESIDENCE_IMAGE_URLS` (listing `bina` = premium then bina).
+ *   `LAYOVER_STUDIO_IMAGE_URLS`, `COMFORT_LISTING_IMAGE_URLS`, `FAMILY_RESIDENCE_IMAGE_URLS`,
+ *   `PREMIUM_RESIDENCE_IMAGE_URLS`,
+ *   `BINA_RESIDENCE_IMAGE_URLS` (listing `bina` = premium then bina).
  * If a global array is missing or empty, legacy `/images/<listing>-NN.*` paths are used.
  *
  * `apartment-image-sources.js` maps `/images/…` when `SITE_APARTMENT_IMAGE_STRATEGY` is `"remote"`. Use `"local"` for production files
@@ -142,6 +144,14 @@
   var HORIZON_APARTMENT_PATHS = urlsOrLegacy(window.HORIZON_APARTMENT_IMAGE_URLS, HORIZON_APARTMENT_LEGACY);
   var HORIZON_APARTMENT_IMAGES = mapResolvedUrls(HORIZON_APARTMENT_PATHS);
 
+  /** Airport Layover Studio (`layover`) — `js/layover-studio-images.js` only. */
+  var LAYOVER_STUDIO_PATHS = urlsOrLegacy(window.LAYOVER_STUDIO_IMAGE_URLS, []);
+  var LAYOVER_STUDIO_IMAGES = mapResolvedUrls(LAYOVER_STUDIO_PATHS);
+
+  /** Comfort Residence listing (`comfort`) — `js/comfort-listing-images.js` only. */
+  var COMFORT_LISTING_PATHS = urlsOrLegacy(window.COMFORT_LISTING_IMAGE_URLS, []);
+  var COMFORT_LISTING_IMAGES = mapResolvedUrls(COMFORT_LISTING_PATHS);
+
   /** Premium Residence listing (`bina`) — `premium-residence-images.js` + `bina-residence-images.js` or local `premium-*`. */
   var PREMIUM_RESIDENCE_LEGACY = [
     "/images/premium-01.jpg",
@@ -253,6 +263,27 @@
       images: HAVEN_COMFORT_IMAGES,
     },
     {
+      id: "comfort",
+      premium: true,
+      featured: false,
+      titleKey: "listing_name_comfort",
+      typeKey: "apt_card_type_comfort",
+      amenitiesLineKey: "apt_amenities_comfort",
+      perksKey: "apt_perks_comfort",
+      blurbKey: "apt_card_blurb_comfort",
+      guestsKey: "apt_card_guests_comfort",
+      priceFrom: 95,
+      waSuffixKey: "wa_suffix_comfort",
+      otaAriaKey: "aria_book_comfort_ota",
+      bookingLink: BOOKING_AIRPORT_HAVEN,
+      ota: {
+        booking: BOOKING_AIRPORT_HAVEN,
+        airbnb: "https://www.airbnb.com/h/airporth",
+      },
+      altMode: "comfortListing",
+      images: COMFORT_LISTING_IMAGES,
+    },
+    {
       id: "avia",
       premium: false,
       titleKey: "listing_name_avia",
@@ -331,6 +362,25 @@
       images: EXPRESS_STUDIO_IMAGES,
     },
     {
+      id: "layover",
+      premium: false,
+      titleKey: "listing_name_layover",
+      typeKey: "apt_card_type_layover",
+      amenitiesLineKey: "apt_amenities_layover",
+      perksKey: "apt_perks_layover",
+      blurbKey: "apt_card_blurb_layover",
+      guestsKey: "apt_card_guests_layover",
+      priceFrom: 70,
+      waSuffixKey: "wa_suffix_layover",
+      otaAriaKey: "aria_book_layover_ota",
+      bookingLink: BOOKING_FIVE_MINUTE_FROM_AIRPORT,
+      ota: {
+        booking: BOOKING_FIVE_MINUTE_FROM_AIRPORT,
+      },
+      altMode: "layover",
+      images: LAYOVER_STUDIO_IMAGES,
+    },
+    {
       id: "family",
       premium: true,
       titleKey: "apt_name_family",
@@ -373,10 +423,12 @@
   window.getApartmentSlideAltKey = function (apt, slideIndex) {
     var m = apt.altMode;
     if (m === "comfort") return "comfort_residence_alt_" + (slideIndex + 1);
+    if (m === "comfortListing") return "comfort_listing_alt_" + (slideIndex + 1);
     if (m === "cozy") return "cozy_studio_alt_" + (slideIndex + 1);
     if (m === "premium") return "premium_residence_alt_" + (slideIndex + 1);
     if (m === "horizon") return "horizon_apartment_alt_" + (slideIndex + 1);
     if (m === "express") return "apt_slide_express_" + (slideIndex + 1);
+    if (m === "layover") return "layover_studio_alt_" + (slideIndex + 1);
     if (m === "family") return "spacious_family_alt_" + (slideIndex + 1);
     return "apt_slide_alt_generic_" + ((slideIndex % 4) + 1);
   };
