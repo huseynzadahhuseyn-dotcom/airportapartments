@@ -272,5 +272,6 @@
     initLightbox();
   }
 
-  window.addEventListener("i18n:applied", refreshGallery);
+  window.__i18nDomHydrators = window.__i18nDomHydrators || [];
+  window.__i18nDomHydrators.push(refreshGallery);
 })();

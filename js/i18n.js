@@ -1,6 +1,6 @@
 /**
  * Loads locales/*.json, applies data-i18n / data-i18n-html / aria / title / img alt,
- * updates document title & meta, dispatches i18n:applied for dependent modules.
+ * updates document title & meta, runs `window.__i18nDomHydrators`, then dispatches i18n:applied.
  */
 (function () {
   "use strict";
@@ -132,6 +132,14 @@
     applyToRoot(document);
     applyMeta();
     updateLangButtons();
+    var hydrators = window.__i18nDomHydrators;
+    if (Array.isArray(hydrators) && hydrators.length) {
+      for (var hi = 0; hi < hydrators.length; hi++) {
+        try {
+          hydrators[hi]();
+        } catch (e) {}
+      }
+    }
     window.dispatchEvent(new CustomEvent("i18n:applied", { detail: { lang: currentLang } }));
   }
 
