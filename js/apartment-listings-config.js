@@ -1,7 +1,7 @@
 /**
  * Apartment cards — editable links, cover image, airport line, price mode.
  *
- * Keys must match `id` in js/apartments-data.js: haven | comfort | avia | bina | horizon | express | layover | family
+ * Keys must match `id` in js/apartments-data.js: haven | avia | bina | horizon | express | layover | family
  *
  * Rules:
  * - Omit `airbnbUrl` / `bookingUrl` to inherit from apartments-data (ota + bookingLink).
@@ -18,14 +18,6 @@
   var APARTMENT_CARD_CONFIG = {
     haven: {
       airportDistanceKey: "apt_airport_dist_haven",
-      priceOnRequest: false,
-      coverImage: "",
-      airbnbUrl: "https://www.airbnb.com/h/airporth",
-      bookingUrl: "https://www.booking.com/hotel/az/airport-haven-cozy-and-convenient.ru.html",
-      telegramUrl: DEFAULT_TELEGRAM,
-    },
-    comfort: {
-      airportDistanceKey: "apt_airport_dist_comfort",
       priceOnRequest: false,
       coverImage: "",
       airbnbUrl: "https://www.airbnb.com/h/airporth",

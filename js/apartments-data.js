@@ -3,7 +3,7 @@
  *
  * Per-listing URL arrays (load before this file, after `apartment-image-sources.js`):
  *   `COZY_AIRPORT_STUDIO_IMAGE_URLS`, `AIRPORT_HAVEN_IMAGE_URLS`, `HORIZON_APARTMENT_IMAGE_URLS`,
- *   `LAYOVER_STUDIO_IMAGE_URLS`, `COMFORT_LISTING_IMAGE_URLS`, `FAMILY_RESIDENCE_IMAGE_URLS`,
+ *   `LAYOVER_STUDIO_IMAGE_URLS`, `FAMILY_RESIDENCE_IMAGE_URLS`,
  *   `PREMIUM_RESIDENCE_IMAGE_URLS`,
  *   `BINA_RESIDENCE_IMAGE_URLS` (listing `bina` = premium then bina).
  * If a global array is missing or empty, legacy `/images/<listing>-NN.*` paths are used.
@@ -148,10 +148,6 @@
   var LAYOVER_STUDIO_PATHS = urlsOrLegacy(window.LAYOVER_STUDIO_IMAGE_URLS, []);
   var LAYOVER_STUDIO_IMAGES = mapResolvedUrls(LAYOVER_STUDIO_PATHS);
 
-  /** Comfort Residence listing (`comfort`) — `js/comfort-listing-images.js` only. */
-  var COMFORT_LISTING_PATHS = urlsOrLegacy(window.COMFORT_LISTING_IMAGE_URLS, []);
-  var COMFORT_LISTING_IMAGES = mapResolvedUrls(COMFORT_LISTING_PATHS);
-
   /** Premium Residence listing (`bina`) — `premium-residence-images.js` + `bina-residence-images.js` or local `premium-*`. */
   var PREMIUM_RESIDENCE_LEGACY = [
     "/images/premium-01.jpg",
@@ -261,27 +257,6 @@
       },
       altMode: "comfort",
       images: HAVEN_COMFORT_IMAGES,
-    },
-    {
-      id: "comfort",
-      premium: true,
-      featured: false,
-      titleKey: "listing_name_comfort",
-      typeKey: "apt_card_type_comfort",
-      amenitiesLineKey: "apt_amenities_comfort",
-      perksKey: "apt_perks_comfort",
-      blurbKey: "apt_card_blurb_comfort",
-      guestsKey: "apt_card_guests_comfort",
-      priceFrom: 95,
-      waSuffixKey: "wa_suffix_comfort",
-      otaAriaKey: "aria_book_comfort_ota",
-      bookingLink: BOOKING_AIRPORT_HAVEN,
-      ota: {
-        booking: BOOKING_AIRPORT_HAVEN,
-        airbnb: "https://www.airbnb.com/h/airporth",
-      },
-      altMode: "comfortListing",
-      images: COMFORT_LISTING_IMAGES,
     },
     {
       id: "avia",
@@ -423,7 +398,6 @@
   window.getApartmentSlideAltKey = function (apt, slideIndex) {
     var m = apt.altMode;
     if (m === "comfort") return "comfort_residence_alt_" + (slideIndex + 1);
-    if (m === "comfortListing") return "comfort_listing_alt_" + (slideIndex + 1);
     if (m === "cozy") return "cozy_studio_alt_" + (slideIndex + 1);
     if (m === "premium") return "premium_residence_alt_" + (slideIndex + 1);
     if (m === "horizon") return "horizon_apartment_alt_" + (slideIndex + 1);

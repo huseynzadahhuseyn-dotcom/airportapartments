@@ -38,7 +38,6 @@
   /** Stable starting index per known listing so cards don’t all look identical. */
   var BOOK_DEMO_START_BY_ID = {
     haven: 0,
-    comfort: 14,
     avia: 2,
     bina: 4,
     horizon: 6,
