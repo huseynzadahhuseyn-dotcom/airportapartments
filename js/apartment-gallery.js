@@ -1,6 +1,6 @@
 /**
- * Homepage #gallery: grouped grids from `window.SITE_GALLERY_GROUPS` (/images/apartments/…).
- * Broken files are hidden (no placeholders). Click → GLightbox.
+ * Homepage #gallery: one cover image per apartment group; extra photos stay off-screen for lightbox.
+ * Tap cover → GLightbox with the full set. Broken files hidden (no placeholders).
  */
 (function () {
   "use strict";
@@ -36,8 +36,9 @@
     return node;
   }
 
-  function collectLightboxPayload(container, clickedBtn) {
-    var figures = container.querySelectorAll(".gallery-apt-item:not(.is-broken)");
+  function collectLightboxPayloadFromBlock(block, clickedBtn) {
+    if (!block) return { elements: [], startAt: 0 };
+    var figures = block.querySelectorAll(".gallery-apt-item:not(.is-broken)");
     var elements = [];
     var startAt = 0;
     for (var i = 0; i < figures.length; i++) {
@@ -52,15 +53,15 @@
         type: "image",
         alt: img.getAttribute("alt") || "",
       });
-      if (btn === clickedBtn || btn.contains(clickedBtn)) {
+      if (clickedBtn && (btn === clickedBtn || btn.contains(clickedBtn))) {
         startAt = elements.length - 1;
       }
     }
     return { elements: elements, startAt: startAt };
   }
 
-  function openLightbox(container, clickedBtn) {
-    var payload = collectLightboxPayload(container, clickedBtn);
+  function openLightbox(block, clickedBtn) {
+    var payload = collectLightboxPayloadFromBlock(block, clickedBtn);
     if (!payload.elements.length) return;
     if (typeof window.openComfortImageLightbox === "function") {
       window.openComfortImageLightbox(payload.elements, payload.startAt);
@@ -94,7 +95,9 @@
       var btn = ev.target.closest("button.gallery-apt-thumb");
       if (!btn || !container.contains(btn)) return;
       ev.preventDefault();
-      openLightbox(container, btn);
+      var block = btn.closest(".gallery-apartment-block");
+      if (!block) return;
+      openLightbox(block, btn);
     });
   }
 
@@ -134,6 +137,13 @@
     wrap.setAttribute("hidden", "");
     wrap.setAttribute("aria-hidden", "true");
     var block = img.closest(".gallery-apartment-block");
+    if (block && wrap.classList.contains("gallery-apt-item--hero")) {
+      var extras = block.querySelector(".gallery-apartment-grid--extras");
+      if (extras) {
+        extras.classList.remove("gallery-apartment-grid--extras");
+        extras.classList.add("gallery-apartment-grid--fallback");
+      }
+    }
     refreshApartmentBlock(block);
     checkGalleryHasPhotos(img.closest("#gallery-grid"));
   }
@@ -164,7 +174,7 @@
       head.setAttribute("data-i18n", group.titleKey || "gallery_listing_name");
       block.appendChild(head);
 
-      var grid = el("div", { className: "gallery-apartment-grid" });
+      var figures = [];
 
       group.images.forEach(function (rawUrl, idxInGroup) {
         var url = normUrl(rawUrl);
@@ -180,13 +190,20 @@
           "aria-label": alt + " — " + t("gallery_open_full_set_a11y"),
         });
 
+        if (idxInGroup === 0) {
+          figure.classList.add("gallery-apt-item--hero");
+          btn.classList.add("gallery-hero-open");
+          btn.setAttribute("data-i18n-aria-label", "apt_hero_open_gallery_a11y");
+          btn.setAttribute("aria-label", "");
+        }
+
         var img = el("img", {
           className: "gallery-apt-img",
           src: url,
           alt: alt,
           width: "800",
           height: "600",
-          sizes: "(max-width: 767px) 100vw, 33vw",
+          sizes: "(max-width: 767px) 100vw, 90vw",
           decoding: "async",
         });
         img.setAttribute("data-no-img-fallback", "true");
@@ -217,13 +234,33 @@
 
         btn.appendChild(img);
         figure.appendChild(btn);
-        grid.appendChild(figure);
+        figures.push(figure);
       });
 
-      if (grid.children.length) {
-        block.appendChild(grid);
-        container.appendChild(block);
+      if (!figures.length) return;
+
+      var heroFig = figures[0];
+      block.appendChild(heroFig);
+
+      if (figures.length > 1) {
+        var extras = el("div", { className: "gallery-apartment-grid gallery-apartment-grid--extras" });
+        for (var fi = 1; fi < figures.length; fi++) {
+          extras.appendChild(figures[fi]);
+        }
+        block.appendChild(extras);
+
+        var heroBtn = heroFig.querySelector("button.gallery-hero-open");
+        if (heroBtn) {
+          heroBtn.appendChild(
+            el("span", { className: "gallery-hero-count", textContent: String(figures.length) })
+          );
+          var hint = el("span", { className: "gallery-hero-hint" });
+          hint.setAttribute("data-i18n", "apt_hero_more_photos");
+          heroBtn.appendChild(hint);
+        }
       }
+
+      container.appendChild(block);
     });
 
     attachDelegate(container);

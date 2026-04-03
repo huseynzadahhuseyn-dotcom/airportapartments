@@ -1,9 +1,9 @@
 /**
- * Renders #apartments-grid and #book-apartments-grid — booking-style cards (one hero photo, lightbox for the rest,
+ * Renders #apartments-grid — booking-style cards (one hero photo, lightbox for the rest,
  * icon row: Booking / Airbnb / WhatsApp under the image).
  *
- * #book-apartments-grid: prefers `apt.images` (gallery URLs). If missing/invalid, uses stable Unsplash demo
- * URLs so the section is never blank. `data-no-img-fallback` only when using real listing URLs.
+ * Uses `apt.images` only (no mixed gallery pool). If missing/invalid, stable Unsplash demo URLs.
+ * `data-no-img-fallback` on hero when using real listing URLs.
  *
  * Data source (first match wins):
  * 1. `APARTMENT_CARDS_DATA` + `normalizeApartmentCardEntry` (see apartment-cards-data.js) when that array is non-empty
@@ -113,7 +113,7 @@
   }
 
   /**
-   * #book-apartments-grid: one slide per `apt.images` entry — never placeholder.svg, never gallery URLs.
+   * Homepage grid: one slide per `apt.images` entry — never placeholder.svg, never gallery URLs.
    * Uses resolve + normalize; falls back to the raw listing string so slide count always matches the array.
    */
   function bookCardImgSrc(raw) {
@@ -143,7 +143,7 @@
 
   /**
    * @param {object} opts
-   * @param {boolean} [opts.bookListingImagesOnly] — #book-apartments-grid: only `apt.images` URLs, no gallery pool or placeholder.svg slides
+   * @param {boolean} [opts.bookListingImagesOnly] — only `apt.images` URLs, no gallery pool or placeholder.svg slides
    */
   function slideUrls(apt, pool, opts) {
     opts = opts || {};
@@ -300,7 +300,8 @@
   function buildApartmentCards(grid, data) {
     if (!grid || !data || !data.length) return;
     var pool = window.SITE_GALLERY_IMAGES || window.POSTIMG_GALLERY_IMAGES || [];
-    var bookGrid = grid.id === "book-apartments-grid";
+    var listingOnlyImages =
+      grid.id === "apartments-grid" || grid.id === "book-apartments-grid";
     grid.textContent = "";
     grid.setAttribute("role", "list");
 
@@ -308,7 +309,7 @@
       var slidesPayload = [];
       var usedBookDemo = false;
 
-      if (bookGrid) {
+      if (listingOnlyImages) {
         var listingUrls = slideUrls(apt, pool, { bookListingImagesOnly: true });
         var bookPack = assembleBookSlidesPayload(apt, listingUrls, false);
         if (!bookPack.ok || !bookPack.payload.length) {
@@ -362,7 +363,7 @@
         decoding: "async",
       });
       heroImg.setAttribute("fetchpriority", "high");
-      if (bookGrid && !usedBookDemo) {
+      if (listingOnlyImages && !usedBookDemo) {
         heroImg.setAttribute("data-no-img-fallback", "true");
       }
       heroBtn.appendChild(heroImg);
@@ -491,21 +492,12 @@
     var data = getApartmentListingRows();
     var hasData = data.length > 0;
     var aptGrid = document.getElementById("apartments-grid");
-    var bookGrid = document.getElementById("book-apartments-grid");
 
     if (aptGrid) {
       if (hasData) {
         buildApartmentCards(aptGrid, data);
       } else {
         renderFallback(aptGrid);
-      }
-    }
-
-    if (bookGrid) {
-      if (hasData) {
-        buildApartmentCards(bookGrid, data);
-      } else {
-        bookGrid.textContent = "";
       }
     }
   }

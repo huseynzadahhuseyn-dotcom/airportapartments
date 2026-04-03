@@ -433,7 +433,7 @@
             <h2 data-i18n="gallery_title"></h2>
             <p data-i18n="gallery_intro" data-i18n-html="true"></p>
           </header>
-          <!-- Gallery: grouped /images/apartments/ grids; tap → GLightbox -->
+          <!-- Gallery: one cover per listing; tap → full set in GLightbox -->
           <div class="gallery-grid" id="gallery-grid"></div>
         </div>
       </section>
@@ -444,7 +444,32 @@
             <h2 id="apartments-title" data-i18n="apartments_section_title"></h2>
             <p class="section-lead section-lead--apartments" data-i18n="apartments_section_intro" data-i18n-html="true"></p>
           </header>
-          <div class="apartments-grid apartments-grid--premium" id="apartments-grid"></div>
+          <div
+            class="apartments-grid apartments-grid--premium"
+            id="apartments-grid"
+            role="list"
+            aria-label=""
+            data-i18n-aria-label="book_apartments_grid_a11y"
+          ></div>
+          <div class="book-cta-panel chat-action-row chat-action-row--center">
+            <a
+              class="btn btn-lg btn-wa-card book-cta-wa"
+              href="https://wa.me/994506581718"
+              target="_blank"
+              rel="noopener noreferrer"
+              data-wa-prefill=""
+              data-i18n="book_cta_whatsapp"
+            ></a>
+            <a
+              class="btn btn-lg btn-telegram book-cta-tg"
+              href="https://t.me/apartamentnearbaku"
+              target="_blank"
+              rel="noopener noreferrer"
+              data-i18n="book_cta_telegram"
+            ></a>
+            <a class="btn btn-lg btn-ghost book-cta-browse" href="#apartments-title" data-i18n="book_cta_browse_apartments"></a>
+          </div>
+          <p class="book-cta-note" data-i18n="book_cta_note"></p>
         </div>
       </section>
 
@@ -1117,41 +1142,6 @@
               </article>
             </li>
           </ul>
-        </div>
-      </section>
-
-      <section class="section section-alt section--book-stay" id="book">
-        <div class="container">
-          <header class="section-head section-head--book-stay">
-            <h2 data-i18n="book_section_title"></h2>
-            <p data-i18n="book_section_intro" data-i18n-html="true"></p>
-          </header>
-          <div
-            class="book-apartments-grid apartments-grid apartments-grid--premium"
-            id="book-apartments-grid"
-            role="list"
-            aria-label=""
-            data-i18n-aria-label="book_apartments_grid_a11y"
-          ></div>
-          <div class="book-cta-panel chat-action-row chat-action-row--center">
-            <a
-              class="btn btn-lg btn-wa-card book-cta-wa"
-              href="https://wa.me/994506581718"
-              target="_blank"
-              rel="noopener noreferrer"
-              data-wa-prefill=""
-              data-i18n="book_cta_whatsapp"
-            ></a>
-            <a
-              class="btn btn-lg btn-telegram book-cta-tg"
-              href="https://t.me/apartamentnearbaku"
-              target="_blank"
-              rel="noopener noreferrer"
-              data-i18n="book_cta_telegram"
-            ></a>
-            <a class="btn btn-lg btn-ghost book-cta-browse" href="#apartments" data-i18n="book_cta_browse_apartments"></a>
-          </div>
-          <p class="book-cta-note" data-i18n="book_cta_note"></p>
         </div>
       </section>
 

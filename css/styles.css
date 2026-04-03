@@ -1870,10 +1870,77 @@ a:hover {
 }
 
 @media (min-width: 768px) {
-  .gallery-apartment-grid {
+  .gallery-apartment-grid:not(.gallery-apartment-grid--extras) {
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 0.85rem;
   }
+}
+
+/* Extra photos: kept in DOM for lightbox, not shown until cover fails */
+.gallery-apartment-grid--extras {
+  display: none !important;
+}
+
+.gallery-apartment-grid--fallback {
+  display: grid !important;
+  margin-top: 0.85rem;
+  gap: 0.75rem;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 768px) {
+  .gallery-apartment-grid--fallback {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.85rem;
+  }
+}
+
+/* One cover per group — tap opens full set */
+.gallery-apt-thumb.gallery-hero-open {
+  aspect-ratio: 16 / 10;
+  min-height: 11rem;
+  max-height: 22rem;
+  border-radius: var(--radius-lg);
+  border-width: 1px;
+  box-shadow:
+    0 12px 36px rgba(26, 31, 46, 0.1),
+    0 4px 12px rgba(13, 110, 110, 0.08);
+}
+
+.gallery-hero-count {
+  position: absolute;
+  top: 0.55rem;
+  right: 0.55rem;
+  min-width: 1.75rem;
+  height: 1.75rem;
+  padding: 0 0.4rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: #fff;
+  background: rgba(22, 28, 42, 0.88);
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.gallery-hero-hint {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 0.5rem 0.65rem 0.55rem;
+  font-size: 0.78rem;
+  font-weight: 650;
+  color: #fff;
+  text-align: center;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.55);
+  background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.62) 100%);
+  pointer-events: none;
+  z-index: 1;
 }
 
 .gallery-apt-item {
@@ -2514,31 +2581,12 @@ a:hover {
   border-radius: 10px;
 }
 
-/* Book your stay — apartment cards + CTAs */
-.section--book-stay .container {
-  max-width: min(100%, 76rem);
+/* Apartments — CTAs below listing grid */
+.section--apartments-rich .book-cta-panel {
+  margin-top: 2.25rem;
 }
 
-.section-head--book-stay {
-  margin-bottom: 1.5rem;
-}
-
-.book-apartments-grid {
-  margin-bottom: 2.25rem;
-}
-
-.book-apartments-grid .apt-card--booking {
-  min-width: 0;
-}
-
-.book-apartments-grid .apt-slider-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-/* Book section — CTAs below cards */
+/* Book / apartments — shared CTA row */
 .book-cta-panel {
   display: flex;
   flex-wrap: wrap;
@@ -2614,9 +2662,9 @@ a:hover {
   }
 }
 
-/* Book your stay — six listings: 3×2 on wide screens */
+/* Apartments — six listings: 3×2 on wide screens */
 @media (min-width: 1100px) {
-  .book-apartments-grid.apartments-grid--premium {
+  .section--apartments-rich .apartments-grid--premium {
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 1.75rem 1.5rem;
   }
