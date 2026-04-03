@@ -41,6 +41,8 @@
     bina: 4,
     horizon: 8,
     layover: 12,
+    "premium-villa-2-bedroom": 0,
+    "airport-family-apartment-2-bedroom": 2,
   };
 
   var BOOK_DEMO_SLIDE_COUNT = 4;

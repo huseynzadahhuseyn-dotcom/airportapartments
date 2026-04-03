@@ -1,7 +1,7 @@
 /**
  * Apartment cards — editable links, cover image, airport line, price mode.
  *
- * Keys must match `id` in js/apartments-data.js: avia | bina | horizon | layover
+ * Keys must match `id` in js/apartments-data.js: avia | bina | horizon | layover | premium-villa-2-bedroom | airport-family-apartment-2-bedroom
  *
  * Rules:
  * - Omit `airbnbUrl` / `bookingUrl` to inherit from apartments-data (ota + bookingLink).
@@ -47,6 +47,22 @@
       coverImage: "",
       airbnbUrl: "",
       bookingUrl: "https://www.booking.com/hotel/az/5-minute-from-airport.en-gb.html",
+      telegramUrl: DEFAULT_TELEGRAM,
+    },
+    "premium-villa-2-bedroom": {
+      airportDistanceKey: "apt_airport_dist_premium_villa_2bed",
+      priceOnRequest: true,
+      coverImage: "",
+      airbnbUrl: "",
+      bookingUrl: "",
+      telegramUrl: DEFAULT_TELEGRAM,
+    },
+    "airport-family-apartment-2-bedroom": {
+      airportDistanceKey: "apt_airport_dist_airport_family_2br",
+      priceOnRequest: false,
+      coverImage: "",
+      airbnbUrl: "",
+      bookingUrl: "",
       telegramUrl: DEFAULT_TELEGRAM,
     },
   };

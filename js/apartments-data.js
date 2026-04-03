@@ -3,7 +3,8 @@
  *
  * Per-listing URL arrays (load before this file, after `apartment-image-sources.js`):
  *   `COZY_AIRPORT_STUDIO_IMAGE_URLS`, `HORIZON_APARTMENT_IMAGE_URLS`,
- *   `LAYOVER_STUDIO_IMAGE_URLS`,
+ *   `LAYOVER_STUDIO_IMAGE_URLS`, `PREMIUM_VILLA_2_BEDROOM_IMAGE_URLS`,
+ *   `AIRPORT_FAMILY_APARTMENT_2_BEDROOM_IMAGE_URLS`,
  *   `PREMIUM_RESIDENCE_IMAGE_URLS`,
  *   `BINA_RESIDENCE_IMAGE_URLS` (listing `bina` = premium then bina).
  * If a global array is missing or empty, legacy `/images/<listing>-NN.*` paths are used.
@@ -105,6 +106,14 @@
   /** Airport Layover Studio (`layover`) — `js/layover-studio-images.js` only. */
   var LAYOVER_STUDIO_PATHS = urlsOrLegacy(window.LAYOVER_STUDIO_IMAGE_URLS, []);
   var LAYOVER_STUDIO_IMAGES = mapResolvedUrls(LAYOVER_STUDIO_PATHS);
+
+  /** Premium Villa 2 Bedroom (`premium-villa-2-bedroom`) — `js/premium-villa-2-bedroom-images.js` only. */
+  var PREMIUM_VILLA_2_BEDROOM_PATHS = urlsOrLegacy(window.PREMIUM_VILLA_2_BEDROOM_IMAGE_URLS, []);
+  var PREMIUM_VILLA_2_BEDROOM_IMAGES = mapResolvedUrls(PREMIUM_VILLA_2_BEDROOM_PATHS);
+
+  /** Airport Family Apartment (`airport-family-apartment-2-bedroom`) — `js/airport-family-apartment-2-bedroom-images.js` only. */
+  var AIRPORT_FAMILY_2BR_PATHS = urlsOrLegacy(window.AIRPORT_FAMILY_APARTMENT_2_BEDROOM_IMAGE_URLS, []);
+  var AIRPORT_FAMILY_2BR_IMAGES = mapResolvedUrls(AIRPORT_FAMILY_2BR_PATHS);
 
   /** Premium Residence listing (`bina`) — `premium-residence-images.js` + `bina-residence-images.js` or local `premium-*`. */
   var PREMIUM_RESIDENCE_LEGACY = [
@@ -249,6 +258,38 @@
       altMode: "layover",
       images: LAYOVER_STUDIO_IMAGES,
     },
+    {
+      id: "premium-villa-2-bedroom",
+      premium: true,
+      titleKey: "listing_name_premium_villa_2bed",
+      typeKey: "apt_card_type_premium_villa_2bed",
+      amenitiesLineKey: "apt_amenities_premium_villa_2bed",
+      perksKey: "apt_perks_premium_villa_2bed",
+      blurbKey: "apt_card_blurb_premium_villa_2bed",
+      guestsKey: "apt_card_guests_premium_villa_2bed",
+      priceFrom: 150,
+      waSuffixKey: "wa_suffix_premium_villa_2bed",
+      bookingLink: "",
+      ota: {},
+      altMode: "premium_villa",
+      images: PREMIUM_VILLA_2_BEDROOM_IMAGES,
+    },
+    {
+      id: "airport-family-apartment-2-bedroom",
+      premium: false,
+      titleKey: "listing_name_airport_family_2br",
+      typeKey: "apt_card_type_airport_family_2br",
+      amenitiesLineKey: "apt_amenities_airport_family_2br",
+      perksKey: "apt_perks_airport_family_2br",
+      blurbKey: "apt_card_blurb_airport_family_2br",
+      guestsKey: "apt_card_guests_airport_family_2br",
+      priceFrom: 110,
+      waSuffixKey: "wa_suffix_airport_family_2br",
+      bookingLink: "",
+      ota: {},
+      altMode: "airport_family_2br",
+      images: AIRPORT_FAMILY_2BR_IMAGES,
+    },
   ];
 
   window.SITE_GALLERY_IMAGE_META = SITE_GALLERY_PATHS.map(function (logical) {
@@ -276,6 +317,8 @@
     if (m === "premium") return "premium_residence_alt_" + (slideIndex + 1);
     if (m === "horizon") return "horizon_apartment_alt_" + (slideIndex + 1);
     if (m === "layover") return "layover_studio_alt_" + (slideIndex + 1);
+    if (m === "premium_villa") return "premium_villa_2bed_alt_" + (slideIndex + 1);
+    if (m === "airport_family_2br") return "airport_family_2br_alt_" + (slideIndex + 1);
     return "apt_slide_alt_generic_" + ((slideIndex % 4) + 1);
   };
 })();
