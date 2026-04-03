@@ -2614,6 +2614,14 @@ a:hover {
   }
 }
 
+/* Book your stay — six listings: 3×2 on wide screens */
+@media (min-width: 1100px) {
+  .book-apartments-grid.apartments-grid--premium {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.75rem 1.5rem;
+  }
+}
+
 .apt-card {
   position: relative;
   background: var(--surface);

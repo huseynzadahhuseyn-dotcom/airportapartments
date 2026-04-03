@@ -132,7 +132,7 @@
     applyToRoot(document);
     applyMeta();
     updateLangButtons();
-    document.dispatchEvent(new CustomEvent("i18n:applied", { detail: { lang: currentLang } }));
+    window.dispatchEvent(new CustomEvent("i18n:applied", { detail: { lang: currentLang } }));
   }
 
   function loadBundle(lang) {
