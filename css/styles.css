@@ -4487,6 +4487,10 @@ a:hover {
   background: linear-gradient(90deg, var(--gold) 0%, #a67c00 100%);
 }
 
+.tour-card--popular::before {
+  background: linear-gradient(90deg, var(--accent) 0%, var(--gold) 55%, var(--accent-hover) 100%);
+}
+
 /* Mercedes Vito City Tour — slightly richer shadow + spacing */
 .tour-card--vito-city {
   box-shadow:
@@ -4634,6 +4638,28 @@ a:hover {
   letter-spacing: 0.1em;
   border: 1px solid rgba(201, 162, 39, 0.45);
   box-shadow: 0 4px 18px rgba(201, 162, 39, 0.35);
+}
+
+.tour-card-badge--popular {
+  background: linear-gradient(135deg, #0d5a5a 0%, #127a7a 45%, #c9a227 100%);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  box-shadow: 0 4px 16px rgba(13, 110, 110, 0.35);
+}
+
+.tour-card-badge--groups {
+  background: linear-gradient(135deg, #c9a227 0%, #9a7b1a 50%, #6b5a1e 100%);
+  color: #1a1f2e;
+  border: 1px solid rgba(255, 252, 245, 0.35);
+  box-shadow: 0 4px 16px rgba(201, 162, 39, 0.4);
+}
+
+.tour-card-badge--vip-choice {
+  background: linear-gradient(135deg, #1a1510 0%, #3d3428 40%, #1a1f2e 100%);
+  color: #f5e6c8;
+  letter-spacing: 0.09em;
+  border: 1px solid rgba(201, 162, 39, 0.5);
+  box-shadow: 0 4px 20px rgba(201, 162, 39, 0.38);
 }
 
 .tour-card-badge {
@@ -5045,6 +5071,45 @@ a:hover {
   color: var(--ink-muted);
 }
 
+.tour-feature-checklist {
+  list-style: none;
+  margin: 0 0 0.9rem;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.tour-feature-checklist li {
+  position: relative;
+  padding-left: 1.65rem;
+  font-size: 0.86rem;
+  font-weight: 600;
+  line-height: 1.45;
+  color: var(--ink);
+}
+
+.tour-feature-checklist li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.12em;
+  width: 1.12rem;
+  height: 1.12rem;
+  border-radius: 50%;
+  background-color: rgba(13, 110, 110, 0.14);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230d6e6e' stroke-width='2.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 65% 65%;
+  flex-shrink: 0;
+}
+
+.tour-feature-checklist--lux li::before {
+  background-color: rgba(201, 162, 39, 0.2);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238a7030' stroke-width='2.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E");
+}
+
 .tour-highlights {
   list-style: none;
   margin: 0 0 1.1rem;
@@ -5083,6 +5148,58 @@ a:hover {
   background: linear-gradient(145deg, rgba(13, 110, 110, 0.07) 0%, rgba(201, 162, 39, 0.06) 100%);
   border-radius: 12px;
   border: 1px solid rgba(13, 110, 110, 0.14);
+}
+
+.tour-price-block--premium {
+  margin-top: 0.15rem;
+  padding: 1.05rem 1.15rem 1.1rem;
+  border-radius: 14px;
+  border: 1px solid rgba(13, 110, 110, 0.22);
+  background: linear-gradient(155deg, rgba(255, 255, 255, 0.65) 0%, rgba(13, 110, 110, 0.09) 42%, rgba(201, 162, 39, 0.08) 100%);
+  box-shadow:
+    0 10px 28px rgba(26, 31, 46, 0.08),
+    0 2px 8px rgba(13, 110, 110, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.75);
+}
+
+.tour-price-block--luxury.tour-price-block--premium {
+  border-color: rgba(201, 162, 39, 0.35);
+  background: linear-gradient(155deg, rgba(255, 252, 245, 0.9) 0%, rgba(201, 162, 39, 0.12) 45%, rgba(26, 31, 46, 0.06) 100%);
+  box-shadow:
+    0 12px 32px rgba(26, 31, 46, 0.1),
+    0 0 0 1px rgba(201, 162, 39, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.85);
+}
+
+.tour-price-tiers--premium li {
+  padding: 0.52rem 0;
+  font-size: 0.9rem;
+  font-weight: 650;
+}
+
+.tour-price-tiers--premium .tour-price-tier-amt {
+  font-size: 1.12rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+
+.tour-price-block--luxury .tour-price-tiers--premium .tour-price-tier-amt {
+  font-size: 1.28rem;
+  color: var(--gold);
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+
+.tour-price-block--premium .tour-price-heading {
+  font-size: 0.74rem;
+  letter-spacing: 0.12em;
+  margin-bottom: 0.65rem;
+}
+
+.tour-price-block--premium .tour-price-note {
+  margin-top: 0.75rem;
+  padding-top: 0.65rem;
+  font-weight: 650;
 }
 
 .tour-price-heading {

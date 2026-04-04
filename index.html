@@ -546,124 +546,459 @@
             <h2 id="tours-title" data-i18n="tours_section_title"></h2>
             <p data-i18n="tours_section_intro"></p>
           </header>
-          <ul class="tours-grid tours-grid--route" role="list">
-            <li class="tour-card-wrap tour-card-wrap--route">
-              <article class="tour-card tour-card--route-package">
-                <div class="tour-route-layout">
-                  <div
-                    class="tour-card-media tour-card-media--hero-gallery tour-card-media--baku-route-tour"
-                    role="group"
-                    data-i18n-aria-label="tour_route_gallery_aria"
-                    aria-label=""
-                  >
-                    <div class="tour-hero-gallery" data-tour-hero-gallery>
-                      <button type="button" class="tour-hero-gallery__main" data-tour-lb-start="0">
+          <ul class="tours-grid" role="list">
+            <li class="tour-card-wrap">
+              <article class="tour-card tour-card--popular">
+                <span class="tour-card-badge tour-card-badge--popular" data-i18n="tour_badge_most_popular"></span>
+                <div
+                  class="tour-card-media tour-card-media--hero-gallery tour-card-media--sedan-tour"
+                  role="group"
+                  data-i18n-aria-label="tour_sedan_gallery_aria"
+                  aria-label=""
+                >
+                  <div class="tour-hero-gallery" data-tour-hero-gallery>
+                    <button type="button" class="tour-hero-gallery__main" data-tour-lb-start="0">
+                      <img
+                        class="tour-hero-gallery__img"
+                        src="https://i.postimg.cc/yNBzTxv7/2.png"
+                        alt=""
+                        data-i18n="tour_sedan_gallery_alt_1"
+                        width="1200"
+                        height="900"
+                        sizes="(max-width: 767px) 100vw, min(520px, 92vw)"
+                        loading="eager"
+                        decoding="async"
+                        fetchpriority="high"
+                      />
+                    </button>
+                    <div class="tour-hero-gallery__thumbs" role="list">
+                      <button type="button" class="tour-hero-gallery__thumb is-active" data-tour-lb-start="0">
                         <img
-                          class="tour-hero-gallery__img"
                           src="https://i.postimg.cc/yNBzTxv7/2.png"
                           alt=""
-                          data-i18n="tour_route_gallery_alt_1"
-                          width="1200"
-                          height="900"
-                          sizes="(max-width: 767px) 100vw, min(640px, 92vw)"
-                          loading="eager"
+                          data-i18n="tour_sedan_gallery_alt_1"
+                          width="400"
+                          height="300"
+                          loading="lazy"
                           decoding="async"
-                          fetchpriority="high"
                         />
                       </button>
-                      <div class="tour-hero-gallery__thumbs tour-hero-gallery__thumbs--route" role="list">
-                        <button type="button" class="tour-hero-gallery__thumb is-active" data-tour-lb-start="0">
-                          <img
-                            src="https://i.postimg.cc/yNBzTxv7/2.png"
-                            alt=""
-                            data-i18n="tour_route_gallery_alt_1"
-                            width="400"
-                            height="300"
-                            loading="lazy"
-                            decoding="async"
-                          />
-                        </button>
-                        <button type="button" class="tour-hero-gallery__thumb" data-tour-lb-start="1">
-                          <img
-                            src="https://i.postimg.cc/7LDyNhmb/4.png"
-                            alt=""
-                            data-i18n="tour_route_gallery_alt_2"
-                            width="400"
-                            height="300"
-                            loading="lazy"
-                            decoding="async"
-                          />
-                        </button>
-                      </div>
-                    </div>
-                    <div class="tour-lb-anchors" aria-hidden="true">
-                      <a
-                        tabindex="-1"
-                        class="tour-route-lightbox tour-lb-src"
-                        href="https://i.postimg.cc/yNBzTxv7/2.png"
-                        data-type="image"
-                        data-gallery="city-tour-baku-route"
-                        ><img src="https://i.postimg.cc/yNBzTxv7/2.png" alt="" data-i18n="tour_route_gallery_alt_1" width="1" height="1" loading="lazy" decoding="async" class="tour-lb-src__img"
-                      /></a>
-                      <a
-                        tabindex="-1"
-                        class="tour-route-lightbox tour-lb-src"
-                        href="https://i.postimg.cc/7LDyNhmb/4.png"
-                        data-type="image"
-                        data-gallery="city-tour-baku-route"
-                        ><img src="https://i.postimg.cc/7LDyNhmb/4.png" alt="" data-i18n="tour_route_gallery_alt_2" width="1" height="1" loading="lazy" decoding="async" class="tour-lb-src__img"
-                      /></a>
+                      <button type="button" class="tour-hero-gallery__thumb" data-tour-lb-start="1">
+                        <img
+                          src="https://i.postimg.cc/5t1Mmyny/3.png"
+                          alt=""
+                          data-i18n="tour_sedan_gallery_alt_2"
+                          width="400"
+                          height="300"
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      </button>
+                      <button type="button" class="tour-hero-gallery__thumb" data-tour-lb-start="2">
+                        <img
+                          src="https://i.postimg.cc/7LDyNhmb/4.png"
+                          alt=""
+                          data-i18n="tour_sedan_gallery_alt_3"
+                          width="400"
+                          height="300"
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      </button>
+                      <button type="button" class="tour-hero-gallery__thumb" data-tour-lb-start="3">
+                        <img
+                          src="https://i.postimg.cc/CKYV45mn/Chat-GPT-Image-Apr-2-2026-11-19-43-AM.png"
+                          alt=""
+                          data-i18n="tour_sedan_gallery_alt_4"
+                          width="400"
+                          height="300"
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      </button>
                     </div>
                   </div>
-                  <div class="tour-route-layout__body">
-                    <div class="tour-card-meta tour-card-meta--route">
-                      <span class="tour-meta-pill">
-                        <span class="tour-meta-ic" aria-hidden="true">⏱</span>
-                        <span data-i18n="tour_route_meta_time"></span>
-                      </span>
-                      <span class="tour-meta-pill">
-                        <span class="tour-meta-ic" aria-hidden="true">🧭</span>
-                        <span data-i18n="tour_route_meta_type"></span>
-                      </span>
-                      <span class="tour-meta-pill">
-                        <span class="tour-meta-ic" aria-hidden="true">📍</span>
-                        <span data-i18n="tour_route_meta_pickup"></span>
-                      </span>
+                  <div class="tour-lb-anchors" aria-hidden="true">
+                    <a
+                      tabindex="-1"
+                      class="tour-sedan-glightbox tour-lb-src"
+                      href="https://i.postimg.cc/yNBzTxv7/2.png"
+                      data-type="image"
+                      data-gallery="city-tour-sedan"
+                      ><img src="https://i.postimg.cc/yNBzTxv7/2.png" alt="" data-i18n="tour_sedan_gallery_alt_1" width="1" height="1" loading="lazy" decoding="async" class="tour-lb-src__img"
+                    /></a>
+                    <a
+                      tabindex="-1"
+                      class="tour-sedan-glightbox tour-lb-src"
+                      href="https://i.postimg.cc/5t1Mmyny/3.png"
+                      data-type="image"
+                      data-gallery="city-tour-sedan"
+                      ><img src="https://i.postimg.cc/5t1Mmyny/3.png" alt="" data-i18n="tour_sedan_gallery_alt_2" width="1" height="1" loading="lazy" decoding="async" class="tour-lb-src__img"
+                    /></a>
+                    <a
+                      tabindex="-1"
+                      class="tour-sedan-glightbox tour-lb-src"
+                      href="https://i.postimg.cc/7LDyNhmb/4.png"
+                      data-type="image"
+                      data-gallery="city-tour-sedan"
+                      ><img src="https://i.postimg.cc/7LDyNhmb/4.png" alt="" data-i18n="tour_sedan_gallery_alt_3" width="1" height="1" loading="lazy" decoding="async" class="tour-lb-src__img"
+                    /></a>
+                    <a
+                      tabindex="-1"
+                      class="tour-sedan-glightbox tour-lb-src"
+                      href="https://i.postimg.cc/CKYV45mn/Chat-GPT-Image-Apr-2-2026-11-19-43-AM.png"
+                      data-type="image"
+                      data-gallery="city-tour-sedan"
+                      data-tour-slide="vehicle"
+                      ><img src="https://i.postimg.cc/CKYV45mn/Chat-GPT-Image-Apr-2-2026-11-19-43-AM.png" alt="" data-i18n="tour_sedan_gallery_alt_4" width="1" height="1" loading="lazy" decoding="async" class="tour-lb-src__img"
+                    /></a>
+                  </div>
+                </div>
+                <div class="tour-card-body">
+                  <div class="tour-card-meta">
+                    <span class="tour-meta-pill">
+                      <span class="tour-meta-ic" aria-hidden="true">⏱</span>
+                      <span data-i18n="tour_sedan_meta_time"></span>
+                    </span>
+                    <span class="tour-meta-pill">
+                      <span class="tour-meta-ic" aria-hidden="true">👥</span>
+                      <span data-i18n="tour_sedan_meta_group"></span>
+                    </span>
+                    <span class="tour-meta-pill">
+                      <span class="tour-meta-ic" aria-hidden="true">📍</span>
+                      <span data-i18n="tour_sedan_meta_pickup"></span>
+                    </span>
+                  </div>
+                  <h3 class="tour-card-title" data-i18n="tour_sedan_title"></h3>
+                  <p class="tour-card-desc" data-i18n="tour_sedan_desc"></p>
+                  <ul class="tour-feature-checklist" role="list">
+                    <li data-i18n="tour_sedan_feat_1"></li>
+                    <li data-i18n="tour_sedan_feat_2"></li>
+                    <li data-i18n="tour_sedan_feat_3"></li>
+                    <li data-i18n="tour_sedan_feat_4"></li>
+                    <li data-i18n="tour_sedan_feat_5"></li>
+                  </ul>
+                  <p class="tour-lang-line">
+                    <span class="tour-lang-line__ic" aria-hidden="true">🗣</span>
+                    <span data-i18n="tour_driver_languages"></span>
+                  </p>
+                  <div class="tour-price-block tour-price-block--premium">
+                    <p class="tour-price-heading" data-i18n="tour_price_label"></p>
+                    <div class="tour-price-body" data-tour-pricing="sedan"></div>
+                    <p class="tour-price-note" data-i18n="tour_sedan_price_note"></p>
+                  </div>
+                  <div class="card-chat-row card-chat-row--tour">
+                    <a
+                      class="btn btn-wa-card tour-wa-btn"
+                      href="#"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      data-wa-full-key="wa_tour_book_sedan"
+                      data-i18n="tour_book_whatsapp"
+                    ></a>
+                    <a
+                      class="btn btn-telegram-outline"
+                      href="https://t.me/apartamentnearbaku"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      data-i18n="tour_book_telegram"
+                    ></a>
+                  </div>
+                </div>
+              </article>
+            </li>
+            <li class="tour-card-wrap">
+              <article class="tour-card tour-card--featured tour-card--vito-city">
+                <span class="tour-card-badge tour-card-badge--groups" data-i18n="tour_badge_best_groups"></span>
+                <div
+                  class="tour-card-media tour-card-media--hero-gallery tour-card-media--vito-city-tour"
+                  role="group"
+                  data-i18n-aria-label="tour_vito_gallery_aria"
+                  aria-label=""
+                >
+                  <div class="tour-hero-gallery" data-tour-hero-gallery>
+                    <button type="button" class="tour-hero-gallery__main" data-tour-lb-start="0">
+                      <img
+                        class="tour-hero-gallery__img"
+                        src="https://i.postimg.cc/qv68GMgn/Whats-App-Image-2026-04-02-at-11-50-56.jpg"
+                        alt=""
+                        data-i18n="tour_vito_gallery_alt_1"
+                        width="1600"
+                        height="1200"
+                        sizes="(max-width: 767px) 100vw, min(520px, 92vw)"
+                        loading="eager"
+                        decoding="async"
+                        fetchpriority="high"
+                      />
+                    </button>
+                    <div class="tour-hero-gallery__thumbs" role="list">
+                      <button type="button" class="tour-hero-gallery__thumb is-active" data-tour-lb-start="0">
+                        <img
+                          src="https://i.postimg.cc/qv68GMgn/Whats-App-Image-2026-04-02-at-11-50-56.jpg"
+                          alt=""
+                          data-i18n="tour_vito_gallery_alt_1"
+                          width="400"
+                          height="300"
+                          loading="eager"
+                          decoding="async"
+                        />
+                      </button>
+                      <button type="button" class="tour-hero-gallery__thumb" data-tour-lb-start="1">
+                        <img
+                          src="https://i.postimg.cc/vZxWvHDq/Whats-App-Image-2026-04-02-at-11-50-57.jpg"
+                          alt=""
+                          data-i18n="tour_vito_gallery_alt_2"
+                          width="400"
+                          height="300"
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      </button>
                     </div>
-                    <h3 class="tour-card-title tour-card-title--route" data-i18n="tour_route_title"></h3>
-                    <p class="tour-card-desc tour-card-desc--route" data-i18n="tour_route_desc"></p>
-                    <h4 class="tour-route-highlights-heading" data-i18n="tour_route_highlights_heading"></h4>
-                    <ol class="tour-route-stops" role="list">
-                      <li data-i18n="tour_route_stop_1"></li>
-                      <li data-i18n="tour_route_stop_2"></li>
-                      <li data-i18n="tour_route_stop_3"></li>
-                      <li data-i18n="tour_route_stop_4"></li>
-                      <li data-i18n="tour_route_stop_5"></li>
-                      <li data-i18n="tour_route_stop_6"></li>
-                      <li data-i18n="tour_route_stop_7"></li>
-                      <li data-i18n="tour_route_stop_8"></li>
-                      <li data-i18n="tour_route_stop_9"></li>
-                      <li data-i18n="tour_route_stop_10"></li>
-                    </ol>
-                    <p class="tour-route-footnote" data-i18n="tour_route_note"></p>
-                    <div class="tour-route-price-teaser" data-i18n="tour_route_price_teaser" data-i18n-html="true"></div>
-                    <div class="card-chat-row card-chat-row--tour card-chat-row--route">
-                      <a
-                        class="btn btn-wa-card tour-wa-btn"
-                        href="#"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        data-wa-full-key="wa_tour_book_route"
-                        data-i18n="tour_book_whatsapp"
-                      ></a>
-                      <a
-                        class="btn btn-telegram-outline"
-                        href="https://t.me/apartamentnearbaku"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        data-i18n="tour_book_telegram"
-                      ></a>
+                  </div>
+                  <div class="tour-lb-anchors" aria-hidden="true">
+                    <a
+                      tabindex="-1"
+                      class="tour-vito-city-lightbox tour-lb-src"
+                      href="https://i.postimg.cc/qv68GMgn/Whats-App-Image-2026-04-02-at-11-50-56.jpg"
+                      data-type="image"
+                      data-gallery="city-tour-vito-city"
+                      ><img src="https://i.postimg.cc/qv68GMgn/Whats-App-Image-2026-04-02-at-11-50-56.jpg" alt="" data-i18n="tour_vito_gallery_alt_1" width="1" height="1" loading="lazy" decoding="async" class="tour-lb-src__img"
+                    /></a>
+                    <a
+                      tabindex="-1"
+                      class="tour-vito-city-lightbox tour-lb-src"
+                      href="https://i.postimg.cc/vZxWvHDq/Whats-App-Image-2026-04-02-at-11-50-57.jpg"
+                      data-type="image"
+                      data-gallery="city-tour-vito-city"
+                      ><img src="https://i.postimg.cc/vZxWvHDq/Whats-App-Image-2026-04-02-at-11-50-57.jpg" alt="" data-i18n="tour_vito_gallery_alt_2" width="1" height="1" loading="lazy" decoding="async" class="tour-lb-src__img"
+                    /></a>
+                  </div>
+                </div>
+                <div class="tour-card-body tour-card-body--vito-city">
+                  <div class="tour-card-meta tour-card-meta--vito-city">
+                    <span class="tour-meta-pill">
+                      <span class="tour-meta-ic" aria-hidden="true">⏱</span>
+                      <span data-i18n="tour_vito_meta_time"></span>
+                    </span>
+                    <span class="tour-meta-pill">
+                      <span class="tour-meta-ic" aria-hidden="true">👥</span>
+                      <span data-i18n="tour_vito_meta_group"></span>
+                    </span>
+                    <span class="tour-meta-pill">
+                      <span class="tour-meta-ic" aria-hidden="true">🚐</span>
+                      <span data-i18n="tour_vito_meta_vehicle"></span>
+                    </span>
+                    <span class="tour-meta-pill">
+                      <span class="tour-meta-ic" aria-hidden="true">🧭</span>
+                      <span data-i18n="tour_vito_meta_tour_type"></span>
+                    </span>
+                    <span class="tour-meta-pill">
+                      <span class="tour-meta-ic" aria-hidden="true">✓</span>
+                      <span data-i18n="tour_vito_meta_flat"></span>
+                    </span>
+                  </div>
+                  <h3 class="tour-card-title" data-i18n="tour_vito_title"></h3>
+                  <p class="tour-card-desc" data-i18n="tour_vito_desc"></p>
+                  <ul class="tour-feature-checklist" role="list">
+                    <li data-i18n="tour_vito_feat_1"></li>
+                    <li data-i18n="tour_vito_feat_2"></li>
+                    <li data-i18n="tour_vito_feat_3"></li>
+                    <li data-i18n="tour_vito_feat_4"></li>
+                    <li data-i18n="tour_vito_feat_5"></li>
+                  </ul>
+                  <p class="tour-lang-line">
+                    <span class="tour-lang-line__ic" aria-hidden="true">🗣</span>
+                    <span data-i18n="tour_driver_languages"></span>
+                  </p>
+                  <div class="tour-price-block tour-price-block--premium">
+                    <p class="tour-price-heading" data-i18n="tour_price_label"></p>
+                    <div class="tour-price-body" data-tour-pricing="vito"></div>
+                    <p class="tour-price-note" data-i18n="tour_vito_price_note"></p>
+                  </div>
+                  <div class="card-chat-row card-chat-row--tour">
+                    <a
+                      class="btn btn-wa-card tour-wa-btn"
+                      href="#"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      data-wa-full-key="wa_tour_book_vito"
+                      data-i18n="tour_book_whatsapp"
+                    ></a>
+                    <a
+                      class="btn btn-telegram-outline"
+                      href="https://t.me/apartamentnearbaku"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      data-i18n="tour_book_telegram"
+                    ></a>
+                  </div>
+                </div>
+              </article>
+            </li>
+            <li class="tour-card-wrap tour-card-wrap--x5-luxury">
+              <article class="tour-card tour-card--luxury tour-card--x5 tour-card--x5-elite">
+                <span class="tour-card-badge tour-card-badge--lux tour-card-badge--vip-choice" data-i18n="tour_badge_vip_choice"></span>
+                <div
+                  class="tour-card-media tour-card-media--hero-gallery tour-card-media--x5-tour tour-card-media--x5-elite"
+                  role="group"
+                  data-i18n-aria-label="tour_x5_gallery_aria"
+                  aria-label=""
+                >
+                  <div class="tour-hero-gallery" data-tour-hero-gallery>
+                    <button type="button" class="tour-hero-gallery__main" data-tour-lb-start="0">
+                      <img
+                        class="tour-hero-gallery__img"
+                        src="https://i.postimg.cc/m2vcB32d/Chat-GPT-Image-Apr-2-2026-11-49-45-AM.png"
+                        alt=""
+                        data-i18n="tour_x5_gallery_alt_1"
+                        width="1200"
+                        height="900"
+                        sizes="(max-width: 767px) 100vw, min(520px, 92vw)"
+                        loading="eager"
+                        decoding="async"
+                        fetchpriority="high"
+                      />
+                    </button>
+                    <div class="tour-hero-gallery__thumbs" role="list">
+                      <button type="button" class="tour-hero-gallery__thumb is-active" data-tour-lb-start="0">
+                        <img
+                          src="https://i.postimg.cc/m2vcB32d/Chat-GPT-Image-Apr-2-2026-11-49-45-AM.png"
+                          alt=""
+                          data-i18n="tour_x5_gallery_alt_1"
+                          width="400"
+                          height="300"
+                          loading="eager"
+                          decoding="async"
+                        />
+                      </button>
+                      <button type="button" class="tour-hero-gallery__thumb" data-tour-lb-start="1">
+                        <img
+                          src="https://i.postimg.cc/MKCcq0Kd/Chat-GPT-Image-Apr-2-2026-11-51-25-AM.png"
+                          alt=""
+                          data-i18n="tour_x5_gallery_alt_2"
+                          width="400"
+                          height="300"
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      </button>
+                      <button type="button" class="tour-hero-gallery__thumb" data-tour-lb-start="2">
+                        <img
+                          src="https://i.postimg.cc/28sqrd8K/Chat-GPT-Image-Apr-2-2026-11-52-30-AM.png"
+                          alt=""
+                          data-i18n="tour_x5_gallery_alt_3"
+                          width="400"
+                          height="300"
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      </button>
+                      <button type="button" class="tour-hero-gallery__thumb" data-tour-lb-start="3">
+                        <img
+                          src="https://i.postimg.cc/DyJW9pF1/Chat-GPT-Image-Apr-2-2026-11-52-50-AM.png"
+                          alt=""
+                          data-i18n="tour_x5_gallery_alt_4"
+                          width="400"
+                          height="300"
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      </button>
                     </div>
+                  </div>
+                  <div class="tour-lb-anchors" aria-hidden="true">
+                    <a
+                      tabindex="-1"
+                      class="tour-x5-lightbox tour-lb-src"
+                      href="https://i.postimg.cc/m2vcB32d/Chat-GPT-Image-Apr-2-2026-11-49-45-AM.png"
+                      data-type="image"
+                      data-gallery="city-tour-x5"
+                      ><img src="https://i.postimg.cc/m2vcB32d/Chat-GPT-Image-Apr-2-2026-11-49-45-AM.png" alt="" data-i18n="tour_x5_gallery_alt_1" width="1" height="1" loading="lazy" decoding="async" class="tour-lb-src__img"
+                    /></a>
+                    <a
+                      tabindex="-1"
+                      class="tour-x5-lightbox tour-lb-src"
+                      href="https://i.postimg.cc/MKCcq0Kd/Chat-GPT-Image-Apr-2-2026-11-51-25-AM.png"
+                      data-type="image"
+                      data-gallery="city-tour-x5"
+                      ><img src="https://i.postimg.cc/MKCcq0Kd/Chat-GPT-Image-Apr-2-2026-11-51-25-AM.png" alt="" data-i18n="tour_x5_gallery_alt_2" width="1" height="1" loading="lazy" decoding="async" class="tour-lb-src__img"
+                    /></a>
+                    <a
+                      tabindex="-1"
+                      class="tour-x5-lightbox tour-lb-src"
+                      href="https://i.postimg.cc/28sqrd8K/Chat-GPT-Image-Apr-2-2026-11-52-30-AM.png"
+                      data-type="image"
+                      data-gallery="city-tour-x5"
+                      ><img src="https://i.postimg.cc/28sqrd8K/Chat-GPT-Image-Apr-2-2026-11-52-30-AM.png" alt="" data-i18n="tour_x5_gallery_alt_3" width="1" height="1" loading="lazy" decoding="async" class="tour-lb-src__img"
+                    /></a>
+                    <a
+                      tabindex="-1"
+                      class="tour-x5-lightbox tour-lb-src"
+                      href="https://i.postimg.cc/DyJW9pF1/Chat-GPT-Image-Apr-2-2026-11-52-50-AM.png"
+                      data-type="image"
+                      data-gallery="city-tour-x5"
+                      ><img src="https://i.postimg.cc/DyJW9pF1/Chat-GPT-Image-Apr-2-2026-11-52-50-AM.png" alt="" data-i18n="tour_x5_gallery_alt_4" width="1" height="1" loading="lazy" decoding="async" class="tour-lb-src__img"
+                    /></a>
+                  </div>
+                </div>
+                <div class="tour-card-body tour-card-body--x5-lux">
+                  <div class="tour-card-meta tour-card-meta--x5-lux">
+                    <span class="tour-meta-pill tour-meta-pill--lux">
+                      <span class="tour-meta-ic" aria-hidden="true">⏱</span>
+                      <span data-i18n="tour_x5_meta_time"></span>
+                    </span>
+                    <span class="tour-meta-pill tour-meta-pill--lux">
+                      <span class="tour-meta-ic" aria-hidden="true">👥</span>
+                      <span data-i18n="tour_x5_meta_group"></span>
+                    </span>
+                    <span class="tour-meta-pill tour-meta-pill--lux">
+                      <span class="tour-meta-ic" aria-hidden="true">🚙</span>
+                      <span data-i18n="tour_x5_meta_vehicle"></span>
+                    </span>
+                    <span class="tour-meta-pill tour-meta-pill--lux">
+                      <span class="tour-meta-ic" aria-hidden="true">🧭</span>
+                      <span data-i18n="tour_x5_meta_tour_type"></span>
+                    </span>
+                    <span class="tour-meta-pill tour-meta-pill--lux">
+                      <span class="tour-meta-ic" aria-hidden="true">💎</span>
+                      <span data-i18n="tour_x5_meta_premium_rate"></span>
+                    </span>
+                  </div>
+                  <h3 class="tour-card-title tour-card-title--x5-elite" data-i18n="tour_x5_title"></h3>
+                  <p class="tour-card-desc" data-i18n="tour_x5_desc"></p>
+                  <ul class="tour-feature-checklist tour-feature-checklist--lux" role="list">
+                    <li data-i18n="tour_x5_feat_1"></li>
+                    <li data-i18n="tour_x5_feat_2"></li>
+                    <li data-i18n="tour_x5_feat_3"></li>
+                    <li data-i18n="tour_x5_feat_4"></li>
+                    <li data-i18n="tour_x5_feat_5"></li>
+                  </ul>
+                  <p class="tour-lang-line">
+                    <span class="tour-lang-line__ic" aria-hidden="true">🗣</span>
+                    <span data-i18n="tour_driver_languages"></span>
+                  </p>
+                  <div class="tour-price-block tour-price-block--luxury tour-price-block--x5-elite tour-price-block--premium">
+                    <p class="tour-price-heading" data-i18n="tour_price_label"></p>
+                    <div class="tour-price-body" data-tour-pricing="x5"></div>
+                    <p class="tour-price-note" data-i18n="tour_x5_price_note"></p>
+                  </div>
+                  <div class="card-chat-row card-chat-row--tour">
+                    <a
+                      class="btn btn-wa-card tour-wa-btn"
+                      href="#"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      data-wa-full-key="wa_tour_book_x5"
+                      data-i18n="tour_book_whatsapp"
+                    ></a>
+                    <a
+                      class="btn btn-telegram-outline"
+                      href="https://t.me/apartamentnearbaku"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      data-i18n="tour_book_telegram"
+                    ></a>
                   </div>
                 </div>
               </article>
@@ -1180,6 +1515,7 @@
     <!-- i18n first: loads locales, applies translations on DOM ready, then fires i18n:applied for gallery -->
     <script src="js/seo-config.js"></script>
     <script src="js/i18n.js"></script>
+    <script src="js/tour-pricing.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/glightbox@3.3.0/dist/js/glightbox.min.js"></script>
     <script src="js/comfort-glightbox.js"></script>
     <script src="js/apt-image-utils.js"></script>

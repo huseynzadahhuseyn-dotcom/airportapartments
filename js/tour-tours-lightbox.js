@@ -7,13 +7,6 @@
 
   var CONFIG = [
     {
-      root: ".tour-card-media--baku-route-tour",
-      link: "a.tour-route-lightbox",
-      isVehicle: function () {
-        return false;
-      },
-    },
-    {
       root: ".tour-card-media--sedan-tour",
       link: "a.tour-sedan-glightbox",
       isVehicle: function (anchor) {
