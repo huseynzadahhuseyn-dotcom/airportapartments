@@ -320,6 +320,7 @@
     grid.setAttribute("role", "list");
 
     data.forEach(function (apt) {
+      try {
       var slidesPayload = [];
       var usedBookDemo = false;
 
@@ -465,6 +466,11 @@
 
       art.appendChild(body);
       grid.appendChild(art);
+      } catch (err) {
+        if (typeof console !== "undefined" && console.warn) {
+          console.warn("[apartment-cards] skipped listing", apt && apt.id, err);
+        }
+      }
     });
 
     if (window.I18N && typeof window.I18N.apply === "function") {
