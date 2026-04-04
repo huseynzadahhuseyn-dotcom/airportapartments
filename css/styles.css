@@ -2816,20 +2816,22 @@ a:hover {
 
 .apt-booking-icon-row {
   display: flex;
-  flex-wrap: nowrap;
-  gap: 0.45rem;
-  margin-top: 0.65rem;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.4rem;
+  margin-top: 0.7rem;
   justify-content: stretch;
 }
 
 .apt-booking-icon-tile {
-  flex: 1 1 0;
+  flex: 1 1 calc(50% - 0.25rem);
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 52px;
+  gap: 0.28rem;
+  min-height: 3.75rem;
   min-width: 0;
-  padding: 0.35rem;
+  padding: 0.42rem 0.3rem 0.38rem;
   border-radius: 14px;
   text-decoration: none;
   border: 1px solid rgba(255, 255, 255, 0.22);
@@ -2840,17 +2842,39 @@ a:hover {
     filter 0.2s ease;
 }
 
+@media (min-width: 380px) {
+  .apt-booking-icon-tile {
+    flex: 1 1 0;
+    min-height: 3.5rem;
+  }
+}
+
 .apt-booking-icon-mark {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 2.5rem;
-  height: 2.5rem;
+  width: 2.35rem;
+  height: 2.35rem;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.22);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.45),
     0 2px 10px rgba(0, 0, 0, 0.12);
+}
+
+.apt-booking-icon-label {
+  display: block;
+  max-width: 100%;
+  font-size: 0.62rem;
+  font-weight: 750;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 1.15;
+  color: rgba(255, 255, 255, 0.96);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .apt-booking-icon-tile:hover:not(.apt-booking-icon-tile--disabled) {
@@ -2894,10 +2918,23 @@ a:hover {
     inset 0 1px 0 rgba(255, 255, 255, 0.18);
 }
 
+.apt-booking-icon-tile--tg {
+  color: #fff;
+  background: linear-gradient(165deg, #37aee2 0%, #229ed9 48%, #1c8bc9 100%);
+  box-shadow:
+    0 6px 18px rgba(34, 158, 217, 0.38),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
 .apt-booking-icon-svg {
-  width: 1.42rem;
-  height: 1.42rem;
+  width: 1.38rem;
+  height: 1.38rem;
   display: block;
+}
+
+.apt-booking-icon-svg--booking {
+  width: 1.5rem;
+  height: 1.5rem;
 }
 
 .apt-booking-icon-svg text {
@@ -4278,6 +4315,115 @@ a:hover {
 }
 
 /* City tours */
+.tours-grid--route {
+  max-width: min(100%, 56rem);
+  margin-inline: auto;
+}
+
+.tour-card--route-package {
+  border-radius: calc(var(--radius-lg) + 4px);
+}
+
+.tour-card--route-package::before {
+  background: linear-gradient(90deg, var(--accent) 0%, rgba(13, 110, 110, 0.55) 55%, rgba(201, 162, 39, 0.75) 100%);
+}
+
+.tour-route-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+@media (min-width: 960px) {
+  .tour-route-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+    align-items: stretch;
+  }
+
+  .tour-route-layout .tour-card-media--baku-route-tour {
+    border-radius: 0;
+    border-right: 1px solid var(--border);
+  }
+
+  .tour-route-layout__body {
+    padding: 1.35rem 1.5rem 1.5rem;
+    justify-content: flex-start;
+  }
+}
+
+.tour-route-layout__body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  padding: 1.15rem 1.25rem 1.35rem;
+}
+
+.tour-card-meta--route {
+  margin-bottom: 0.15rem;
+}
+
+.tour-card-title--route {
+  font-family: var(--font-display);
+  font-size: clamp(1.2rem, 2.8vw, 1.45rem);
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+.tour-card-desc--route {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: var(--ink-muted);
+}
+
+.tour-route-highlights-heading {
+  margin: 0.35rem 0 0.25rem;
+  font-size: 0.82rem;
+  font-weight: 750;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.tour-route-stops {
+  margin: 0;
+  padding: 0.35rem 0 0.35rem 1.15rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  font-size: 0.92rem;
+  line-height: 1.45;
+  color: var(--ink);
+}
+
+.tour-route-stops li::marker {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.tour-route-footnote {
+  margin: 0.25rem 0 0;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--ink-muted);
+}
+
+.tour-route-price-teaser {
+  margin: 0.15rem 0 0.35rem;
+  padding: 0.65rem 0.85rem;
+  font-size: 0.88rem;
+  line-height: 1.45;
+  color: var(--ink);
+  background: linear-gradient(145deg, rgba(13, 110, 110, 0.08) 0%, rgba(26, 31, 46, 0.04) 100%);
+  border: 1px solid rgba(13, 110, 110, 0.18);
+  border-radius: var(--radius);
+}
+
+.tour-hero-gallery__thumbs--route {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
 .tours-grid {
   list-style: none;
   margin: 0;

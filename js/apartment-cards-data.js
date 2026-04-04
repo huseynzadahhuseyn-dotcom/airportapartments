@@ -45,6 +45,7 @@
     whatsapp: "#",
     booking: "#",
     airbnb: "#",
+    telegram: "https://t.me/apartamentnearbaku",
     details: "#",
     featured: false,
     /** Optional: full WhatsApp message instead of site default (+ optional suffix key). */
@@ -78,6 +79,10 @@
       if (ds && ds !== "#") detailHref = ds;
     }
 
+    var tgRaw = raw.telegram == null ? "" : String(raw.telegram).trim();
+    var cardTelegramUrl =
+      tgRaw && tgRaw !== "#" && /^https?:\/\//i.test(tgRaw) ? tgRaw : "https://t.me/apartamentnearbaku";
+
     return {
       id: id,
       _plain: true,
@@ -93,6 +98,7 @@
       waSuffixKey: raw.whatsappSuffixKey != null ? String(raw.whatsappSuffixKey) : "",
       cardBookingUrl: linkUsable(raw.booking),
       cardAirbnbUrl: linkUsable(raw.airbnb),
+      cardTelegramUrl: cardTelegramUrl,
       detailHref: detailHref,
     };
   };

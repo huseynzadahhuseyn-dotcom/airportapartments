@@ -203,29 +203,42 @@
     return wrap.firstChild;
   }
 
-  /** Stylised marks (not official logos) — readable at small sizes */
+  /**
+   * Brand-inspired marks (not official trademarks) — booking vs messaging read clearly at small sizes.
+   * Booking: dot grid reminiscent of Booking.com; Airbnb: loop/belo shape; WA/TG: chat icons.
+   */
   function iconSvgBooking() {
     return svgNs(
-      '<svg class="apt-booking-icon-svg" viewBox="0 0 24 24" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">' +
-        '<text x="6.2" y="16.8" font-family="system-ui,-apple-system,BlinkMacSystemFont,\'Segoe UI\',Roboto,sans-serif" font-weight="800" font-size="14" fill="currentColor">B</text>' +
-        '<circle cx="18.2" cy="8.4" r="1.85" fill="currentColor"/>' +
-      "</svg>"
+      '<svg class="apt-booking-icon-svg apt-booking-icon-svg--booking" viewBox="0 0 24 24" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">' +
+        '<g fill="currentColor">' +
+        '<circle cx="6.5" cy="6.5" r="2.1"/><circle cx="12" cy="6.5" r="2.1"/><circle cx="17.5" cy="6.5" r="2.1"/>' +
+        '<circle cx="9.25" cy="12" r="2.1"/><circle cx="14.75" cy="12" r="2.1"/>' +
+        '<circle cx="12" cy="17.5" r="2.1"/>' +
+        "</g></svg>"
     );
   }
 
   function iconSvgAirbnb() {
     return svgNs(
-      '<svg class="apt-booking-icon-svg" viewBox="0 0 24 24" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">' +
-        '<path fill="currentColor" d="M12 17.2c-.9-1.6-1.8-3.6-2.4-5.2-.4-1.1-.6-2-.6-2.8 0-1.4.8-2.4 1.9-2.4.9 0 1.5.5 2.1 1.3.6-.8 1.2-1.3 2.1-1.3 1.1 0 1.9 1 1.9 2.4 0 .8-.2 1.7-.6 2.8-.6 1.6-1.5 3.6-2.4 5.2-.3.6-.7.9-1.2.9s-.9-.3-1.2-.9z"/>' +
-      "</svg>"
+      '<svg class="apt-booking-icon-svg apt-booking-icon-svg--airbnb" viewBox="0 0 24 24" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">' +
+        '<path fill="currentColor" d="M12 3.4L10.5 6c-.9 1.55-2.7 4.75-3.45 6.2-.55 1.05-.55 2.25 0 3.35.45.85 1.35 1.4 2.35 1.4.95 0 1.85-.5 2.45-1.35.6.85 1.5 1.35 2.45 1.35 1 0 1.9-.55 2.35-1.4.55-1.1.55-2.3 0-3.35-.75-1.45-2.55-4.65-3.45-6.2L12 3.4zm0 2.35c.75 1.3 2.35 4.1 3.05 5.45.25.5.25 1.05 0 1.55-.15.3-.45.45-.75.45-.35 0-.65-.2-.85-.5l-1.45-2.1-1.45 2.1c-.2.3-.5.5-.85.5-.3 0-.6-.15-.75-.45-.25-.5-.25-1.05 0-1.55.7-1.35 2.3-4.15 3.05-5.45z"/>' +
+        "</svg>"
     );
   }
 
   function iconSvgWhatsApp() {
     return svgNs(
-      '<svg class="apt-booking-icon-svg" viewBox="0 0 24 24" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">' +
-        '<path fill="currentColor" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.63-.01c-.22 0-.457.095-.657.293-.21.196-.866.844-.866 2.004 0 1.168.848 2.294.968 2.448.122.154.68 1.084 1.637 1.9C11.5 16.13 13.5 17 14.9 17.3c.7.14 1.24.18 1.66.15.536-.05 1.66-.676 1.903-1.33.203-.557.203-1.03.15-1.134-.053-.104-.171-.214-.335-.362zM12.05 3.5c-5.06 0-9.91 4.01-9.91 8.94 0 1.58.44 3.08 1.2 4.45L2.05 22l4.23-1.22a9.86 9.86 0 0 0 4.77 1.22h.01c5.06 0 9.91-4.01 9.91-8.94S17.12 3.5 12.05 3.5z"/>' +
-      "</svg>"
+      '<svg class="apt-booking-icon-svg apt-booking-icon-svg--wa" viewBox="0 0 24 24" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">' +
+        '<path fill="currentColor" d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.96.51 3.83 1.48 5.48L2 22l4.74-1.24a9.86 9.86 0 0 0 5.3 1.53h.01c5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zm0 1.8c4.48 0 8.11 3.63 8.11 8.11 0 4.48-3.63 8.11-8.11 8.11-.89 0-1.76-.14-2.58-.41l-.19-.07-2.66.7.71-2.59-.08-.2a8.06 8.06 0 0 1-1.24-4.33c0-4.48 3.63-8.11 8.11-8.11zm4.38 6.15c.24-.01.54.08.7.28.18.22.35.63.35 1.02 0 .2-.04.4-.12.6-.08.22-.62 1.18-.62 1.36s-.19.44-.56.77c-.34.31-.67.53-.77.62-.22.18-.47.27-.72.27-.18 0-.35-.04-.52-.12-.16-.08-.62-.23-1.78-.73-1.5-.65-2.48-1.46-2.86-1.7-.38-.24-.66-.37-.85-.62-.19-.26-.29-.48-.29-.7 0-.22.1-.42.22-.58.14-.18.31-.45.47-.6.16-.16.22-.27.33-.45.11-.18.05-.34-.02-.48-.08-.14-.7-1.68-.96-2.3-.25-.6-.51-.52-.7-.53h-.6c-.2 0-.52.08-.79.38-.27.31-1.04 1.01-1.04 2.47 0 1.45 1.06 2.86 1.21 3.06.15.2 2.09 3.38 5.28 4.61.74.28 1.31.45 1.76.58.74.21 1.41.18 1.94.11.59-.09 1.82-.74 2.08-1.46.26-.72.26-1.34.18-1.46-.08-.12-.3-.19-.62-.33z"/>' +
+        "</svg>"
+    );
+  }
+
+  function iconSvgTelegram() {
+    return svgNs(
+      '<svg class="apt-booking-icon-svg apt-booking-icon-svg--tg" viewBox="0 0 24 24" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">' +
+        '<path fill="currentColor" d="M21.924 3.625a1.05 1.05 0 0 0-1.05-.05L3.265 11.35a1.05 1.05 0 0 0 .05 1.97l4.62 1.72 1.78 5.58a1.05 1.05 0 0 0 1.97.08l2.48-4.55 5.32 3.88a1.05 1.05 0 0 0 1.63-.58l2.95-14.7zM17.1 6.35 9.62 13.1l-.22 3.15-1.2-3.75 7.9-6.15z"/>' +
+        "</svg>"
     );
   }
 
@@ -233,6 +246,20 @@
     var mark = el("span", "apt-booking-icon-mark");
     mark.appendChild(svgNode.cloneNode(true));
     tile.appendChild(mark);
+  }
+
+  function appendIconLabel(tile, i18nKey) {
+    var lab = el("span", "apt-booking-icon-label");
+    lab.setAttribute("data-i18n", i18nKey);
+    tile.appendChild(lab);
+  }
+
+  function addIconTile(row, tag, cls, iconFactory, attrs, labelKey) {
+    var node = el(tag, cls, attrs || {});
+    wrapIconMark(node, iconFactory());
+    appendIconLabel(node, labelKey);
+    row.appendChild(node);
+    return node;
   }
 
   function openApartmentLightbox(apt, slidesPayload) {
@@ -251,43 +278,65 @@
     row.setAttribute("data-i18n-aria-label", "apt_booking_icons_group_a11y");
     row.setAttribute("aria-label", "");
 
-    function addTile(tag, cls, iconFactory, attrs) {
-      var node = el(tag, cls, attrs || {});
-      wrapIconMark(node, iconFactory());
-      row.appendChild(node);
-      return node;
-    }
-
     if (bookingUrl) {
-      var b = addTile("a", "apt-booking-icon-tile apt-booking-icon-tile--booking", iconSvgBooking, {
-        href: bookingUrl,
-        target: "_blank",
-        rel: "noopener noreferrer",
-      });
+      var b = addIconTile(
+        row,
+        "a",
+        "apt-booking-icon-tile apt-booking-icon-tile--booking",
+        iconSvgBooking,
+        {
+          href: bookingUrl,
+          target: "_blank",
+          rel: "noopener noreferrer",
+        },
+        "apt_label_booking"
+      );
       b.setAttribute("data-i18n-title", "apt_icon_booking_title");
       b.setAttribute("data-i18n-aria-label", "apt_icon_booking_title");
     } else {
-      var bs = addTile("span", "apt-booking-icon-tile apt-booking-icon-tile--booking apt-booking-icon-tile--disabled", iconSvgBooking);
+      var bs = addIconTile(
+        row,
+        "span",
+        "apt-booking-icon-tile apt-booking-icon-tile--booking apt-booking-icon-tile--disabled",
+        iconSvgBooking,
+        {},
+        "apt_label_booking"
+      );
       bs.setAttribute("data-i18n-title", "apt_icon_unavailable");
       bs.setAttribute("data-i18n-aria-label", "apt_cta_unavailable");
     }
 
     if (airbnbUrl) {
-      var a = addTile("a", "apt-booking-icon-tile apt-booking-icon-tile--airbnb", iconSvgAirbnb, {
-        href: airbnbUrl,
-        target: "_blank",
-        rel: "noopener noreferrer",
-      });
-      a.setAttribute("data-i18n-title", "apt_icon_airbnb_title");
-      a.setAttribute("data-i18n-aria-label", "apt_icon_airbnb_title");
+      var ar = addIconTile(
+        row,
+        "a",
+        "apt-booking-icon-tile apt-booking-icon-tile--airbnb",
+        iconSvgAirbnb,
+        {
+          href: airbnbUrl,
+          target: "_blank",
+          rel: "noopener noreferrer",
+        },
+        "apt_label_airbnb"
+      );
+      ar.setAttribute("data-i18n-title", "apt_icon_airbnb_title");
+      ar.setAttribute("data-i18n-aria-label", "apt_icon_airbnb_title");
     } else {
-      var as = addTile("span", "apt-booking-icon-tile apt-booking-icon-tile--airbnb apt-booking-icon-tile--disabled", iconSvgAirbnb);
+      var as = addIconTile(
+        row,
+        "span",
+        "apt-booking-icon-tile apt-booking-icon-tile--airbnb apt-booking-icon-tile--disabled",
+        iconSvgAirbnb,
+        {},
+        "apt_label_airbnb"
+      );
       as.setAttribute("data-i18n-title", "apt_icon_unavailable");
       as.setAttribute("data-i18n-aria-label", "apt_cta_unavailable");
     }
 
     var wa = el("a", "apt-booking-icon-tile apt-booking-icon-tile--wa");
     wrapIconMark(wa, iconSvgWhatsApp());
+    appendIconLabel(wa, "apt_label_whatsapp");
     wa.setAttribute("target", "_blank");
     wa.setAttribute("rel", "noopener noreferrer");
     wa.setAttribute("data-i18n-title", "apt_icon_whatsapp_title");
@@ -307,6 +356,17 @@
       wa.setAttribute("data-wa-suffix-key", apt.waSuffixKey || "");
     }
     row.appendChild(wa);
+
+    var tgHref = (apt.cardTelegramUrl || "https://t.me/apartamentnearbaku").trim() || "https://t.me/apartamentnearbaku";
+    var tg = el("a", "apt-booking-icon-tile apt-booking-icon-tile--tg");
+    wrapIconMark(tg, iconSvgTelegram());
+    appendIconLabel(tg, "apt_label_telegram");
+    tg.setAttribute("href", tgHref);
+    tg.setAttribute("target", "_blank");
+    tg.setAttribute("rel", "noopener noreferrer");
+    tg.setAttribute("data-i18n-title", "apt_icon_telegram_title");
+    tg.setAttribute("data-i18n-aria-label", "apt_icon_telegram_title");
+    row.appendChild(tg);
 
     media.appendChild(row);
   }
