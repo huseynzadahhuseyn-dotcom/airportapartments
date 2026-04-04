@@ -36,7 +36,7 @@
     title: "Apartment Name",
     description: "Short apartment description",
     guests: "Up to 4 guests",
-    price: "from 95 AZN / night",
+    price: "from 60 AZN / night",
     images: [
       "/images/apartments/example/1.jpg",
       "/images/apartments/example/2.jpg",

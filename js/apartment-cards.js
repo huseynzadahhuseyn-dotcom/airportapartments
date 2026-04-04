@@ -511,7 +511,7 @@
             '<strong class="apt-booking-price-num">' +
             apt.priceFrom +
             "</strong> " +
-            '<span class="apt-booking-price-cur" data-i18n="currency_azn"></span>' +
+            '<span class="apt-booking-price-cur" data-i18n="currency_azn"></span> ' +
             '<span class="apt-booking-price-per" data-i18n="price_per_night"></span>';
         }
         body.appendChild(priceRow);

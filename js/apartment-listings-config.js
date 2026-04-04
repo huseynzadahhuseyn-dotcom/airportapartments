@@ -26,7 +26,7 @@
     },
     bina: {
       airportDistanceKey: "apt_airport_dist_bina",
-      priceOnRequest: true,
+      priceOnRequest: false,
       coverImage: "",
       airbnbUrl: "https://www.airbnb.com/h/binaairport",
       bookingUrl: "https://www.booking.com/hotel/az/house-near-baku-airport-and-bos.ru.html",
@@ -51,7 +51,7 @@
     },
     "premium-villa-2-bedroom": {
       airportDistanceKey: "apt_airport_dist_premium_villa_2bed",
-      priceOnRequest: true,
+      priceOnRequest: false,
       coverImage: "",
       airbnbUrl: "",
       bookingUrl: "",

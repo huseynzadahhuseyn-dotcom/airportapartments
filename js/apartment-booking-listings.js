@@ -32,7 +32,7 @@
  *   titleKey: "listing_name_avia",
  *   blurbKey: "apt_card_blurb_avia",
  *   guestsKey: "apt_card_guests_avia",
- *   priceFrom: 85,
+ *   priceFrom: 60,
  *   waSuffixKey: "wa_suffix_avia",
  *   images: ["/images/placeholder.svg", "/images/placeholder.svg"],
  *   bookingLink: "https://www.booking.com/...",
@@ -46,10 +46,10 @@
 
   /* Skeleton examples (same shape as real rows). Replace keys/urls/images for new listings.
 
-  { id: "example-1", premium: false, titleKey: "listing_name_avia",      blurbKey: "apt_card_blurb_avia",      guestsKey: "apt_card_guests_avia",      priceFrom: 85,  waSuffixKey: "wa_suffix_avia",      images: ["/images/placeholder.svg"] },
-  { id: "example-2", premium: false, titleKey: "listing_name_bina",      blurbKey: "apt_card_blurb_bina",      guestsKey: "apt_card_guests_bina",      priceFrom: 120, waSuffixKey: "wa_suffix_bina",      images: ["/images/placeholder.svg"] },
-  { id: "example-3", premium: false, titleKey: "listing_name_horizon",   blurbKey: "apt_card_blurb_horizon",   guestsKey: "apt_card_guests_horizon",   priceFrom: 90,  waSuffixKey: "wa_suffix_horizon",   images: ["/images/placeholder.svg"] },
-  { id: "example-4", premium: false, titleKey: "listing_name_layover",   blurbKey: "apt_card_blurb_layover",   guestsKey: "apt_card_guests_layover",   priceFrom: 70,  waSuffixKey: "wa_suffix_layover",   images: ["/images/placeholder.svg"] },
+  { id: "example-1", premium: false, titleKey: "listing_name_avia",      blurbKey: "apt_card_blurb_avia",      guestsKey: "apt_card_guests_avia",      priceFrom: 60,  waSuffixKey: "wa_suffix_avia",      images: ["/images/placeholder.svg"] },
+  { id: "example-2", premium: false, titleKey: "listing_name_bina",      blurbKey: "apt_card_blurb_bina",      guestsKey: "apt_card_guests_bina",      priceFrom: 80, waSuffixKey: "wa_suffix_bina",      images: ["/images/placeholder.svg"] },
+  { id: "example-3", premium: false, titleKey: "listing_name_horizon",   blurbKey: "apt_card_blurb_horizon",   guestsKey: "apt_card_guests_horizon",   priceFrom: 80,  waSuffixKey: "wa_suffix_horizon",   images: ["/images/placeholder.svg"] },
+  { id: "example-4", premium: false, titleKey: "listing_name_layover",   blurbKey: "apt_card_blurb_layover",   guestsKey: "apt_card_guests_layover",   priceFrom: 80,  waSuffixKey: "wa_suffix_layover",   images: ["/images/placeholder.svg"] },
 
   */
 })();
