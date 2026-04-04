@@ -346,6 +346,10 @@
       window.I18N.apply(contentEl);
     }
 
+    if (typeof window.applyWhatsAppLinks === "function") {
+      window.applyWhatsAppLinks();
+    }
+
     if (typeof window.initApartmentSliders === "function") {
       window.initApartmentSliders();
     }

@@ -48,6 +48,8 @@
     telegram: "https://t.me/apartamentnearbaku",
     details: "#",
     featured: false,
+    /** Optional: set false to hide the free airport transfer badge on the card image. */
+    freeAirportTransfer: true,
     /** Optional: full WhatsApp message instead of site default (+ optional suffix key). */
     whatsappMessage: "",
     /** Optional: i18n key appended after default `whatsapp_message` (same as legacy listings). */
@@ -87,6 +89,7 @@
       id: id,
       _plain: true,
       premium: !!raw.featured,
+      cardFreeTransfer: raw.freeAirportTransfer !== false,
       plainTitle: String(raw.title || ""),
       plainDesc: String(raw.description || ""),
       plainGuests: String(raw.guests || ""),

@@ -1,5 +1,7 @@
 /**
- * WhatsApp links: data-wa-prefill (whatsapp_message) and data-wa-full-key (locale key).
+ * WhatsApp links: unified booking text from `whatsapp_message` (all locales).
+ * - `data-wa-prefill` — uses `data-wa-body` if set, else `whatsapp_message`.
+ * - `data-wa-full-key` — legacy attribute; href still uses `whatsapp_message` so every CTA matches.
  */
 (function () {
   "use strict";
@@ -10,38 +12,32 @@
     return encodeURIComponent(text || "");
   }
 
-  function applyWaLinks() {
-    var defaultMsg = "";
+  function defaultWhatsAppText() {
     if (window.I18N && typeof window.I18N.t === "function") {
-      defaultMsg = window.I18N.t("whatsapp_message") || "";
+      return window.I18N.t("whatsapp_message") || "";
     }
+    return "";
+  }
+
+  function applyWaLinks() {
+    var fallback = defaultWhatsAppText();
 
     document.querySelectorAll("a[data-wa-full-key]").forEach(function (a) {
-      var key = a.getAttribute("data-wa-full-key");
-      if (!key || !window.I18N || typeof window.I18N.t !== "function") return;
-      var body = window.I18N.t(key);
+      var body = fallback;
       a.setAttribute("href", WA_BASE + "?text=" + encode(body));
     });
 
     document.querySelectorAll("a[data-wa-prefill]").forEach(function (a) {
       if (a.hasAttribute("data-wa-full-key")) return;
       var bodyOnly = a.getAttribute("data-wa-body");
-      var msg;
-      if (bodyOnly !== null && bodyOnly !== "") {
-        msg = bodyOnly;
-      } else {
-        msg = defaultMsg;
-        if (window.I18N && typeof window.I18N.t === "function") {
-          msg = window.I18N.t("whatsapp_message") || msg;
-          var sk = a.getAttribute("data-wa-suffix-key");
-          if (sk) {
-            msg = msg + (window.I18N.t(sk) || "");
-          }
-        }
-      }
+      var msg =
+        bodyOnly !== null && bodyOnly !== ""
+          ? bodyOnly
+          : fallback;
       a.setAttribute("href", WA_BASE + "?text=" + encode(msg));
     });
   }
 
+  window.applyWhatsAppLinks = applyWaLinks;
   window.addEventListener("i18n:applied", applyWaLinks);
 })();

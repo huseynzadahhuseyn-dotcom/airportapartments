@@ -8,6 +8,7 @@
  * - Set `airbnbUrl` or `bookingUrl` to "" to hide that button on the card.
  * - `coverImage`: optional full path e.g. "/images/cozy-01.jpg" — shown first in the slider.
  * - `priceOnRequest`: true → shows "Price on request" instead of from-price.
+ * - `freeAirportTransfer`: false → hides the green "Free airport transfer" badge on the card image (default: true).
  * - `airportDistanceKey`: i18n key; add matching strings in locales/en.json (and az, ru).
  */
 (function () {
@@ -113,6 +114,8 @@
 
       var cardDistanceKey = pick(cfg, "airportDistanceKey") || "apt_airport_dist_generic";
       var cardPriceOnRequest = pick(cfg, "priceOnRequest") === true;
+      var freeT = pick(cfg, "freeAirportTransfer");
+      var cardFreeTransfer = freeT === false ? false : true;
 
       return Object.assign({}, apt, {
         images: imgs,
@@ -121,6 +124,7 @@
         cardTelegramUrl: cardTelegramUrl,
         cardDistanceKey: cardDistanceKey,
         cardPriceOnRequest: cardPriceOnRequest,
+        cardFreeTransfer: cardFreeTransfer,
       });
     });
   }

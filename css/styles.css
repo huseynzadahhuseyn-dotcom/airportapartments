@@ -2970,6 +2970,49 @@ a:hover {
   vertical-align: middle;
 }
 
+.apt-booking-transfer-badge {
+  position: absolute;
+  top: 0.55rem;
+  left: 0.55rem;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  max-width: min(11.5rem, calc(100% - 3.5rem));
+  padding: 0.28rem 0.5rem;
+  font-size: 0.68rem;
+  font-weight: 750;
+  line-height: 1.15;
+  letter-spacing: 0.01em;
+  color: #fff;
+  text-align: left;
+  background: linear-gradient(145deg, #25d366 0%, #128c7e 100%);
+  border-radius: 6px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.28);
+  pointer-events: none;
+}
+
+.apt-booking-transfer-badge__ic {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.95;
+}
+
+.apt-booking-transfer-badge__ic svg {
+  display: block;
+}
+
+.apt-booking-transfer-badge__text {
+  min-width: 0;
+}
+
+/* Stack under the gold “Featured” pill (same corner on the card) */
+.apt-card--booking-featured .apt-booking-transfer-badge {
+  top: 2.15rem;
+}
+
 .apt-booking-hero-count {
   position: absolute;
   top: 0.65rem;
