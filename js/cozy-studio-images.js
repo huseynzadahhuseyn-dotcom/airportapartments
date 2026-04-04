@@ -1,5 +1,5 @@
 /**
- * Cozy Airport Studio – 5 Min from GYD: direct i.postimg.cc URLs only (listing `avia`, cards, detail, gallery).
+ * Airport Studio Near Baku Airport (GYD) – Free Pickup, 5 Min: direct i.postimg.cc URLs (listing `avia`).
  * `resolveListingImageUrl` passes these through unchanged (remote HTTPS).
  */
 (function () {

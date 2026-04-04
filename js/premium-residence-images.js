@@ -1,5 +1,5 @@
 /**
- * Premium Residence near Baku Airport (GYD) — listing `bina` primary set (direct i.postimg.cc only).
+ * Premium Apartment Near Baku Airport (GYD) – Spacious & Quiet — listing `bina` primary set (direct i.postimg.cc only).
  * `BINA_RESIDENCE_IMAGE_URLS` stays empty so cards/detail/gallery use this list only, no merge extras.
  * `resolveListingImageUrl` leaves HTTPS i.postimg.cc URLs unchanged.
  */

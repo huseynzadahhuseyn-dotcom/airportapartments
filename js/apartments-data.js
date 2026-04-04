@@ -108,7 +108,7 @@
   var LAYOVER_STUDIO_PATHS = urlsOrLegacy(window.LAYOVER_STUDIO_IMAGE_URLS, []);
   var LAYOVER_STUDIO_IMAGES = mapResolvedUrls(LAYOVER_STUDIO_PATHS);
 
-  /** Premium Villa 2 Bedroom (`premium-villa-2-bedroom`) — `js/premium-villa-2-bedroom-images.js` only. */
+  /** 2 Bedroom Villa Near Baku Airport (GYD) (`premium-villa-2-bedroom`) — `js/premium-villa-2-bedroom-images.js` only. */
   var PREMIUM_VILLA_2_BEDROOM_PATHS = urlsOrLegacy(window.PREMIUM_VILLA_2_BEDROOM_IMAGE_URLS, []);
   var PREMIUM_VILLA_2_BEDROOM_IMAGES = mapResolvedUrls(PREMIUM_VILLA_2_BEDROOM_PATHS);
 
@@ -136,7 +136,7 @@
   var PREMIUM_RESIDENCE_PATHS = mergePremiumBina(PREMIUM_RESIDENCE_LEGACY);
   var PREMIUM_RESIDENCE_IMAGES = mapResolvedUrls(PREMIUM_RESIDENCE_PATHS);
 
-  /** Cozy Airport Studio (`avia`) — `js/cozy-studio-images.js` or local `/images/cozy-NN.jpg`. */
+  /** Airport Studio Near Baku Airport (GYD) (`avia`) — `js/cozy-studio-images.js` or local `/images/cozy-NN.jpg`. */
   var AVIA_COZY_PATHS = Array.isArray(window.COZY_AIRPORT_STUDIO_IMAGE_URLS) && window.COZY_AIRPORT_STUDIO_IMAGE_URLS.length
     ? window.COZY_AIRPORT_STUDIO_IMAGE_URLS.slice()
     : [

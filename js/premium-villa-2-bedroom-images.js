@@ -1,5 +1,5 @@
 /**
- * Premium Villa 2 Bedroom — listing `premium-villa-2-bedroom` only.
+ * 2 Bedroom Villa Near Baku Airport (GYD) – Family Friendly — listing `premium-villa-2-bedroom` only.
  * Direct i.postimg.cc URLs in this order (cards, detail). Not part of homepage gallery pool.
  */
 (function () {

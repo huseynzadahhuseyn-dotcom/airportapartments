@@ -1,5 +1,5 @@
 /**
- * Horizon Apartment – Near Baku Airport (GYD) — listing `horizon` only.
+ * Modern Apartment Near Baku Airport (GYD) – Quiet Area — listing `horizon` only.
  * Direct i.postimg.cc URLs in this order (cards, detail, gallery group). No pool / no other listings.
  */
 (function () {

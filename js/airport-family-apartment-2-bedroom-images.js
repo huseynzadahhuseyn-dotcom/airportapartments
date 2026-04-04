@@ -1,5 +1,5 @@
 /**
- * Airport Family Apartment for 5 Person 2 Bedroom — listing `airport-family-apartment-2-bedroom` only.
+ * Family Apartment Near Baku Airport (GYD) – 2 Bedrooms, Up to 5 Guests — listing `airport-family-apartment-2-bedroom` only.
  * Direct i.postimg.cc URLs in this order (cards, detail). Not part of homepage gallery pool.
  */
 (function () {

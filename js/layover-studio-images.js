@@ -1,5 +1,5 @@
 /**
- * Airport Layover Studio – 5 Min from GYD — listing `layover` only.
+ * Layover Studio Near Baku Airport (GYD) – Ideal for Transit — listing `layover` only.
  * Direct i.postimg.cc URLs in this order (cards, detail, gallery group). No pool / no other listings.
  */
 (function () {
