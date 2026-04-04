@@ -21,7 +21,7 @@
  * ota             object   optional { booking: "...", airbnb: "..." }
  * premium         bool     optional "featured" badge
  *
- * After adding rows here, add matching i18n keys in locales/en.json, ru.json, az.json
+ * After adding rows here, add matching i18n keys in locales/en.json, az.json, tr.json, ar.json
  * and (if needed) a block in `apartment-listings-config.js` for airport line / airbnb / booking overrides.
  *
  * Example (commented — duplicate and uncomment to add a 7th listing):

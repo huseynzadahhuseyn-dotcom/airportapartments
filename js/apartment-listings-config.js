@@ -9,7 +9,7 @@
  * - `coverImage`: optional full path e.g. "/images/cozy-01.jpg" — shown first in the slider.
  * - `priceOnRequest`: true → shows "Price on request" instead of from-price.
  * - `freeAirportTransfer`: false → hides the green "Free airport transfer" badge on the card image (default: true).
- * - `airportDistanceKey`: i18n key; add matching strings in locales/en.json (and az, ru).
+ * - `airportDistanceKey`: i18n key; add matching strings in locales/en.json (and az, tr, ar).
  */
 (function () {
   "use strict";

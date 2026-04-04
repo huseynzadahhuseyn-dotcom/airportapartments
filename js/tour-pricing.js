@@ -1,12 +1,11 @@
 /**
  * Injects tour tier prices from canonical AZN bases, converted by site language:
- * AZ → AZN, EN → USD (1 USD = 1.70 AZN), RU → EUR (1 EUR = 2 AZN).
+ * AZ → AZN; EN / TR / AR → USD (1 USD = 1.70 AZN).
  */
 (function () {
   "use strict";
 
   var AZN_PER_USD = 1.7;
-  var AZN_PER_EUR = 2;
 
   var BASE = {
     sedan: [85, 102, 102],
@@ -22,9 +21,6 @@
   function formatAmount(lang, azn) {
     if (lang === "az") {
       return roundClean(azn) + " ₼";
-    }
-    if (lang === "ru") {
-      return "€" + roundClean(azn / AZN_PER_EUR);
     }
     return "$" + roundClean(azn / AZN_PER_USD);
   }

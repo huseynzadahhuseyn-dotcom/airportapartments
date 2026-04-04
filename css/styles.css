@@ -298,6 +298,38 @@ a:hover {
   justify-content: flex-end;
 }
 
+/* Desktop: nav links + chat stay in one band; lang + menu sit to the right (lang always visible on mobile too). */
+@media (min-width: 861px) {
+  .header-end {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    grid-template-areas: "site-nav lang toggle";
+    align-items: center;
+    gap: 0.65rem;
+  }
+
+  .header-end > .site-nav {
+    grid-area: site-nav;
+    flex: unset;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .header-end > .lang-switcher {
+    grid-area: lang;
+  }
+
+  .header-end > .nav-toggle {
+    grid-area: toggle;
+    justify-self: end;
+  }
+
+  html[dir="rtl"] .header-end {
+    grid-template-columns: auto auto minmax(0, 1fr);
+    grid-template-areas: "toggle lang site-nav";
+  }
+}
+
 .site-nav {
   display: flex;
   align-items: center;
@@ -608,8 +640,8 @@ a:hover {
   flex-wrap: nowrap;
   align-items: center;
   justify-content: center;
-  gap: 0.25rem;
-  padding: 0.2rem 0.3rem;
+  gap: 0.2rem;
+  padding: 0.18rem 0.28rem;
   border-radius: 12px;
   background: rgba(26, 31, 46, 0.04);
   border: 1px solid var(--border);
@@ -660,23 +692,76 @@ a:hover {
   border-color: rgba(13, 110, 110, 0.12);
 }
 
+.lang-btn--flag {
+  flex-direction: row;
+  padding: 0.22rem;
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 10px;
+}
+
+.lang-flag-emoji {
+  font-size: 1.32rem;
+  line-height: 1;
+  display: block;
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
+  font-family:
+    "Segoe UI Emoji",
+    "Apple Color Emoji",
+    "Noto Color Emoji",
+    sans-serif;
+}
+
+.lang-btn--flag:hover {
+  background: rgba(255, 255, 255, 0.92);
+  border-color: rgba(13, 110, 110, 0.18);
+}
+
+.lang-btn--flag:hover .lang-flag-emoji {
+  transform: scale(1.08);
+  opacity: 0.9;
+}
+
+.lang-btn--flag:active .lang-flag-emoji {
+  transform: scale(0.96);
+  opacity: 1;
+}
+
 .lang-btn:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
 
-.lang-btn-active {
+.lang-btn-active.lang-btn--flag {
+  color: var(--ink);
+  background: rgba(13, 110, 110, 0.12);
+  border-color: rgba(13, 110, 110, 0.4);
+  box-shadow: inset 0 0 0 2px var(--accent);
+}
+
+.lang-btn-active.lang-btn--flag:hover {
+  color: var(--ink);
+  background: rgba(13, 110, 110, 0.16);
+  border-color: rgba(13, 110, 110, 0.45);
+}
+
+/* Legacy text+column lang buttons (if any) */
+.lang-btn-active:not(.lang-btn--flag) {
   color: #fff;
   background: linear-gradient(145deg, var(--accent) 0%, var(--accent-hover) 100%);
   border-color: transparent;
   box-shadow: 0 2px 8px rgba(13, 110, 110, 0.28);
 }
 
-.lang-btn-active .lang-code {
+.lang-btn-active:not(.lang-btn--flag) .lang-code {
   color: #fff;
 }
 
-.lang-btn-active:hover {
+.lang-btn-active:not(.lang-btn--flag):hover {
   color: #fff;
   background: linear-gradient(145deg, var(--accent-hover) 0%, #084040 100%);
   border-color: transparent;
@@ -692,8 +777,15 @@ a:hover {
   padding: 0 0.05rem;
 }
 
+/* Arabic (RTL): keep Google Maps embed LTR for stable controls */
+html[dir="rtl"] .map-embed-wrap .map-embed,
+html[dir="rtl"] iframe[src*="google.com/maps"] {
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+
 @media (min-width: 861px) {
-  .header-actions .lang-switcher {
+  .header-end > .lang-switcher {
     padding: 0.2rem 0.35rem;
     border-top: none;
     justify-content: flex-end;
@@ -778,8 +870,26 @@ a:hover {
 }
 
 @media (max-width: 860px) {
+  .header-end {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .header-end > .site-nav {
+    flex: 0 0 auto;
+  }
+
+  .header-end > .lang-switcher {
+    flex-shrink: 0;
+    z-index: 101;
+    position: relative;
+  }
+
   .nav-toggle {
     display: flex;
+    flex-shrink: 0;
   }
 
   .site-nav {
@@ -859,12 +969,6 @@ a:hover {
     padding-top: 0.85rem;
     margin-top: 0.35rem;
     border-top: 1px solid var(--border);
-  }
-
-  .header-actions .lang-switcher {
-    justify-content: center;
-    width: 100%;
-    max-width: 100%;
   }
 
   .header-actions .header-chat-btns {
@@ -6704,6 +6808,11 @@ button,
 
   .nav-check:checked ~ .site-nav {
     will-change: auto;
+  }
+
+  .lang-btn--flag:hover .lang-flag-emoji,
+  .lang-btn--flag:active .lang-flag-emoji {
+    transform: none;
   }
 }
 

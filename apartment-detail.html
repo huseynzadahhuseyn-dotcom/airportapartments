@@ -1,6 +1,19 @@
 <!DOCTYPE html>
-<html lang="en" data-seo-page="apartment-detail" data-canonical-path="/apartment-detail.html">
+<html lang="en" dir="ltr" data-seo-page="apartment-detail" data-canonical-path="/apartment-detail.html">
   <head>
+    <script>
+      (function () {
+        try {
+          var k = "site_lang";
+          var s = (localStorage.getItem(k) || "en").trim().toLowerCase();
+          if (s === "ru") s = "en";
+          var ok = s === "en" || s === "az" || s === "tr" || s === "ar";
+          if (!ok) s = "en";
+          document.documentElement.lang = s;
+          document.documentElement.setAttribute("dir", s === "ar" ? "rtl" : "ltr");
+        } catch (e) {}
+      })();
+    </script>
     <meta charset="UTF-8" />
     <meta
       name="viewport"
@@ -22,8 +35,9 @@
     <meta id="tw-desc" name="twitter:description" content="" />
     <meta id="tw-image" name="twitter:image" content="" />
     <link rel="alternate" hreflang="en" data-hreflang="en" href="" />
-    <link rel="alternate" hreflang="ru" data-hreflang="ru" href="" />
     <link rel="alternate" hreflang="az" data-hreflang="az" href="" />
+    <link rel="alternate" hreflang="tr" data-hreflang="tr" href="" />
+    <link rel="alternate" hreflang="ar" data-hreflang="ar" href="" />
     <link rel="alternate" hreflang="x-default" id="hreflang-x-default" href="" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -59,14 +73,6 @@
         </a>
         <div class="header-end">
           <input type="checkbox" id="nav-toggle" class="nav-check" aria-controls="site-nav" />
-          <label
-            for="nav-toggle"
-            class="nav-toggle"
-            data-i18n-aria-label="nav_open_menu"
-            aria-label=""
-          >
-            <span class="nav-toggle-bar" aria-hidden="true"></span>
-          </label>
           <nav class="site-nav site-nav--primary" id="site-nav" data-i18n-aria-label="nav_primary" aria-label="">
             <ul class="nav-primary-list">
               <li>
@@ -140,25 +146,6 @@
               </li>
             </ul>
             <div class="header-actions">
-              <div
-                class="lang-switcher"
-                role="group"
-                data-i18n-aria-label="lang_switcher_label"
-                aria-label=""
-              >
-                <button type="button" class="lang-btn" data-set-lang="en" aria-pressed="true">
-                  <span class="lang-flag" aria-hidden="true">🇬🇧</span>
-                  <span class="lang-code">EN</span>
-                </button>
-                <button type="button" class="lang-btn" data-set-lang="ru" aria-pressed="false">
-                  <span class="lang-flag" aria-hidden="true">🇷🇺</span>
-                  <span class="lang-code">RU</span>
-                </button>
-                <button type="button" class="lang-btn" data-set-lang="az" aria-pressed="false">
-                  <span class="lang-flag" aria-hidden="true">🇦🇿</span>
-                  <span class="lang-code">AZ</span>
-                </button>
-              </div>
               <div class="header-chat-btns">
                 <a
                   class="btn btn-primary btn-nav btn-nav--header"
@@ -178,6 +165,33 @@
               </div>
             </div>
           </nav>
+          <div
+            class="lang-switcher"
+            role="group"
+            data-i18n-aria-label="lang_switcher_label"
+            aria-label=""
+          >
+            <button type="button" class="lang-btn lang-btn--flag" data-set-lang="az" aria-pressed="false" data-i18n-aria-label="lang_name_az">
+              <span class="lang-flag-emoji" aria-hidden="true">🇦🇿</span>
+            </button>
+            <button type="button" class="lang-btn lang-btn--flag" data-set-lang="en" aria-pressed="true" data-i18n-aria-label="lang_name_en">
+              <span class="lang-flag-emoji" aria-hidden="true">🇬🇧</span>
+            </button>
+            <button type="button" class="lang-btn lang-btn--flag" data-set-lang="tr" aria-pressed="false" data-i18n-aria-label="lang_name_tr">
+              <span class="lang-flag-emoji" aria-hidden="true">🇹🇷</span>
+            </button>
+            <button type="button" class="lang-btn lang-btn--flag" data-set-lang="ar" aria-pressed="false" data-i18n-aria-label="lang_name_ar">
+              <span class="lang-flag-emoji" aria-hidden="true">🇦🇪</span>
+            </button>
+          </div>
+          <label
+            for="nav-toggle"
+            class="nav-toggle"
+            data-i18n-aria-label="nav_open_menu"
+            aria-label=""
+          >
+            <span class="nav-toggle-bar" aria-hidden="true"></span>
+          </label>
         </div>
       </div>
     </header>

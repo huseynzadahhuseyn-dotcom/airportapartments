@@ -1,32 +1,54 @@
 /**
  * Loads locales/*.json, applies data-i18n / data-i18n-html / aria / title / img alt,
  * updates document title & meta, runs `window.__i18nDomHydrators`, then dispatches i18n:applied.
+ *
+ * Locales: en (base), az, tr, ar — non-English bundles merge over en.json for missing keys.
+ * Arabic (ar) sets document dir=rtl; others use dir=ltr.
  */
 (function () {
   "use strict";
 
   var STORAGE_KEY = "site_lang";
-  var SUPPORTED = ["en", "ru", "az"];
+  var SUPPORTED = ["en", "az", "tr", "ar"];
   var DEFAULT_LANG = "en";
 
   var bundle = null;
   var currentLang = DEFAULT_LANG;
 
+  function normalizeStoredLang(code) {
+    if (!code || typeof code !== "string") return DEFAULT_LANG;
+    var s = code.trim().toLowerCase();
+    if (s === "ru") return DEFAULT_LANG;
+    if (SUPPORTED.indexOf(s) !== -1) return s;
+    return DEFAULT_LANG;
+  }
+
   function getLang() {
     try {
       var s = localStorage.getItem(STORAGE_KEY);
-      if (s && SUPPORTED.indexOf(s) !== -1) return s;
+      if (s) {
+        var raw = String(s).trim().toLowerCase();
+        var n = normalizeStoredLang(s);
+        if (n !== raw) {
+          try {
+            localStorage.setItem(STORAGE_KEY, n);
+          } catch (e2) {}
+        }
+        return n;
+      }
     } catch (e) {}
     return DEFAULT_LANG;
   }
 
   function setLang(lang) {
-    if (SUPPORTED.indexOf(lang) === -1) return;
-    currentLang = lang;
+    var l = normalizeStoredLang(lang);
+    if (SUPPORTED.indexOf(l) === -1) l = DEFAULT_LANG;
+    currentLang = l;
     try {
-      localStorage.setItem(STORAGE_KEY, lang);
+      localStorage.setItem(STORAGE_KEY, l);
     } catch (e) {}
-    document.documentElement.lang = lang;
+    document.documentElement.setAttribute("lang", l);
+    document.documentElement.setAttribute("dir", l === "ar" ? "rtl" : "ltr");
   }
 
   function interpolate(str, vars) {
@@ -81,7 +103,7 @@
       twImg.setAttribute("content", base.replace(/\/$/, "") + "/images/logo.svg");
     }
 
-    var localeMap = { en: "en_US", ru: "ru_RU", az: "az_AZ" };
+    var localeMap = { en: "en_US", az: "az_AZ", tr: "tr_TR", ar: "ar_AE" };
     var ogLoc = document.getElementById("og-locale");
     if (ogLoc) ogLoc.setAttribute("content", localeMap[currentLang] || "en_US");
   }
@@ -125,6 +147,7 @@
       var l = btn.getAttribute("data-set-lang");
       var on = l === currentLang;
       btn.setAttribute("aria-pressed", on ? "true" : "false");
+      btn.classList.toggle("lang-btn-active", on);
     });
   }
 
@@ -144,20 +167,40 @@
   }
 
   function loadBundle(lang) {
-    var url = "locales/" + lang + ".json";
-    return fetch(url, { credentials: "same-origin" })
+    var target = normalizeStoredLang(lang);
+    if (SUPPORTED.indexOf(target) === -1) target = DEFAULT_LANG;
+
+    function finish(enBase, overlay) {
+      bundle = Object.assign({}, enBase || {}, overlay || {});
+      setLang(target);
+      applyAll();
+    }
+
+    return fetch("locales/en.json", { credentials: "same-origin" })
       .then(function (r) {
-        if (!r.ok) throw new Error("locale " + lang);
+        if (!r.ok) throw new Error("en");
         return r.json();
       })
-      .then(function (json) {
-        bundle = json;
-        setLang(lang);
-        applyAll();
+      .then(function (enBase) {
+        if (target === "en") {
+          finish(enBase, {});
+          return;
+        }
+        return fetch("locales/" + target + ".json", { credentials: "same-origin" })
+          .then(function (r) {
+            if (!r.ok) throw new Error(target);
+            return r.json();
+          })
+          .then(function (loc) {
+            finish(enBase, loc);
+          })
+          .catch(function () {
+            finish(enBase, {});
+          });
       })
       .catch(function () {
-        if (lang !== DEFAULT_LANG) return loadBundle(DEFAULT_LANG);
         bundle = {};
+        setLang(DEFAULT_LANG);
         applyAll();
       });
   }
@@ -166,8 +209,10 @@
     document.querySelectorAll(".lang-btn[data-set-lang]").forEach(function (btn) {
       btn.addEventListener("click", function () {
         var l = btn.getAttribute("data-set-lang");
-        if (!l || l === currentLang) return;
-        loadBundle(l);
+        if (!l) return;
+        var next = normalizeStoredLang(l);
+        if (next === currentLang) return;
+        loadBundle(next);
       });
     });
   }
