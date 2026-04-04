@@ -1,5 +1,5 @@
 /**
- * Renders #apartments-grid — booking-style cards (one hero photo, lightbox for the rest,
+ * Renders #book-apartments-grid-preview (first 3) and #apartments-grid — booking-style cards (one hero photo, lightbox for the rest,
  * icon row: Booking / Airbnb / WhatsApp under the image).
  *
  * Uses `apt.images` only (no mixed gallery pool). If missing/invalid, stable Unsplash demo URLs.
@@ -46,6 +46,41 @@
   };
 
   var BOOK_DEMO_SLIDE_COUNT = 4;
+
+  /** Curated “best” listings for the homepage Book Your Stay preview (order = display order). */
+  var BOOK_PREVIEW_LISTING_IDS = ["avia", "bina", "premium-villa-2-bedroom"];
+
+  function pickBookPreviewListings(all) {
+    if (!all || !all.length) return [];
+    var ids =
+      Array.isArray(window.BOOK_PREVIEW_LISTING_IDS) && window.BOOK_PREVIEW_LISTING_IDS.length
+        ? window.BOOK_PREVIEW_LISTING_IDS
+        : BOOK_PREVIEW_LISTING_IDS;
+    var byId = {};
+    for (var i = 0; i < all.length; i++) {
+      var row = all[i];
+      if (row && row.id) byId[row.id] = row;
+    }
+    var ordered = [];
+    for (var j = 0; j < ids.length; j++) {
+      var id = ids[j];
+      if (byId[id]) ordered.push(byId[id]);
+    }
+    if (ordered.length >= 3) return ordered.slice(0, 3);
+    for (var k = 0; k < all.length && ordered.length < 3; k++) {
+      var r = all[k];
+      if (!r || !r.id) continue;
+      var dup = false;
+      for (var u = 0; u < ordered.length; u++) {
+        if (ordered[u].id === r.id) {
+          dup = true;
+          break;
+        }
+      }
+      if (!dup) ordered.push(r);
+    }
+    return ordered.slice(0, 3);
+  }
 
   function getBookStayDemoUrls(apt) {
     var pool = BOOK_STAY_DEMO_URLS;
@@ -272,6 +307,42 @@
     }
   }
 
+  function applyWhatsAppChatLinkAttrs(link, apt) {
+    link.setAttribute("target", "_blank");
+    link.setAttribute("rel", "noopener noreferrer");
+    if (apt._plain) {
+      if (apt.whatsappIsUrl) {
+        link.setAttribute("href", apt.whatsappRaw);
+      } else {
+        link.setAttribute("href", "#");
+        link.setAttribute("data-wa-prefill", "");
+        if (apt.waMessage) link.setAttribute("data-wa-body", apt.waMessage);
+        if (apt.waSuffixKey) link.setAttribute("data-wa-suffix-key", apt.waSuffixKey);
+      }
+    } else {
+      link.setAttribute("href", "#");
+      link.setAttribute("data-wa-prefill", "");
+      link.setAttribute("data-wa-suffix-key", apt.waSuffixKey || "");
+    }
+  }
+
+  function appendBookPreviewChatRow(body, apt) {
+    var row = el("div", "apt-book-preview-cta-row");
+    var wa = el("a", "apt-book-preview-btn apt-book-preview-btn--wa");
+    applyWhatsAppChatLinkAttrs(wa, apt);
+    wa.setAttribute("data-i18n", "book_preview_chat_whatsapp");
+    var tgHref = (apt.cardTelegramUrl || "https://t.me/apartamentnearbaku").trim() || "https://t.me/apartamentnearbaku";
+    var tg = el("a", "apt-book-preview-btn apt-book-preview-btn--tg", {
+      href: tgHref,
+    });
+    tg.setAttribute("target", "_blank");
+    tg.setAttribute("rel", "noopener noreferrer");
+    tg.setAttribute("data-i18n", "book_preview_chat_telegram");
+    row.appendChild(wa);
+    row.appendChild(tg);
+    body.appendChild(row);
+  }
+
   function appendBookingIconRow(media, apt, bookingUrl, airbnbUrl) {
     var row = el("div", "apt-booking-icon-row");
     row.setAttribute("role", "group");
@@ -337,24 +408,9 @@
     var wa = el("a", "apt-booking-icon-tile apt-booking-icon-tile--wa");
     wrapIconMark(wa, iconSvgWhatsApp());
     appendIconLabel(wa, "apt_label_whatsapp");
-    wa.setAttribute("target", "_blank");
-    wa.setAttribute("rel", "noopener noreferrer");
     wa.setAttribute("data-i18n-title", "apt_icon_whatsapp_title");
     wa.setAttribute("data-i18n-aria-label", "apt_icon_whatsapp_title");
-    if (apt._plain) {
-      if (apt.whatsappIsUrl) {
-        wa.setAttribute("href", apt.whatsappRaw);
-      } else {
-        wa.setAttribute("href", "#");
-        wa.setAttribute("data-wa-prefill", "");
-        if (apt.waMessage) wa.setAttribute("data-wa-body", apt.waMessage);
-        if (apt.waSuffixKey) wa.setAttribute("data-wa-suffix-key", apt.waSuffixKey);
-      }
-    } else {
-      wa.setAttribute("href", "#");
-      wa.setAttribute("data-wa-prefill", "");
-      wa.setAttribute("data-wa-suffix-key", apt.waSuffixKey || "");
-    }
+    applyWhatsAppChatLinkAttrs(wa, apt);
     row.appendChild(wa);
 
     var tgHref = (apt.cardTelegramUrl || "https://t.me/apartamentnearbaku").trim() || "https://t.me/apartamentnearbaku";
@@ -375,7 +431,10 @@
     if (!grid || !data || !data.length) return;
     var pool = window.SITE_GALLERY_IMAGES || window.POSTIMG_GALLERY_IMAGES || [];
     var listingOnlyImages =
-      grid.id === "apartments-grid" || grid.id === "book-apartments-grid";
+      grid.id === "apartments-grid" ||
+      grid.id === "book-apartments-grid" ||
+      grid.id === "book-apartments-grid-preview";
+    var isBookPreviewGrid = grid.id === "book-apartments-grid-preview";
     grid.textContent = "";
     grid.setAttribute("role", "list");
 
@@ -413,10 +472,11 @@
       var bookingUrl = (apt.cardBookingUrl || "").trim();
       var airbnbUrl = (apt.cardAirbnbUrl || "").trim();
 
-      var art = el(
-        "article",
-        "apt-card apt-card--booking" + (apt.premium ? " apt-card--booking-featured" : "")
-      );
+      var artCls =
+        "apt-card apt-card--booking" +
+        (apt.premium ? " apt-card--booking-featured" : "") +
+        (isBookPreviewGrid ? " apt-card--book-preview" : "");
+      var art = el("article", artCls);
       art.setAttribute("role", "listitem");
       art.setAttribute("data-apt-id", apt.id);
 
@@ -471,7 +531,18 @@
         guestsRowP.appendChild(el("span", "apt-booking-guests-text", { text: apt.plainGuests }));
         body.appendChild(guestsRowP);
 
-        body.appendChild(el("div", "apt-booking-price apt-booking-price--plain", { text: apt.plainPrice }));
+        body.appendChild(
+          el(
+            "div",
+            "apt-booking-price apt-booking-price--plain" +
+              (isBookPreviewGrid ? " apt-booking-price--promo" : ""),
+            { text: apt.plainPrice }
+          )
+        );
+
+        if (isBookPreviewGrid) {
+          appendBookPreviewChatRow(body, apt);
+        }
 
         if (apt.detailHref) {
           body.appendChild(
@@ -500,7 +571,7 @@
         guestsRow.appendChild(gSpan);
         body.appendChild(guestsRow);
 
-        var priceRow = el("div", "apt-booking-price");
+        var priceRow = el("div", "apt-booking-price" + (isBookPreviewGrid ? " apt-booking-price--promo" : ""));
         if (apt.cardPriceOnRequest) {
           var pr = el("span", "apt-booking-price-text");
           pr.setAttribute("data-i18n", "price_on_request");
@@ -515,6 +586,10 @@
             '<span class="apt-booking-price-per" data-i18n="price_per_night"></span>';
         }
         body.appendChild(priceRow);
+
+        if (isBookPreviewGrid) {
+          appendBookPreviewChatRow(body, apt);
+        }
 
         body.appendChild(
           el("a", "apt-booking-details-btn", {
@@ -571,7 +646,16 @@
   function tryRender() {
     var data = getApartmentListingRows();
     var hasData = data.length > 0;
+    var previewGrid = document.getElementById("book-apartments-grid-preview");
     var aptGrid = document.getElementById("apartments-grid");
+
+    if (previewGrid) {
+      if (hasData) {
+        buildApartmentCards(previewGrid, pickBookPreviewListings(data));
+      } else {
+        renderFallback(previewGrid);
+      }
+    }
 
     if (aptGrid) {
       if (hasData) {

@@ -1368,6 +1368,67 @@ a:hover {
   padding-block: clamp(2rem, 5vw, 2.75rem);
 }
 
+.section--book-stay {
+  padding-block: clamp(2rem, 5vw, 2.85rem);
+}
+
+.book-stay-direct {
+  margin-top: clamp(2rem, 4vw, 2.75rem);
+  padding-top: clamp(1.5rem, 3vw, 2rem);
+  border-top: 1px solid rgba(13, 110, 110, 0.12);
+}
+
+.book-preview-actions {
+  margin-top: 0.35rem;
+}
+
+.book-stay-trust {
+  list-style: none;
+  margin: 0 auto 1.75rem;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.55rem 0.65rem;
+  max-width: 52rem;
+}
+
+.book-stay-trust__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 0.85rem;
+  font-size: 0.82rem;
+  font-weight: 650;
+  line-height: 1.3;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid rgba(13, 110, 110, 0.18);
+  border-radius: 999px;
+  box-shadow: 0 2px 10px rgba(26, 31, 46, 0.05);
+}
+
+.book-stay-trust__ic {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.15rem;
+  height: 1.15rem;
+  font-size: 0.65rem;
+  font-weight: 800;
+  color: #fff;
+  background: linear-gradient(145deg, #0d6e6e 0%, #0a5558 100%);
+  border-radius: 50%;
+}
+
+@media (min-width: 640px) {
+  .apartments-grid--preview.apartments-grid--premium {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.5rem 1.25rem;
+  }
+}
+
 .direct-book-inner {
   background: linear-gradient(135deg, var(--surface) 0%, #f0faf9 100%);
   border: 1px solid rgba(13, 110, 110, 0.22);
@@ -2730,6 +2791,137 @@ a:hover {
   box-shadow:
     0 28px 64px rgba(26, 31, 46, 0.13),
     0 10px 26px rgba(13, 110, 110, 0.09);
+}
+
+/* Book Your Stay — homepage preview: Booking.com–inspired price + chat CTAs */
+.apt-card.apt-card--book-preview {
+  border: 1px solid rgba(0, 52, 128, 0.14);
+  box-shadow:
+    0 22px 50px rgba(0, 36, 77, 0.09),
+    0 8px 22px rgba(13, 110, 110, 0.07);
+}
+
+.apt-card.apt-card--book-preview:hover {
+  border-color: rgba(0, 52, 128, 0.22);
+  box-shadow:
+    0 28px 60px rgba(0, 36, 77, 0.12),
+    0 10px 28px rgba(13, 110, 110, 0.1);
+}
+
+.apt-card--book-preview .apt-booking-body {
+  gap: 0.65rem;
+  padding: 1.35rem 1.4rem 1.5rem;
+  background: linear-gradient(180deg, #fafcfd 0%, var(--surface) 55%);
+}
+
+.apt-card--book-preview .apt-booking-title {
+  font-size: clamp(1.08rem, 2.2vw, 1.28rem);
+}
+
+.apt-card--book-preview .apt-booking-desc {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.apt-booking-price--promo {
+  margin: 0.35rem 0 0.2rem;
+  padding: 0.65rem 0.85rem;
+  background: linear-gradient(135deg, #f4f8ff 0%, #eef6f6 100%);
+  border: 1px solid rgba(0, 52, 128, 0.12);
+  border-radius: 12px;
+  display: block;
+}
+
+.apt-booking-price--promo .apt-booking-price-from,
+.apt-booking-price--promo .apt-booking-price-cur,
+.apt-booking-price--promo .apt-booking-price-per {
+  font-size: 0.82rem;
+  font-weight: 650;
+  color: #5a6578;
+}
+
+.apt-booking-price--promo .apt-booking-price-num {
+  font-size: clamp(1.45rem, 3.2vw, 1.95rem);
+  font-weight: 800;
+  color: #003580;
+  letter-spacing: -0.02em;
+  margin: 0 0.15rem;
+}
+
+.apt-booking-price--promo .apt-booking-price-text {
+  font-size: 1.12rem;
+  font-weight: 800;
+  color: #003580;
+}
+
+.apt-booking-price--promo.apt-booking-price--plain {
+  font-size: clamp(1.25rem, 2.8vw, 1.65rem);
+  font-weight: 800;
+  color: #003580;
+  text-align: center;
+}
+
+.apt-book-preview-cta-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+  margin-top: 0.15rem;
+}
+
+@media (max-width: 380px) {
+  .apt-book-preview-cta-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+.apt-book-preview-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  min-height: 46px;
+  padding: 0.55rem 0.65rem;
+  font-size: 0.82rem;
+  font-weight: 750;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    filter 0.18s ease;
+}
+
+.apt-book-preview-btn:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.03);
+}
+
+.apt-book-preview-btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.apt-book-preview-btn--wa {
+  color: #fff !important;
+  background: linear-gradient(165deg, #25d366 0%, #128c7e 100%);
+  box-shadow: 0 4px 14px rgba(18, 140, 126, 0.35);
+}
+
+.apt-book-preview-btn--tg {
+  color: #fff !important;
+  background: linear-gradient(165deg, #37aee2 0%, #1c8bc9 100%);
+  box-shadow: 0 4px 14px rgba(34, 158, 217, 0.35);
+}
+
+.apt-card--book-preview .apt-booking-details-btn {
+  margin-top: 0.15rem;
+  font-weight: 650;
+  border-color: rgba(0, 52, 128, 0.2);
 }
 
 .apt-booking-media {
@@ -4422,6 +4614,190 @@ a:hover {
 
 .tour-hero-gallery__thumbs--route {
   grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+/* City tours — premium private Baku experience */
+.section-tours-premium {
+  padding-block: clamp(2.75rem, 6vw, 4rem);
+  background: linear-gradient(180deg, rgba(13, 110, 110, 0.07) 0%, var(--bg) 45%, var(--bg) 100%);
+}
+
+.section-head--tours-premium {
+  text-align: center;
+  max-width: 42rem;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 1.75rem;
+}
+
+.section-head--tours-premium .tours-premium-eyebrow {
+  margin: 0 0 0.5rem;
+  font-size: 0.78rem;
+  font-weight: 750;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent-hover);
+}
+
+.section-head--tours-premium h2 {
+  margin: 0 0 0.85rem;
+  font-size: clamp(1.45rem, 3.6vw, 2.05rem);
+  font-weight: 750;
+  line-height: 1.18;
+  color: var(--ink);
+}
+
+.tours-premium-lead {
+  margin: 0;
+  font-size: 1.03rem;
+  line-height: 1.62;
+  color: var(--ink-muted);
+}
+
+.tours-premium-panel {
+  max-width: 58rem;
+  margin: 0 auto 2rem;
+  padding: clamp(1.35rem, 3.2vw, 1.9rem);
+  background: var(--surface);
+  border: 1px solid rgba(13, 110, 110, 0.16);
+  border-radius: calc(var(--radius-lg) + 6px);
+  box-shadow:
+    0 24px 56px rgba(26, 31, 46, 0.09),
+    0 0 0 1px rgba(255, 255, 255, 0.06) inset;
+}
+
+.tours-premium-features {
+  list-style: none;
+  margin: 0 0 1.5rem;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.65rem;
+}
+
+@media (min-width: 520px) {
+  .tours-premium-features {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 900px) {
+  .tours-premium-features {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.75rem;
+  }
+}
+
+.tours-premium-feature {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.55rem;
+  padding: 0.7rem 0.8rem;
+  font-size: 0.86rem;
+  font-weight: 650;
+  line-height: 1.38;
+  color: var(--ink);
+  background: linear-gradient(145deg, rgba(13, 110, 110, 0.07) 0%, rgba(26, 31, 46, 0.03) 100%);
+  border-radius: var(--radius);
+  border: 1px solid rgba(13, 110, 110, 0.11);
+}
+
+.tours-premium-feature__ic {
+  flex-shrink: 0;
+  font-size: 1.12rem;
+  line-height: 1;
+}
+
+.tours-premium-route__title {
+  margin: 0 0 0.9rem;
+  font-size: 0.9rem;
+  font-weight: 750;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent-hover);
+}
+
+.tours-premium-stops {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.48rem 1rem;
+}
+
+@media (min-width: 520px) {
+  .tours-premium-stops {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 820px) {
+  .tours-premium-stops {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.tours-premium-stops li {
+  position: relative;
+  padding-left: 1.1rem;
+  font-size: 0.9rem;
+  line-height: 1.42;
+  color: var(--ink);
+  font-weight: 550;
+}
+
+.tours-premium-stops li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.48rem;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 0 2px rgba(201, 162, 39, 0.35);
+}
+
+.tours-vehicles-label {
+  margin: 0 0 1.1rem;
+  text-align: center;
+  font-size: 0.98rem;
+  font-weight: 750;
+  color: var(--ink);
+}
+
+.tours-grid--premium-offer {
+  gap: 1.5rem;
+}
+
+.section-tours-premium .tour-card-body {
+  padding-top: 1rem;
+}
+
+.section-tours-premium .tour-price-block--premium .tour-price-heading {
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  opacity: 0.92;
+}
+
+.card-chat-row--tour-premium {
+  margin-top: 0.4rem;
+}
+
+.card-chat-row--tour-premium .tour-wa-btn--premium {
+  min-height: 48px;
+  font-weight: 750;
+  border-radius: 12px;
+  box-shadow: 0 4px 18px rgba(18, 140, 126, 0.28);
+}
+
+.card-chat-row--tour-premium .tour-tg-btn--premium {
+  min-height: 48px;
+  font-weight: 700;
+  border-radius: 12px;
+  border-width: 2px;
 }
 
 .tours-grid {

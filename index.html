@@ -72,6 +72,9 @@
           <nav class="site-nav site-nav--primary" id="site-nav" data-i18n-aria-label="nav_primary" aria-label="">
             <ul class="nav-primary-list">
               <li>
+                <a class="nav-link" href="#book" data-section-id="book" data-i18n="nav_book"></a>
+              </li>
+              <li>
                 <a class="nav-link" href="#why-us" data-section-id="why-us" data-i18n="nav_why_section"></a>
               </li>
               <li>
@@ -244,22 +247,52 @@
                   rel="noopener noreferrer"
                   data-i18n="nav_telegram"
                 ></a>
-                <a class="btn btn-lg btn-hero-secondary" href="#apartments" data-i18n="view_apartments"></a>
+                <a class="btn btn-lg btn-hero-secondary" href="#book" data-i18n="view_apartments"></a>
               </div>
             </div>
         </div>
       </section>
 
-      <div class="urgency-strip" role="status">
-        <div class="container urgency-strip-inner">
-          <span class="urgency-item" data-i18n="urgency_line1" data-i18n-html="true"></span>
-          <span class="urgency-item urgency-item-muted" data-i18n="urgency_line2"></span>
-        </div>
-      </div>
-
-      <section class="section section-alt direct-book-banner" aria-labelledby="direct-book-title">
+      <section class="section section-alt section--book-stay" id="book" aria-labelledby="book-section-heading">
         <div class="container">
-          <div class="direct-book-inner">
+          <header class="section-head section-head--center section-head--apartments">
+            <h2 id="book-section-heading" data-i18n="book_section_title"></h2>
+            <p class="section-lead section-lead--apartments" data-i18n="book_preview_intro" data-i18n-html="true"></p>
+          </header>
+          <ul
+            class="book-stay-trust"
+            role="list"
+            data-i18n-aria-label="book_stay_highlights_a11y"
+            aria-label=""
+          >
+            <li class="book-stay-trust__item">
+              <span class="book-stay-trust__ic" aria-hidden="true">✓</span>
+              <span data-i18n="book_highlight_airport"></span>
+            </li>
+            <li class="book-stay-trust__item">
+              <span class="book-stay-trust__ic" aria-hidden="true">✓</span>
+              <span data-i18n="book_highlight_transfer"></span>
+            </li>
+            <li class="book-stay-trust__item">
+              <span class="book-stay-trust__ic" aria-hidden="true">✓</span>
+              <span data-i18n="book_highlight_checkin"></span>
+            </li>
+            <li class="book-stay-trust__item">
+              <span class="book-stay-trust__ic" aria-hidden="true">✓</span>
+              <span data-i18n="book_highlight_direct"></span>
+            </li>
+          </ul>
+          <div
+            class="apartments-grid apartments-grid--premium apartments-grid--preview"
+            id="book-apartments-grid-preview"
+            role="list"
+            aria-label=""
+            data-i18n-aria-label="book_apartments_grid_a11y"
+          ></div>
+          <div class="book-preview-actions chat-action-row chat-action-row--center">
+            <a class="btn btn-primary btn-lg" href="#apartments" data-i18n="book_view_all_apartments"></a>
+          </div>
+          <div class="direct-book-inner book-stay-direct" aria-labelledby="direct-book-title">
             <h2 id="direct-book-title" class="direct-book-title" data-i18n="direct_book_title"></h2>
             <ul class="direct-book-perks" role="list">
               <li><span class="direct-book-check" aria-hidden="true">✔</span> <span data-i18n="direct_book_perk1"></span></li>
@@ -285,158 +318,12 @@
         </div>
       </section>
 
-      <section class="section section-premium choose-us choose-us--seo" id="why-us" aria-labelledby="why-us-heading">
-        <div class="container">
-          <header class="section-head section-head--center choose-us__head">
-            <h2 id="why-us-heading" data-i18n="why_section_title"></h2>
-            <div class="choose-us__intro">
-              <p class="choose-us__lead" data-i18n="why_section_sub_1" data-i18n-html="true"></p>
-              <p class="choose-us__lead choose-us__lead--2" data-i18n="why_section_sub_2" data-i18n-html="true"></p>
-            </div>
-          </header>
-          <ul class="choose-benefits" role="list">
-            <li class="choose-benefit">
-              <span class="choose-benefit__ic" aria-hidden="true">⏱️</span>
-              <p class="choose-benefit__text" data-i18n="why_benefit_1" data-i18n-html="true"></p>
-            </li>
-            <li class="choose-benefit">
-              <span class="choose-benefit__ic" aria-hidden="true">🏡</span>
-              <p class="choose-benefit__text" data-i18n="why_benefit_2" data-i18n-html="true"></p>
-            </li>
-            <li class="choose-benefit">
-              <span class="choose-benefit__ic" aria-hidden="true">✈️</span>
-              <p class="choose-benefit__text" data-i18n="why_benefit_3" data-i18n-html="true"></p>
-            </li>
-            <li class="choose-benefit">
-              <span class="choose-benefit__ic" aria-hidden="true">🌍</span>
-              <p class="choose-benefit__text" data-i18n="why_benefit_4" data-i18n-html="true"></p>
-            </li>
-            <li class="choose-benefit">
-              <span class="choose-benefit__ic" aria-hidden="true">🚗</span>
-              <p class="choose-benefit__text" data-i18n="why_benefit_5" data-i18n-html="true"></p>
-            </li>
-            <li class="choose-benefit">
-              <span class="choose-benefit__ic" aria-hidden="true">📱</span>
-              <p class="choose-benefit__text" data-i18n="why_benefit_6" data-i18n-html="true"></p>
-            </li>
-          </ul>
-          <p class="choose-us__more" data-i18n="why_more_services_hint" data-i18n-html="true"></p>
-          <h3 class="choose-meta__heading" id="why-at-a-glance" data-i18n="why_meta_heading"></h3>
-          <div class="choose-meta" role="list" aria-labelledby="why-at-a-glance">
-            <div class="choose-meta__card" role="listitem">
-              <span class="choose-meta__label" data-i18n="why_meta_location_label"></span>
-              <p class="choose-meta__text" data-i18n="why_meta_location_text" data-i18n-html="true"></p>
-            </div>
-            <div class="choose-meta__card" role="listitem">
-              <span class="choose-meta__label" data-i18n="why_meta_best_label"></span>
-              <p class="choose-meta__text" data-i18n="why_meta_best_text" data-i18n-html="true"></p>
-            </div>
-            <div class="choose-meta__card" role="listitem">
-              <span class="choose-meta__label" data-i18n="why_meta_lang_label"></span>
-              <p class="choose-meta__text" data-i18n="why_meta_lang_text" data-i18n-html="true"></p>
-            </div>
-          </div>
-          <div class="choose-us__cta chat-action-row chat-action-row--center">
-            <a
-              class="btn btn-primary btn-lg btn-hero-primary btn-hero-wa-glow"
-              href="https://wa.me/994506581718"
-              target="_blank"
-              rel="noopener noreferrer"
-              data-wa-prefill=""
-              data-i18n="why_cta_whatsapp"
-            ></a>
-            <a
-              class="btn btn-lg btn-telegram"
-              href="https://t.me/apartamentnearbaku"
-              target="_blank"
-              rel="noopener noreferrer"
-              data-i18n="nav_telegram"
-            ></a>
-          </div>
+      <div class="urgency-strip" role="status">
+        <div class="container urgency-strip-inner">
+          <span class="urgency-item" data-i18n="urgency_line1" data-i18n-html="true"></span>
+          <span class="urgency-item urgency-item-muted" data-i18n="urgency_line2"></span>
         </div>
-      </section>
-
-      <section class="section section-alt" id="amenities">
-        <div class="container">
-          <header class="section-head">
-            <h2 data-i18n="amenities_title"></h2>
-            <p data-i18n="amenities_intro" data-i18n-html="true"></p>
-          </header>
-          <ul class="amenity-grid" role="list">
-            <li class="amenity-card">
-              <span class="amenity-icon" aria-hidden="true">◎</span>
-              <h3 data-i18n="amenity_wifi_title"></h3>
-              <p data-i18n="amenity_wifi_text"></p>
-            </li>
-            <li class="amenity-card">
-              <span class="amenity-icon" aria-hidden="true">⌂</span>
-              <h3 data-i18n="amenity_entire_title"></h3>
-              <p data-i18n="amenity_entire_text"></p>
-            </li>
-            <li class="amenity-card">
-              <span class="amenity-icon" aria-hidden="true">◈</span>
-              <h3 data-i18n="amenity_kitchen_title"></h3>
-              <p data-i18n="amenity_kitchen_text"></p>
-            </li>
-            <li class="amenity-card">
-              <span class="amenity-icon" aria-hidden="true">↻</span>
-              <h3 data-i18n="amenity_laundry_title"></h3>
-              <p data-i18n="amenity_laundry_text"></p>
-            </li>
-            <li class="amenity-card">
-              <span class="amenity-icon" aria-hidden="true">☂</span>
-              <h3 data-i18n="amenity_climate_title"></h3>
-              <p data-i18n="amenity_climate_text"></p>
-            </li>
-            <li class="amenity-card">
-              <span class="amenity-icon" aria-hidden="true">▣</span>
-              <h3 data-i18n="amenity_tv_title"></h3>
-              <p data-i18n="amenity_tv_text"></p>
-            </li>
-            <li class="amenity-card">
-              <span class="amenity-icon" aria-hidden="true">Ⓟ</span>
-              <h3 data-i18n="amenity_parking_title"></h3>
-              <p data-i18n="amenity_parking_text"></p>
-            </li>
-            <li class="amenity-card">
-              <span class="amenity-icon" aria-hidden="true">☀</span>
-              <h3 data-i18n="amenity_patio_title"></h3>
-              <p data-i18n="amenity_patio_text"></p>
-            </li>
-            <li class="amenity-card">
-              <span class="amenity-icon" aria-hidden="true">☽</span>
-              <h3 data-i18n="amenity_bedlinen_title"></h3>
-              <p data-i18n="amenity_bedlinen_text"></p>
-            </li>
-            <li class="amenity-card">
-              <span class="amenity-icon" aria-hidden="true">✶</span>
-              <h3 data-i18n="amenity_iron_title"></h3>
-              <p data-i18n="amenity_iron_text"></p>
-            </li>
-            <li class="amenity-card">
-              <span class="amenity-icon" aria-hidden="true">⊕</span>
-              <h3 data-i18n="amenity_safety_title"></h3>
-              <p data-i18n="amenity_safety_text"></p>
-            </li>
-            <li class="amenity-card">
-              <span class="amenity-icon" aria-hidden="true">✓</span>
-              <h3 data-i18n="amenity_hosting_title"></h3>
-              <p data-i18n="amenity_hosting_text"></p>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <section class="section" id="gallery">
-        <div class="container">
-          <header class="section-head section-head--center">
-            <h2 data-i18n="gallery_title"></h2>
-            <p data-i18n="gallery_intro" data-i18n-html="true"></p>
-          </header>
-          <!-- Gallery: one large centered preview; tap → all photos in GLightbox -->
-          <div class="gallery-grid" id="gallery-grid"></div>
-        </div>
-      </section>
+      </div>
 
       <section class="section section--apartments-rich" id="apartments" aria-labelledby="apartments-title">
         <div class="container">
@@ -467,12 +354,11 @@
               rel="noopener noreferrer"
               data-i18n="book_cta_telegram"
             ></a>
-            <a class="btn btn-lg btn-ghost book-cta-browse" href="#apartments-title" data-i18n="book_cta_browse_apartments"></a>
+            <a class="btn btn-lg btn-ghost book-cta-browse" href="#apartments" data-i18n="book_cta_browse_apartments"></a>
           </div>
           <p class="book-cta-note" data-i18n="book_cta_note"></p>
         </div>
       </section>
-
       <section class="section section-alt" id="payment-methods" aria-labelledby="payment-methods-title">
         <div class="container">
           <header class="section-head">
@@ -539,14 +425,49 @@
           <p class="payment-fee-note" data-i18n="payment_card_fee_note"></p>
         </div>
       </section>
-
-      <section class="section" id="tours" aria-labelledby="tours-title">
+      <section class="section section-tours-premium" id="tours" aria-labelledby="tours-title">
         <div class="container">
-          <header class="section-head">
+          <header class="section-head section-head--tours-premium">
+            <p class="tours-premium-eyebrow" data-i18n="tours_premium_eyebrow"></p>
             <h2 id="tours-title" data-i18n="tours_section_title"></h2>
-            <p data-i18n="tours_section_intro"></p>
+            <p class="tours-premium-lead" data-i18n="tours_section_intro"></p>
           </header>
-          <ul class="tours-grid" role="list">
+          <div class="tours-premium-panel">
+            <ul class="tours-premium-features" role="list">
+              <li class="tours-premium-feature">
+                <span class="tours-premium-feature__ic" aria-hidden="true">🚗</span>
+                <span data-i18n="tours_feat_private_car"></span>
+              </li>
+              <li class="tours-premium-feature">
+                <span class="tours-premium-feature__ic" aria-hidden="true">📍</span>
+                <span data-i18n="tours_feat_pickup"></span>
+              </li>
+              <li class="tours-premium-feature">
+                <span class="tours-premium-feature__ic" aria-hidden="true">⏱</span>
+                <span data-i18n="tours_feat_flexible"></span>
+              </li>
+              <li class="tours-premium-feature">
+                <span class="tours-premium-feature__ic" aria-hidden="true">🗣</span>
+                <span data-i18n="tours_feat_driver_lang"></span>
+              </li>
+            </ul>
+            <div class="tours-premium-route">
+              <h3 class="tours-premium-route__title" data-i18n="tours_stops_heading"></h3>
+              <ul class="tours-premium-stops" role="list">
+                <li data-i18n="tours_stop_1"></li>
+                <li data-i18n="tours_stop_2"></li>
+                <li data-i18n="tours_stop_3"></li>
+                <li data-i18n="tours_stop_4"></li>
+                <li data-i18n="tours_stop_5"></li>
+                <li data-i18n="tours_stop_6"></li>
+                <li data-i18n="tours_stop_7"></li>
+                <li data-i18n="tours_stop_8"></li>
+                <li data-i18n="tours_stop_9"></li>
+              </ul>
+            </div>
+          </div>
+          <p class="tours-vehicles-label" data-i18n="tours_choose_vehicle"></p>
+          <ul class="tours-grid tours-grid--premium-offer" role="list">
             <li class="tour-card-wrap">
               <article class="tour-card tour-card--popular">
                 <span class="tour-card-badge tour-card-badge--popular" data-i18n="tour_badge_most_popular"></span>
@@ -671,25 +592,14 @@
                   </div>
                   <h3 class="tour-card-title" data-i18n="tour_sedan_title"></h3>
                   <p class="tour-card-desc" data-i18n="tour_sedan_desc"></p>
-                  <ul class="tour-feature-checklist" role="list">
-                    <li data-i18n="tour_sedan_feat_1"></li>
-                    <li data-i18n="tour_sedan_feat_2"></li>
-                    <li data-i18n="tour_sedan_feat_3"></li>
-                    <li data-i18n="tour_sedan_feat_4"></li>
-                    <li data-i18n="tour_sedan_feat_5"></li>
-                  </ul>
-                  <p class="tour-lang-line">
-                    <span class="tour-lang-line__ic" aria-hidden="true">🗣</span>
-                    <span data-i18n="tour_driver_languages"></span>
-                  </p>
                   <div class="tour-price-block tour-price-block--premium">
                     <p class="tour-price-heading" data-i18n="tour_price_label"></p>
                     <div class="tour-price-body" data-tour-pricing="sedan"></div>
                     <p class="tour-price-note" data-i18n="tour_sedan_price_note"></p>
                   </div>
-                  <div class="card-chat-row card-chat-row--tour">
+                  <div class="card-chat-row card-chat-row--tour card-chat-row--tour-premium">
                     <a
-                      class="btn btn-wa-card tour-wa-btn"
+                      class="btn btn-wa-card tour-wa-btn tour-wa-btn--premium"
                       href="#"
                       target="_blank"
                       rel="noopener noreferrer"
@@ -697,7 +607,7 @@
                       data-i18n="tour_book_whatsapp"
                     ></a>
                     <a
-                      class="btn btn-telegram-outline"
+                      class="btn btn-telegram-outline tour-tg-btn--premium"
                       href="https://t.me/apartamentnearbaku"
                       target="_blank"
                       rel="noopener noreferrer"
@@ -800,25 +710,14 @@
                   </div>
                   <h3 class="tour-card-title" data-i18n="tour_vito_title"></h3>
                   <p class="tour-card-desc" data-i18n="tour_vito_desc"></p>
-                  <ul class="tour-feature-checklist" role="list">
-                    <li data-i18n="tour_vito_feat_1"></li>
-                    <li data-i18n="tour_vito_feat_2"></li>
-                    <li data-i18n="tour_vito_feat_3"></li>
-                    <li data-i18n="tour_vito_feat_4"></li>
-                    <li data-i18n="tour_vito_feat_5"></li>
-                  </ul>
-                  <p class="tour-lang-line">
-                    <span class="tour-lang-line__ic" aria-hidden="true">🗣</span>
-                    <span data-i18n="tour_driver_languages"></span>
-                  </p>
                   <div class="tour-price-block tour-price-block--premium">
                     <p class="tour-price-heading" data-i18n="tour_price_label"></p>
                     <div class="tour-price-body" data-tour-pricing="vito"></div>
                     <p class="tour-price-note" data-i18n="tour_vito_price_note"></p>
                   </div>
-                  <div class="card-chat-row card-chat-row--tour">
+                  <div class="card-chat-row card-chat-row--tour card-chat-row--tour-premium">
                     <a
-                      class="btn btn-wa-card tour-wa-btn"
+                      class="btn btn-wa-card tour-wa-btn tour-wa-btn--premium"
                       href="#"
                       target="_blank"
                       rel="noopener noreferrer"
@@ -826,7 +725,7 @@
                       data-i18n="tour_book_whatsapp"
                     ></a>
                     <a
-                      class="btn btn-telegram-outline"
+                      class="btn btn-telegram-outline tour-tg-btn--premium"
                       href="https://t.me/apartamentnearbaku"
                       target="_blank"
                       rel="noopener noreferrer"
@@ -967,25 +866,14 @@
                   </div>
                   <h3 class="tour-card-title tour-card-title--x5-elite" data-i18n="tour_x5_title"></h3>
                   <p class="tour-card-desc" data-i18n="tour_x5_desc"></p>
-                  <ul class="tour-feature-checklist tour-feature-checklist--lux" role="list">
-                    <li data-i18n="tour_x5_feat_1"></li>
-                    <li data-i18n="tour_x5_feat_2"></li>
-                    <li data-i18n="tour_x5_feat_3"></li>
-                    <li data-i18n="tour_x5_feat_4"></li>
-                    <li data-i18n="tour_x5_feat_5"></li>
-                  </ul>
-                  <p class="tour-lang-line">
-                    <span class="tour-lang-line__ic" aria-hidden="true">🗣</span>
-                    <span data-i18n="tour_driver_languages"></span>
-                  </p>
                   <div class="tour-price-block tour-price-block--luxury tour-price-block--x5-elite tour-price-block--premium">
                     <p class="tour-price-heading" data-i18n="tour_price_label"></p>
                     <div class="tour-price-body" data-tour-pricing="x5"></div>
                     <p class="tour-price-note" data-i18n="tour_x5_price_note"></p>
                   </div>
-                  <div class="card-chat-row card-chat-row--tour">
+                  <div class="card-chat-row card-chat-row--tour card-chat-row--tour-premium">
                     <a
-                      class="btn btn-wa-card tour-wa-btn"
+                      class="btn btn-wa-card tour-wa-btn tour-wa-btn--premium"
                       href="#"
                       target="_blank"
                       rel="noopener noreferrer"
@@ -993,7 +881,7 @@
                       data-i18n="tour_book_whatsapp"
                     ></a>
                     <a
-                      class="btn btn-telegram-outline"
+                      class="btn btn-telegram-outline tour-tg-btn--premium"
                       href="https://t.me/apartamentnearbaku"
                       target="_blank"
                       rel="noopener noreferrer"
@@ -1002,6 +890,156 @@
                   </div>
                 </div>
               </article>
+            </li>
+          </ul>
+        </div>
+      </section>
+      <section class="section" id="gallery">
+        <div class="container">
+          <header class="section-head section-head--center">
+            <h2 data-i18n="gallery_title"></h2>
+            <p data-i18n="gallery_intro" data-i18n-html="true"></p>
+          </header>
+          <!-- Gallery: one large centered preview; tap → all photos in GLightbox -->
+          <div class="gallery-grid" id="gallery-grid"></div>
+        </div>
+      </section>
+      <section class="section section-premium choose-us choose-us--seo" id="why-us" aria-labelledby="why-us-heading">
+        <div class="container">
+          <header class="section-head section-head--center choose-us__head">
+            <h2 id="why-us-heading" data-i18n="why_section_title"></h2>
+            <div class="choose-us__intro">
+              <p class="choose-us__lead" data-i18n="why_section_sub_1" data-i18n-html="true"></p>
+              <p class="choose-us__lead choose-us__lead--2" data-i18n="why_section_sub_2" data-i18n-html="true"></p>
+            </div>
+          </header>
+          <ul class="choose-benefits" role="list">
+            <li class="choose-benefit">
+              <span class="choose-benefit__ic" aria-hidden="true">⏱️</span>
+              <p class="choose-benefit__text" data-i18n="why_benefit_1" data-i18n-html="true"></p>
+            </li>
+            <li class="choose-benefit">
+              <span class="choose-benefit__ic" aria-hidden="true">🏡</span>
+              <p class="choose-benefit__text" data-i18n="why_benefit_2" data-i18n-html="true"></p>
+            </li>
+            <li class="choose-benefit">
+              <span class="choose-benefit__ic" aria-hidden="true">✈️</span>
+              <p class="choose-benefit__text" data-i18n="why_benefit_3" data-i18n-html="true"></p>
+            </li>
+            <li class="choose-benefit">
+              <span class="choose-benefit__ic" aria-hidden="true">🌍</span>
+              <p class="choose-benefit__text" data-i18n="why_benefit_4" data-i18n-html="true"></p>
+            </li>
+            <li class="choose-benefit">
+              <span class="choose-benefit__ic" aria-hidden="true">🚗</span>
+              <p class="choose-benefit__text" data-i18n="why_benefit_5" data-i18n-html="true"></p>
+            </li>
+            <li class="choose-benefit">
+              <span class="choose-benefit__ic" aria-hidden="true">📱</span>
+              <p class="choose-benefit__text" data-i18n="why_benefit_6" data-i18n-html="true"></p>
+            </li>
+          </ul>
+          <p class="choose-us__more" data-i18n="why_more_services_hint" data-i18n-html="true"></p>
+          <h3 class="choose-meta__heading" id="why-at-a-glance" data-i18n="why_meta_heading"></h3>
+          <div class="choose-meta" role="list" aria-labelledby="why-at-a-glance">
+            <div class="choose-meta__card" role="listitem">
+              <span class="choose-meta__label" data-i18n="why_meta_location_label"></span>
+              <p class="choose-meta__text" data-i18n="why_meta_location_text" data-i18n-html="true"></p>
+            </div>
+            <div class="choose-meta__card" role="listitem">
+              <span class="choose-meta__label" data-i18n="why_meta_best_label"></span>
+              <p class="choose-meta__text" data-i18n="why_meta_best_text" data-i18n-html="true"></p>
+            </div>
+            <div class="choose-meta__card" role="listitem">
+              <span class="choose-meta__label" data-i18n="why_meta_lang_label"></span>
+              <p class="choose-meta__text" data-i18n="why_meta_lang_text" data-i18n-html="true"></p>
+            </div>
+          </div>
+          <div class="choose-us__cta chat-action-row chat-action-row--center">
+            <a
+              class="btn btn-primary btn-lg btn-hero-primary btn-hero-wa-glow"
+              href="https://wa.me/994506581718"
+              target="_blank"
+              rel="noopener noreferrer"
+              data-wa-prefill=""
+              data-i18n="why_cta_whatsapp"
+            ></a>
+            <a
+              class="btn btn-lg btn-telegram"
+              href="https://t.me/apartamentnearbaku"
+              target="_blank"
+              rel="noopener noreferrer"
+              data-i18n="nav_telegram"
+            ></a>
+          </div>
+        </div>
+      </section>
+      <section class="section section-alt" id="amenities">
+        <div class="container">
+          <header class="section-head">
+            <h2 data-i18n="amenities_title"></h2>
+            <p data-i18n="amenities_intro" data-i18n-html="true"></p>
+          </header>
+          <ul class="amenity-grid" role="list">
+            <li class="amenity-card">
+              <span class="amenity-icon" aria-hidden="true">◎</span>
+              <h3 data-i18n="amenity_wifi_title"></h3>
+              <p data-i18n="amenity_wifi_text"></p>
+            </li>
+            <li class="amenity-card">
+              <span class="amenity-icon" aria-hidden="true">⌂</span>
+              <h3 data-i18n="amenity_entire_title"></h3>
+              <p data-i18n="amenity_entire_text"></p>
+            </li>
+            <li class="amenity-card">
+              <span class="amenity-icon" aria-hidden="true">◈</span>
+              <h3 data-i18n="amenity_kitchen_title"></h3>
+              <p data-i18n="amenity_kitchen_text"></p>
+            </li>
+            <li class="amenity-card">
+              <span class="amenity-icon" aria-hidden="true">↻</span>
+              <h3 data-i18n="amenity_laundry_title"></h3>
+              <p data-i18n="amenity_laundry_text"></p>
+            </li>
+            <li class="amenity-card">
+              <span class="amenity-icon" aria-hidden="true">☂</span>
+              <h3 data-i18n="amenity_climate_title"></h3>
+              <p data-i18n="amenity_climate_text"></p>
+            </li>
+            <li class="amenity-card">
+              <span class="amenity-icon" aria-hidden="true">▣</span>
+              <h3 data-i18n="amenity_tv_title"></h3>
+              <p data-i18n="amenity_tv_text"></p>
+            </li>
+            <li class="amenity-card">
+              <span class="amenity-icon" aria-hidden="true">Ⓟ</span>
+              <h3 data-i18n="amenity_parking_title"></h3>
+              <p data-i18n="amenity_parking_text"></p>
+            </li>
+            <li class="amenity-card">
+              <span class="amenity-icon" aria-hidden="true">☀</span>
+              <h3 data-i18n="amenity_patio_title"></h3>
+              <p data-i18n="amenity_patio_text"></p>
+            </li>
+            <li class="amenity-card">
+              <span class="amenity-icon" aria-hidden="true">☽</span>
+              <h3 data-i18n="amenity_bedlinen_title"></h3>
+              <p data-i18n="amenity_bedlinen_text"></p>
+            </li>
+            <li class="amenity-card">
+              <span class="amenity-icon" aria-hidden="true">✶</span>
+              <h3 data-i18n="amenity_iron_title"></h3>
+              <p data-i18n="amenity_iron_text"></p>
+            </li>
+            <li class="amenity-card">
+              <span class="amenity-icon" aria-hidden="true">⊕</span>
+              <h3 data-i18n="amenity_safety_title"></h3>
+              <p data-i18n="amenity_safety_text"></p>
+            </li>
+            <li class="amenity-card">
+              <span class="amenity-icon" aria-hidden="true">✓</span>
+              <h3 data-i18n="amenity_hosting_title"></h3>
+              <p data-i18n="amenity_hosting_text"></p>
             </li>
           </ul>
         </div>

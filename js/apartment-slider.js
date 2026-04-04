@@ -1,5 +1,5 @@
 /**
- * In-card image sliders for #apartments-grid (see buildApartmentCards).
+ * In-card image sliders for apartment grids (see buildApartmentCards).
  */
 (function () {
   "use strict";
