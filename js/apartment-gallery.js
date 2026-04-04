@@ -226,15 +226,15 @@
           className: "gallery-apt-img",
           src: url,
           alt: alt,
-          width: "1200",
-          height: "900",
-          sizes: "(max-width: 767px) 100vw, min(56rem, 90vw)",
+          width: "1600",
+          height: "1200",
+          sizes: "(max-width: 767px) 100vw, (max-width: 1200px) min(92vw, 48rem), min(56rem, 88vw)",
           decoding: "async",
         });
         img.setAttribute("data-no-img-fallback", "true");
-        if (globalSlot < 20) {
+        if (globalSlot < 12) {
           img.setAttribute("loading", "eager");
-          if (globalSlot < 6) img.setAttribute("fetchpriority", "high");
+          if (globalSlot < 4) img.setAttribute("fetchpriority", "high");
           if (globalSlot < 2) img.setAttribute("decoding", "sync");
         } else {
           img.setAttribute("loading", "lazy");

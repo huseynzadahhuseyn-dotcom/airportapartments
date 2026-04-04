@@ -13,8 +13,9 @@
  * (`public/images/`, sync via `node scripts/sync-public-images.js`). Direct HTTPS (e.g. i.postimg.cc) passes through.
  * Do not use postimg.cc *page* URLs — only direct file URLs or `/images/…`.
  *
- * Cards, `apartment-detail.html`, and homepage gallery read resolved `APARTMENTS_DATA[].images` / `SITE_GALLERY_GROUPS` (see
- * `apartment-gallery-config.js`). Broken slider/detail images → `placeholder.svg` via `apt-image-utils.js`; gallery hides broken thumbs.
+ * Cards, `apartment-detail.html`, and homepage `#gallery` read resolved `APARTMENTS_DATA[].images` / `SITE_GALLERY_GROUPS`
+ * (`site-homepage-gallery-images.js` + `apartment-gallery-config.js`). Broken slider/detail images → `placeholder.svg` via
+ * `apt-image-utils.js`; gallery hides broken thumbs.
  */
 (function () {
   "use strict";
@@ -168,11 +169,11 @@
       ];
   var AVIA_COZY_IMAGES = mapResolvedUrls(AVIA_COZY_PATHS);
 
-  /** Homepage #gallery: logical paths (same order as resolved `SITE_GALLERY_IMAGES`) for alt text. */
-  var SITE_GALLERY_PATHS = []
-    .concat(AVIA_COZY_PATHS.slice(0, 8))
-    .concat(PREMIUM_RESIDENCE_PATHS.slice(0, 8))
-    .concat(HORIZON_APARTMENT_PATHS.slice(0, 8));
+  /** Homepage #gallery: same ordered URLs as `SITE_GALLERY_GROUPS` (`site-homepage-gallery-images.js`). */
+  var SITE_GALLERY_PATHS =
+    Array.isArray(window.SITE_HOMEPAGE_GALLERY_IMAGE_URLS) && window.SITE_HOMEPAGE_GALLERY_IMAGE_URLS.length
+      ? window.SITE_HOMEPAGE_GALLERY_IMAGE_URLS.slice()
+      : [];
 
   var SITE_GALLERY_IMAGES = mapResolvedUrls(SITE_GALLERY_PATHS);
 
