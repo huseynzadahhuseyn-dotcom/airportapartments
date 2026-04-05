@@ -8,6 +8,9 @@
  * - Use `whatsapp`, `booking`, `airbnb`, `details` with `"#"` or `""` until you have real links
  *   (missing Booking/Airbnb URLs omit those buttons; `details: ""` hides View details).
  * - Optional `distanceKey`: i18n key for the airport line (default `hero_badge_airport`); `""` hides it.
+ * - Optional `imagesFromApartmentId`: legacy `id` from `js/apartments-data.js` (`avia`, `bina`, `layover`,
+ *   `premium-villa-2-bedroom`, `airport-family-apartment-2-bedroom`, …) — reuses that listing’s resolved
+ *   `images` (postimg / local URLs). Omit `images` or leave empty when using this. Loads after `apartments-data.js`.
  * - `normalizeApartmentCardEntry` is used by the card script and detail page for the same shape.
  */
 (function () {
@@ -61,14 +64,37 @@
    * @param {object} raw Same shape as APARTMENT_CARD_ENTRY_EXAMPLE
    * @returns {object} Normalized row for card + detail render (`_plain: true`)
    */
+  function imagesFromLegacyListing(legacyId) {
+    var lid = legacyId == null ? "" : String(legacyId).trim();
+    if (!lid || !Array.isArray(window.APARTMENTS_DATA)) return null;
+    for (var i = 0; i < window.APARTMENTS_DATA.length; i++) {
+      var row = window.APARTMENTS_DATA[i];
+      if (!row || row.id !== lid) continue;
+      if (!Array.isArray(row.images) || !row.images.length) return null;
+      var out = [];
+      for (var j = 0; j < row.images.length; j++) {
+        if (row.images[j] == null) continue;
+        out.push(normImg(String(row.images[j]).trim()));
+      }
+      return out.length ? out : null;
+    }
+    return null;
+  }
+
   window.normalizeApartmentCardEntry = function (raw) {
     if (!raw || typeof raw !== "object") return null;
 
     var id = String(raw.id || "apartment").trim() || "apartment";
-    var images =
-      Array.isArray(raw.images) && raw.images.length
-        ? raw.images.map(normImg)
-        : [normImg(PLACEHOLDER_IMAGE)];
+
+    var legacySrc =
+      raw.imagesFromApartmentId != null ? String(raw.imagesFromApartmentId).trim() : "";
+    var images = legacySrc ? imagesFromLegacyListing(legacySrc) : null;
+    if (!images || !images.length) {
+      images =
+        Array.isArray(raw.images) && raw.images.length
+          ? raw.images.map(normImg)
+          : [normImg(PLACEHOLDER_IMAGE)];
+    }
 
     var wh = raw.whatsapp;
     var whStr = wh == null ? "#" : String(wh).trim();
@@ -143,12 +169,12 @@
   window.APARTMENT_CARDS_DATA = [
     {
       id: "airport-studio-gyd",
+      imagesFromApartmentId: "avia",
       title: "Airport Studio Near Baku Airport (GYD) – Free Pickup, 5 Min",
       description:
         "Cozy airport studio just 5 minutes from Baku Airport, ideal for transit guests and short stays. Includes free pickup, fast check-in, and a comfortable private space near GYD.",
       guests: "Ideal for 1–2 guests",
       price: "Book on Booking.com or Airbnb",
-      images: ["/images/placeholder.svg"],
       whatsapp: "#",
       booking: "https://www.booking.com/hotel/az/airport-haven-cozy-and-convenient.ru.html",
       airbnb: "https://airbnb.ru/h/airporth",
@@ -161,12 +187,12 @@
     },
     {
       id: "premium-apartment-gyd",
+      imagesFromApartmentId: "bina",
       title: "Premium Apartment Near Baku Airport (GYD)",
       description:
         "Spacious, quiet and comfortable apartment perfect for rest before or after flight.",
       guests: "Up to 4 guests",
       price: "Contact for rates",
-      images: ["/images/placeholder.svg"],
       whatsapp: "#",
       booking: "",
       airbnb: "",
@@ -175,12 +201,12 @@
     },
     {
       id: "family-apartment-gyd",
+      imagesFromApartmentId: "airport-family-apartment-2-bedroom",
       title: "Family Apartment Near Baku Airport (GYD) – 2 Bedrooms, Up to 5 Guests",
       description:
         "Spacious 2-bedroom apartment ideal for families and groups of up to 5 people. Fully equipped, comfortable stay just 5 minutes from the airport.",
       guests: "Up to 5 guests",
       price: "Book on Booking.com or Airbnb",
-      images: ["/images/placeholder.svg"],
       whatsapp: "#",
       booking: "https://www.booking.com/hotel/az/house-near-baku-airport-and-bos.ru.html",
       airbnb: "https://airbnb.ru/h/binaairport",
@@ -193,11 +219,11 @@
     },
     {
       id: "layover-studio-gyd",
+      imagesFromApartmentId: "layover",
       title: "Layover Studio Near Baku Airport (GYD)",
       description: "Best choice for transit passengers, fast check-in, close to airport.",
       guests: "Ideal for 1–3 guests",
       price: "Rates on Booking.com",
-      images: ["/images/placeholder.svg"],
       whatsapp: "#",
       booking: "https://www.booking.com/hotel/az/5-minute-from-airport.en-gb.html",
       airbnb: "",
@@ -206,11 +232,11 @@
     },
     {
       id: "villa-2br-gyd",
+      imagesFromApartmentId: "premium-villa-2-bedroom",
       title: "2 Bedroom Villa Near Baku Airport (GYD)",
       description: "Large villa for families, quiet area, near airport and expo center.",
       guests: "Families and groups",
       price: "See Booking.com or Airbnb",
-      images: ["/images/placeholder.svg"],
       whatsapp: "#",
       booking: "https://www.booking.com/hotel/az/house-near-airport-and-baku-expo-center.ru.html",
       airbnb: "https://www.airbnb.com.tr/rooms/1240319336186131182",
