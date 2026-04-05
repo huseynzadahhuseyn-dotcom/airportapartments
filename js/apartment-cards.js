@@ -319,24 +319,49 @@
   }
 
   function appendPlainOtaTextButtonRow(body, bookingUrl, airbnbUrl) {
-    if (!bookingUrl || !airbnbUrl || !body) return;
+    if (!body) return;
+    var bU = (bookingUrl || "").trim();
+    var aU = (airbnbUrl || "").trim();
+    if (!bU && !aU) return;
     var row = el("div", "apt-booking-ota-text-row");
-    var b = el("a", "apt-booking-ota-text apt-booking-ota-text--booking", {
-      href: bookingUrl,
-      text: "🔵 Book on Booking.com",
-    });
-    b.setAttribute("target", "_blank");
-    b.setAttribute("rel", "noopener noreferrer");
-    b.setAttribute("aria-label", "Book on Booking.com");
-    var ar = el("a", "apt-booking-ota-text apt-booking-ota-text--airbnb", {
-      href: airbnbUrl,
-      text: "🔴 Book on Airbnb",
-    });
-    ar.setAttribute("target", "_blank");
-    ar.setAttribute("rel", "noopener noreferrer");
-    ar.setAttribute("aria-label", "Book on Airbnb");
-    row.appendChild(b);
-    row.appendChild(ar);
+    if (bU && aU) {
+      var b = el("a", "apt-booking-ota-text apt-booking-ota-text--booking", {
+        href: bU,
+        text: "🔵 Book on Booking.com",
+      });
+      b.setAttribute("target", "_blank");
+      b.setAttribute("rel", "noopener noreferrer");
+      b.setAttribute("aria-label", "Book on Booking.com");
+      var ar = el("a", "apt-booking-ota-text apt-booking-ota-text--airbnb", {
+        href: aU,
+        text: "🔴 Book on Airbnb",
+      });
+      ar.setAttribute("target", "_blank");
+      ar.setAttribute("rel", "noopener noreferrer");
+      ar.setAttribute("aria-label", "Book on Airbnb");
+      row.appendChild(b);
+      row.appendChild(ar);
+    } else if (bU) {
+      row.classList.add("apt-booking-ota-text-row--single");
+      var bOnly = el("a", "apt-booking-ota-text apt-booking-ota-text--booking", {
+        href: bU,
+        text: "🔵 Book on Booking.com",
+      });
+      bOnly.setAttribute("target", "_blank");
+      bOnly.setAttribute("rel", "noopener noreferrer");
+      bOnly.setAttribute("aria-label", "Book on Booking.com");
+      row.appendChild(bOnly);
+    } else {
+      row.classList.add("apt-booking-ota-text-row--single");
+      var arOnly = el("a", "apt-booking-ota-text apt-booking-ota-text--airbnb", {
+        href: aU,
+        text: "🔴 Book on Airbnb",
+      });
+      arOnly.setAttribute("target", "_blank");
+      arOnly.setAttribute("rel", "noopener noreferrer");
+      arOnly.setAttribute("aria-label", "Book on Airbnb");
+      row.appendChild(arOnly);
+    }
     body.appendChild(row);
   }
 
@@ -346,7 +371,7 @@
     row.setAttribute("data-i18n-aria-label", "apt_booking_icons_group_a11y");
     row.setAttribute("aria-label", "");
 
-    var otaAsTextRow = apt.otaTextButtons === true && bookingUrl && airbnbUrl;
+    var otaAsTextRow = apt.otaTextButtons === true && ((bookingUrl && bookingUrl.trim()) || (airbnbUrl && airbnbUrl.trim()));
 
     if (bookingUrl && !otaAsTextRow) {
       var b = addIconTile(
@@ -417,6 +442,8 @@
 
     data.forEach(function (apt) {
       try {
+      var standardHomePlain = listingOnlyImages && apt._plain === true && !isBookPreviewGrid;
+
       var slidesPayload = [];
       var usedBookDemo = false;
 
@@ -447,13 +474,13 @@
 
       var artCls =
         "apt-card apt-card--booking" +
-        (apt.premium ? " apt-card--booking-featured" : "") +
+        (apt.premium && !standardHomePlain ? " apt-card--booking-featured" : "") +
         (isBookPreviewGrid ? " apt-card--book-preview" : "");
       var art = el("article", artCls);
       art.setAttribute("role", "listitem");
       art.setAttribute("data-apt-id", apt.id);
 
-      if (apt.premium) {
+      if (apt.premium && !standardHomePlain) {
         var badge = el("span", "apt-card-badge apt-card-badge--gold apt-booking-badge", {});
         badge.setAttribute("data-i18n", "apt_badge_featured");
         art.appendChild(badge);
@@ -493,7 +520,17 @@
 
       var hbList = Array.isArray(apt.heroBadges) && apt.heroBadges.length ? apt.heroBadges : [];
       var showTransfer = apt.cardFreeTransfer !== false;
-      if (hbList.length) {
+
+      if (standardHomePlain) {
+        var stdCol = el("div", "apt-booking-hero-badges-col");
+        var stdKeys = ["apt_card_badge_pickup", "apt_card_badge_breakfast", "apt_card_badge_cuisine"];
+        for (var sk = 0; sk < stdKeys.length; sk++) {
+          var stdBadge = el("span", "apt-booking-mini-badge apt-booking-mini-badge--i18n");
+          stdBadge.setAttribute("data-i18n", stdKeys[sk]);
+          stdCol.appendChild(stdBadge);
+        }
+        heroBtn.appendChild(stdCol);
+      } else if (hbList.length) {
         var badgeCol = el("div", "apt-booking-hero-badges-col");
         if (showTransfer) {
           badgeCol.appendChild(buildTransferBadge(true));
@@ -527,9 +564,20 @@
       var body = el("div", "apt-booking-body");
 
       if (apt._plain) {
+        if (standardHomePlain) {
+          var topInfo = el("div", "apt-booking-top-info");
+          var topCar = el("p", "apt-booking-top-info__line");
+          topCar.setAttribute("data-i18n", "apt_card_top_car_5min");
+          var topWalk = el("p", "apt-booking-top-info__line");
+          topWalk.setAttribute("data-i18n", "apt_card_top_walk_25min");
+          topInfo.appendChild(topCar);
+          topInfo.appendChild(topWalk);
+          body.appendChild(topInfo);
+        }
+
         body.appendChild(el("h3", "apt-booking-title", { text: apt.plainTitle }));
 
-        if (apt.cardDistanceKey) {
+        if (apt.cardDistanceKey && !standardHomePlain) {
           var distPlain = el("p", "apt-booking-distance-label");
           distPlain.setAttribute("data-i18n", apt.cardDistanceKey);
           body.appendChild(distPlain);

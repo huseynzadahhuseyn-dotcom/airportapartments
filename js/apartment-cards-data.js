@@ -8,6 +8,7 @@
  * - Use `whatsapp`, `booking`, `airbnb`, `details` with `"#"` or `""` until you have real links
  *   (missing Booking/Airbnb URLs omit those buttons; `details: ""` hides View details).
  * - Optional `distanceKey`: i18n key for the airport line (default `hero_badge_airport`); `""` hides it.
+ *   On the homepage grid, distance is replaced by the standard top lines + hero badges (see apartment-cards.js).
  * - Optional `imagesFromApartmentId`: legacy `id` from `js/apartments-data.js` (`avia`, `bina`, `layover`,
  *   `premium-villa-2-bedroom`, `airport-family-apartment-2-bedroom`, …) — reuses that listing’s resolved
  *   `images` (postimg / local URLs). Omit `images` or leave empty when using this. Loads after `apartments-data.js`.
@@ -155,107 +156,122 @@
   };
 
   /**
-   * Your listings. Leave empty to keep the original multilingual apartment grid.
+   * Homepage “Book your stay” order (strict):
+   * 1 Studio → 2 Layover → 3 Premium → 4 Family → 5 Modern → 6 Villa
    *
-   * Example — one card from the template:
-   *   window.APARTMENT_CARDS_DATA = [
-   *     Object.assign({}, window.APARTMENT_CARD_ENTRY_EXAMPLE, {
-   *       id: "sea-view",
-   *       title: "Sea View Apartment",
-   *       details: "apartment-detail.html?apt=sea-view",
-   *     }),
-   *   ];
+   * `otaTextButtons: true` matches the Airport Studio card (text Booking/Airbnb + WhatsApp/Telegram icons).
+   * Standard top lines + hero badges are injected in js/apartment-cards.js for this grid.
    */
   window.APARTMENT_CARDS_DATA = [
     {
       id: "airport-studio-gyd",
       imagesFromApartmentId: "avia",
-      title: "Airport Studio Near Baku Airport (GYD) – Free Pickup, 5 Min",
+      title: "Airport Studio Near Baku Airport (GYD)",
       description:
-        "Cozy airport studio just 5 minutes from Baku Airport, ideal for transit guests and short stays. Includes free pickup, fast check-in, and a comfortable private space near GYD.",
-      guests: "Ideal for 1–2 guests",
+        "Cozy airport studio ideal for transit guests and short stays: fast check-in, calm private space, and easy access to GYD.",
+      guests: "Up to 3 guests",
       price: "Book on Booking.com or Airbnb",
       whatsapp: "#",
       booking: "https://www.booking.com/hotel/az/airport-haven-cozy-and-convenient.ru.html",
-      airbnb: "https://airbnb.ru/h/airporth",
+      airbnb: "https://www.airbnb.com/h/aviaapartmentz",
       details: "",
       featured: false,
       freeAirportTransfer: false,
       distanceKey: "",
-      heroBadges: ["5 min from airport", "Free Pickup", "Transit Friendly"],
       otaTextButtons: true,
+      whatsappSuffixKey: "wa_suffix_avia",
+    },
+    {
+      id: "layover-studio-gyd",
+      imagesFromApartmentId: "layover",
+      title: "Layover Near Baku Airport (GYD)",
+      description:
+        "Purpose-built for layovers: quick check-in, restful sleep, and a short hop to the terminal when you fly.",
+      guests: "Ideal for 1–3 guests",
+      price: "Book on Booking.com",
+      whatsapp: "#",
+      booking: "https://www.booking.com/hotel/az/5-minute-from-airport.en-gb.html",
+      airbnb: "",
+      details: "",
+      featured: false,
+      freeAirportTransfer: false,
+      distanceKey: "",
+      otaTextButtons: true,
+      whatsappSuffixKey: "wa_suffix_layover",
     },
     {
       id: "premium-apartment-gyd",
       imagesFromApartmentId: "bina",
       title: "Premium Apartment Near Baku Airport (GYD)",
       description:
-        "Spacious, quiet and comfortable apartment perfect for rest before or after flight.",
-      guests: "Up to 4 guests",
-      price: "Contact for rates",
+        "Spacious, quiet premium stay near GYD — 2 bedrooms, 2 toilets, 2 bathrooms. Perfect to unwind before or after your flight.",
+      guests: "Up to 6 guests",
+      price: "Book on Booking.com or Airbnb",
       whatsapp: "#",
-      booking: "",
-      airbnb: "",
+      booking: "https://www.booking.com/hotel/az/house-near-baku-airport-and-bos.ru.html",
+      airbnb: "https://www.airbnb.com/h/binaairport",
       details: "",
       featured: false,
-    },
-    {
-      id: "horizon-apartment-gyd",
-      imagesFromApartmentId: "horizon",
-      title: "Modern Apartment Near Baku Airport (GYD) – Quiet Area",
-      description:
-        "Balanced one-bedroom feel near the airport—quiet block, easy GYD access.",
-      guests: "Up to 3 guests",
-      price: "Rates on Booking.com",
-      whatsapp: "#",
-      booking: "https://www.booking.com/hotel/az/house-near-airport-and-baku-expo-center.ru.html",
-      airbnb: "",
-      details: "",
-      featured: false,
+      freeAirportTransfer: false,
+      distanceKey: "",
+      otaTextButtons: true,
+      whatsappSuffixKey: "wa_suffix_bina",
     },
     {
       id: "family-apartment-gyd",
       imagesFromApartmentId: "airport-family-apartment-2-bedroom",
-      title: "Family Apartment Near Baku Airport (GYD) – 2 Bedrooms, Up to 5 Guests",
+      title: "Family Apartment Near Baku Airport (GYD)",
       description:
-        "Spacious 2-bedroom apartment ideal for families and groups of up to 5 people. Fully equipped, comfortable stay just 5 minutes from the airport.",
+        "Family-friendly two-bedroom apartment with room to spread out — great for parents and kids, groups up to five, minutes from the airport.",
       guests: "Up to 5 guests",
       price: "Book on Booking.com or Airbnb",
       whatsapp: "#",
       booking: "https://www.booking.com/hotel/az/house-near-baku-airport-and-bos.ru.html",
-      airbnb: "https://airbnb.ru/h/binaairport",
+      airbnb: "https://www.airbnb.com/h/binaairport",
       details: "",
       featured: false,
-      freeAirportTransfer: true,
+      freeAirportTransfer: false,
       distanceKey: "",
-      heroBadges: ["5 min from airport", "Family friendly"],
       otaTextButtons: true,
+      whatsappSuffixKey: "wa_suffix_airport_family_2br",
     },
     {
-      id: "layover-studio-gyd",
-      imagesFromApartmentId: "layover",
-      title: "Layover Studio Near Baku Airport (GYD)",
-      description: "Best choice for transit passengers, fast check-in, close to airport.",
-      guests: "Ideal for 1–3 guests",
-      price: "Rates on Booking.com",
+      id: "horizon-apartment-gyd",
+      imagesFromApartmentId: "horizon",
+      title: "Modern Apartment Near Baku Airport (GYD)",
+      description:
+        "Modern comfort in a quieter pocket near the airport — balanced layout, easy GYD access, ideal for short city-airport stays.",
+      guests: "Up to 3 guests",
+      price: "Book on Booking.com",
       whatsapp: "#",
-      booking: "https://www.booking.com/hotel/az/5-minute-from-airport.en-gb.html",
+      booking:
+        "https://www.booking.com/hotel/az/house-near-airport-and-baku-expo-center.ru.html?label=gen173bo-10CAsoEUInaG91c2UtbmVhci1haXJwb3J0LWFuZC1iYWt1LWV4cG8tY2VudGVySDNYA2gRiAEBmAEzuAEXyAEM2AED6AEB-AEBiAIBmAIGqAIBuALuxLnOBsACAdICJDMyMDY4ZGMyLTUyZTEtNDRjNC1iMzNiLWY3OTY5NTJjMGNmZtgCAeACAQ&sid=050bd510d0756cc961ebf1977517a667&dist=0&group_adults=2&group_children=0&no_rooms=1&sb_price_type=total&type=total&",
       airbnb: "",
       details: "",
       featured: false,
+      freeAirportTransfer: false,
+      distanceKey: "",
+      otaTextButtons: true,
+      whatsappSuffixKey: "wa_suffix_horizon",
     },
     {
       id: "villa-2br-gyd",
       imagesFromApartmentId: "premium-villa-2-bedroom",
       title: "2 Bedroom Villa Near Baku Airport (GYD)",
-      description: "Large villa for families, quiet area, near airport and expo center.",
+      description:
+        "Large two-bedroom villa for families or groups — quiet area, generous living space, close to the airport and expo district.",
       guests: "Families and groups",
-      price: "See Booking.com or Airbnb",
+      price: "Book on Booking.com or Airbnb",
       whatsapp: "#",
-      booking: "https://www.booking.com/hotel/az/house-near-airport-and-baku-expo-center.ru.html",
+      booking:
+        "https://www.booking.com/hotel/az/house-near-airport-and-baku-expo-center.ru.html?label=gen173bo-10CAsoEUInaG91c2UtbmVhci1haXJwb3J0LWFuZC1iYWt1LWV4cG8tY2VudGVySDNYA2gRiAEBmAEzuAEXyAEM2AED6AEB-AEBiAIBmAIGqAIBuALuxLnOBsACAdICJDMyMDY4ZGMyLTUyZTEtNDRjNC1iMzNiLWY3OTY5NTJjMGNmZtgCAeACAQ&sid=050bd510d0756cc961ebf1977517a667&dist=0&group_adults=2&group_children=0&no_rooms=1&sb_price_type=total&type=total&",
       airbnb: "https://www.airbnb.com.tr/rooms/1240319336186131182",
       details: "",
-      featured: true,
+      featured: false,
+      freeAirportTransfer: false,
+      distanceKey: "",
+      otaTextButtons: true,
+      whatsappSuffixKey: "wa_suffix_premium_villa_2bed",
     },
   ];
 })();

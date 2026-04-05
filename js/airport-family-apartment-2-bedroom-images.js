@@ -6,8 +6,8 @@
   "use strict";
 
   window.AIRPORT_FAMILY_APARTMENT_2_BEDROOM_IMAGE_URLS = [
-    "https://i.postimg.cc/9Mytr6pH/072fd3ac-528d-40ac-9d0a-c259be5d5e80.jpg",
     "https://i.postimg.cc/c1MBZNCq/555f64cc-0f41-4e14-a943-9a9a5aa5b569.jpg",
+    "https://i.postimg.cc/9Mytr6pH/072fd3ac-528d-40ac-9d0a-c259be5d5e80.jpg",
     "https://i.postimg.cc/wxcQHdMY/c1dc9d24-e192-44e8-932f-41bb707ae16c.jpg",
     "https://i.postimg.cc/Xq8fg9mD/ca0770f9-33c1-4039-8a8a-14db83748bc9.jpg",
     "https://i.postimg.cc/CMHsYV5T/ca5dc021-bb2b-45ad-a3d1-dc171c9a7051.jpg",

@@ -3325,6 +3325,24 @@ html[dir="rtl"] iframe[src*="google.com/maps"] {
   pointer-events: none;
 }
 
+.apt-booking-top-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  margin: 0 0 0.1rem;
+  padding-bottom: 0.65rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.apt-booking-top-info__line {
+  margin: 0;
+  font-size: 0.78rem;
+  font-weight: 650;
+  line-height: 1.4;
+  letter-spacing: 0.01em;
+  color: var(--ink-muted);
+}
+
 .apt-booking-body {
   display: flex;
   flex-direction: column;
@@ -3356,6 +3374,10 @@ html[dir="rtl"] iframe[src*="google.com/maps"] {
   grid-template-columns: 1fr 1fr;
   gap: 0.5rem;
   margin-top: 0.35rem;
+}
+
+.apt-booking-ota-text-row--single {
+  grid-template-columns: 1fr;
 }
 
 .apt-booking-ota-text {
