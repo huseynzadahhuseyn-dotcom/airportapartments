@@ -2771,11 +2771,6 @@ html[dir="rtl"] iframe[src*="google.com/maps"] {
   border-radius: 10px;
 }
 
-/* Apartments — CTAs below listing grid */
-.section--apartments-rich .book-cta-panel {
-  margin-top: 2.25rem;
-}
-
 /* Book / apartments — shared CTA row */
 .book-cta-panel {
   display: flex;
@@ -2794,6 +2789,10 @@ html[dir="rtl"] iframe[src*="google.com/maps"] {
 .book-cta-wa {
   font-weight: 700;
   box-shadow: 0 4px 20px rgba(37, 211, 102, 0.35);
+}
+
+.book-cta-note--under-grid {
+  margin-top: 1rem;
 }
 
 .book-cta-note {
@@ -2828,8 +2827,6 @@ html[dir="rtl"] iframe[src*="google.com/maps"] {
 /* Apartments — hotel-style premium cards */
 .section--apartments-rich {
   background: linear-gradient(180deg, rgba(13, 110, 110, 0.045) 0%, var(--bg) 38%, var(--bg) 100%);
-  padding-top: 2.75rem;
-  padding-bottom: 3.25rem;
 }
 
 .section-head--apartments .section-lead--apartments {
@@ -2852,9 +2849,16 @@ html[dir="rtl"] iframe[src*="google.com/maps"] {
   }
 }
 
-/* Apartments — six listings: 3×2 on wide screens */
+/* Book your stay / main apartments: mobile 1 col, tablet 2, desktop 3 (6 cards = 3×2) */
+@media (min-width: 640px) {
+  .section--book-stay .apartments-grid--premium {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.65rem 1.35rem;
+  }
+}
+
 @media (min-width: 1100px) {
-  .section--apartments-rich .apartments-grid--premium {
+  .section--book-stay .apartments-grid--premium {
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 1.75rem 1.5rem;
   }

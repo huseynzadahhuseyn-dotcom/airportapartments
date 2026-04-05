@@ -82,7 +82,7 @@
           <nav class="site-nav site-nav--primary" id="site-nav" data-i18n-aria-label="nav_primary" aria-label="">
             <ul class="nav-primary-list">
               <li>
-                <a class="nav-link" href="#book" data-section-id="book" data-i18n="nav_book"></a>
+                <a class="nav-link" href="#apartments" data-section-id="apartments" data-i18n="nav_book"></a>
               </li>
               <li>
                 <a class="nav-link" href="#why-us" data-section-id="why-us" data-i18n="nav_why_section"></a>
@@ -265,13 +265,17 @@
                   rel="noopener noreferrer"
                   data-i18n="nav_telegram"
                 ></a>
-                <a class="btn btn-lg btn-hero-secondary" href="#book" data-i18n="view_apartments"></a>
+                <a class="btn btn-lg btn-hero-secondary" href="#apartments" data-i18n="view_apartments"></a>
               </div>
             </div>
         </div>
       </section>
 
-      <section class="section section-alt section--book-stay" id="book" aria-labelledby="book-section-heading">
+      <section
+        class="section section-alt section--book-stay section--apartments-rich"
+        id="apartments"
+        aria-labelledby="book-section-heading"
+      >
         <div class="container">
           <header class="section-head section-head--center section-head--apartments">
             <h2 id="book-section-heading" data-i18n="book_section_title"></h2>
@@ -301,15 +305,16 @@
             </li>
           </ul>
           <div
-            class="apartments-grid apartments-grid--premium apartments-grid--preview"
-            id="book-apartments-grid-preview"
+            class="apartments-grid apartments-grid--premium"
+            id="apartments-grid"
             role="list"
             aria-label=""
             data-i18n-aria-label="book_apartments_grid_a11y"
           ></div>
           <div class="book-preview-actions chat-action-row chat-action-row--center">
-            <a class="btn btn-primary btn-lg" href="#apartments" data-i18n="book_view_all_apartments"></a>
+            <a class="btn btn-lg btn-ghost" href="#apartments" data-i18n="book_cta_browse_apartments"></a>
           </div>
+          <p class="book-cta-note book-cta-note--under-grid" data-i18n="book_cta_note"></p>
           <div class="direct-book-inner book-stay-direct" aria-labelledby="direct-book-title">
             <h2 id="direct-book-title" class="direct-book-title" data-i18n="direct_book_title"></h2>
             <ul class="direct-book-perks" role="list">
@@ -343,40 +348,6 @@
         </div>
       </div>
 
-      <section class="section section--apartments-rich" id="apartments" aria-labelledby="apartments-title">
-        <div class="container">
-          <header class="section-head section-head--center section-head--apartments">
-            <h2 id="apartments-title" data-i18n="apartments_section_title"></h2>
-            <p class="section-lead section-lead--apartments" data-i18n="apartments_section_intro" data-i18n-html="true"></p>
-          </header>
-          <div
-            class="apartments-grid apartments-grid--premium"
-            id="apartments-grid"
-            role="list"
-            aria-label=""
-            data-i18n-aria-label="book_apartments_grid_a11y"
-          ></div>
-          <div class="book-cta-panel chat-action-row chat-action-row--center">
-            <a
-              class="btn btn-lg btn-wa-card book-cta-wa"
-              href="https://wa.me/994506581718"
-              target="_blank"
-              rel="noopener noreferrer"
-              data-wa-prefill=""
-              data-i18n="book_cta_whatsapp"
-            ></a>
-            <a
-              class="btn btn-lg btn-telegram book-cta-tg"
-              href="https://t.me/apartamentnearbaku"
-              target="_blank"
-              rel="noopener noreferrer"
-              data-i18n="book_cta_telegram"
-            ></a>
-            <a class="btn btn-lg btn-ghost book-cta-browse" href="#apartments" data-i18n="book_cta_browse_apartments"></a>
-          </div>
-          <p class="book-cta-note" data-i18n="book_cta_note"></p>
-        </div>
-      </section>
       <section class="section section-alt" id="payment-methods" aria-labelledby="payment-methods-title">
         <div class="container">
           <header class="section-head">

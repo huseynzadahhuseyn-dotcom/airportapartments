@@ -200,6 +200,20 @@
       featured: false,
     },
     {
+      id: "horizon-apartment-gyd",
+      imagesFromApartmentId: "horizon",
+      title: "Modern Apartment Near Baku Airport (GYD) – Quiet Area",
+      description:
+        "Balanced one-bedroom feel near the airport—quiet block, easy GYD access.",
+      guests: "Up to 3 guests",
+      price: "Rates on Booking.com",
+      whatsapp: "#",
+      booking: "https://www.booking.com/hotel/az/house-near-airport-and-baku-expo-center.ru.html",
+      airbnb: "",
+      details: "",
+      featured: false,
+    },
+    {
       id: "family-apartment-gyd",
       imagesFromApartmentId: "airport-family-apartment-2-bedroom",
       title: "Family Apartment Near Baku Airport (GYD) – 2 Bedrooms, Up to 5 Guests",

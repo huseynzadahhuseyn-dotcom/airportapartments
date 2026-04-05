@@ -1,5 +1,5 @@
 /**
- * Renders #book-apartments-grid-preview (first 3) and #apartments-grid — booking-style cards (one hero photo, lightbox for the rest,
+ * Renders `#apartments-grid` on the homepage (booking-style cards: hero photo, lightbox for the rest,
  * icon row: Booking / Airbnb / WhatsApp under the image).
  *
  * Uses `apt.images` only (no mixed gallery pool). If missing/invalid, stable Unsplash demo URLs.
@@ -46,41 +46,6 @@
   };
 
   var BOOK_DEMO_SLIDE_COUNT = 4;
-
-  /** Curated “best” listings for the homepage Book Your Stay preview (order = display order). */
-  var BOOK_PREVIEW_LISTING_IDS = ["avia", "bina", "premium-villa-2-bedroom"];
-
-  function pickBookPreviewListings(all) {
-    if (!all || !all.length) return [];
-    var ids =
-      Array.isArray(window.BOOK_PREVIEW_LISTING_IDS) && window.BOOK_PREVIEW_LISTING_IDS.length
-        ? window.BOOK_PREVIEW_LISTING_IDS
-        : BOOK_PREVIEW_LISTING_IDS;
-    var byId = {};
-    for (var i = 0; i < all.length; i++) {
-      var row = all[i];
-      if (row && row.id) byId[row.id] = row;
-    }
-    var ordered = [];
-    for (var j = 0; j < ids.length; j++) {
-      var id = ids[j];
-      if (byId[id]) ordered.push(byId[id]);
-    }
-    if (ordered.length >= 3) return ordered.slice(0, 3);
-    for (var k = 0; k < all.length && ordered.length < 3; k++) {
-      var r = all[k];
-      if (!r || !r.id) continue;
-      var dup = false;
-      for (var u = 0; u < ordered.length; u++) {
-        if (ordered[u].id === r.id) {
-          dup = true;
-          break;
-        }
-      }
-      if (!dup) ordered.push(r);
-    }
-    return ordered.slice(0, 3);
-  }
 
   function getBookStayDemoUrls(apt) {
     var pool = BOOK_STAY_DEMO_URLS;
@@ -702,16 +667,7 @@
   function tryRender() {
     var data = getApartmentListingRows();
     var hasData = data.length > 0;
-    var previewGrid = document.getElementById("book-apartments-grid-preview");
     var aptGrid = document.getElementById("apartments-grid");
-
-    if (previewGrid) {
-      if (hasData) {
-        buildApartmentCards(previewGrid, pickBookPreviewListings(data));
-      } else {
-        renderFallback(previewGrid);
-      }
-    }
 
     if (aptGrid) {
       if (hasData) {
