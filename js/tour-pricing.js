@@ -1,6 +1,6 @@
 /**
  * Injects tour tier prices from canonical AZN bases, converted by site language:
- * AZ → AZN; EN / TR / AR → USD (1 USD = 1.70 AZN).
+ * AZ → AZN; EN / TR / RU → USD (1 USD = 1.70 AZN).
  */
 (function () {
   "use strict";

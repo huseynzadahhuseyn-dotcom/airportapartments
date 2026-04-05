@@ -2,14 +2,13 @@
  * Loads locales/*.json, applies data-i18n / data-i18n-html / aria / title / img alt,
  * updates document title & meta, runs `window.__i18nDomHydrators`, then dispatches i18n:applied.
  *
- * Locales: en (base), az, tr, ar — non-English bundles merge over en.json for missing keys.
- * Arabic (ar) sets document dir=rtl; others use dir=ltr.
+ * Locales: en (base), az, tr, ru — non-English bundles merge over en.json for missing keys.
  */
 (function () {
   "use strict";
 
   var STORAGE_KEY = "site_lang";
-  var SUPPORTED = ["en", "az", "tr", "ar"];
+  var SUPPORTED = ["en", "az", "tr", "ru"];
   var DEFAULT_LANG = "en";
 
   var bundle = null;
@@ -18,7 +17,7 @@
   function normalizeStoredLang(code) {
     if (!code || typeof code !== "string") return DEFAULT_LANG;
     var s = code.trim().toLowerCase();
-    if (s === "ru") return DEFAULT_LANG;
+    if (s === "ar") return DEFAULT_LANG;
     if (SUPPORTED.indexOf(s) !== -1) return s;
     return DEFAULT_LANG;
   }
@@ -48,7 +47,7 @@
       localStorage.setItem(STORAGE_KEY, l);
     } catch (e) {}
     document.documentElement.setAttribute("lang", l);
-    document.documentElement.setAttribute("dir", l === "ar" ? "rtl" : "ltr");
+    document.documentElement.setAttribute("dir", "ltr");
   }
 
   function interpolate(str, vars) {
@@ -103,7 +102,7 @@
       twImg.setAttribute("content", base.replace(/\/$/, "") + "/images/logo.svg");
     }
 
-    var localeMap = { en: "en_US", az: "az_AZ", tr: "tr_TR", ar: "ar_AE" };
+    var localeMap = { en: "en_US", az: "az_AZ", tr: "tr_TR", ru: "ru_RU" };
     var ogLoc = document.getElementById("og-locale");
     if (ogLoc) ogLoc.setAttribute("content", localeMap[currentLang] || "en_US");
   }

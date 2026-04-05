@@ -6,11 +6,11 @@
         try {
           var k = "site_lang";
           var s = (localStorage.getItem(k) || "en").trim().toLowerCase();
-          if (s === "ru") s = "en";
-          var ok = s === "en" || s === "az" || s === "tr" || s === "ar";
+          if (s === "ar") s = "en";
+          var ok = s === "en" || s === "az" || s === "tr" || s === "ru";
           if (!ok) s = "en";
           document.documentElement.lang = s;
-          document.documentElement.setAttribute("dir", s === "ar" ? "rtl" : "ltr");
+          document.documentElement.setAttribute("dir", "ltr");
         } catch (e) {}
       })();
     </script>
@@ -41,7 +41,7 @@
     <link rel="alternate" hreflang="en" data-hreflang="en" href="" />
     <link rel="alternate" hreflang="az" data-hreflang="az" href="" />
     <link rel="alternate" hreflang="tr" data-hreflang="tr" href="" />
-    <link rel="alternate" hreflang="ar" data-hreflang="ar" href="" />
+    <link rel="alternate" hreflang="ru" data-hreflang="ru" href="" />
     <link rel="alternate" hreflang="x-default" id="hreflang-x-default" href="" />
     <link rel="preconnect" href="https://www.booking.com" crossorigin />
     <link rel="dns-prefetch" href="https://maps.google.com" />
@@ -186,11 +186,11 @@
             <button type="button" class="lang-btn lang-btn--flag" data-set-lang="en" aria-pressed="true" data-i18n-aria-label="lang_name_en">
               <span class="lang-flag-emoji" aria-hidden="true">🇬🇧</span>
             </button>
+            <button type="button" class="lang-btn lang-btn--flag" data-set-lang="ru" aria-pressed="false" data-i18n-aria-label="lang_name_ru">
+              <span class="lang-flag-emoji" aria-hidden="true">🇷🇺</span>
+            </button>
             <button type="button" class="lang-btn lang-btn--flag" data-set-lang="tr" aria-pressed="false" data-i18n-aria-label="lang_name_tr">
               <span class="lang-flag-emoji" aria-hidden="true">🇹🇷</span>
-            </button>
-            <button type="button" class="lang-btn lang-btn--flag" data-set-lang="ar" aria-pressed="false" data-i18n-aria-label="lang_name_ar">
-              <span class="lang-flag-emoji" aria-hidden="true">🇦🇪</span>
             </button>
           </div>
           <label
