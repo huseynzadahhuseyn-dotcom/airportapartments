@@ -2850,6 +2850,20 @@ html[dir="rtl"] iframe[src*="google.com/maps"] {
 }
 
 /* Book your stay / main apartments: mobile 1 col, tablet 2, desktop 3 (6 cards = 3×2) */
+.section--book-stay #apartments-grid.apartments-grid--premium {
+  align-items: stretch;
+}
+
+.section--book-stay #apartments-grid.apartments-grid--premium > .apt-card--booking {
+  height: 100%;
+  min-height: 0;
+}
+
+.section--book-stay #apartments-grid.apartments-grid--premium .apt-booking-desc {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
 @media (min-width: 640px) {
   .section--book-stay .apartments-grid--premium {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -5114,6 +5128,14 @@ html[dir="rtl"] iframe[src*="google.com/maps"] {
   margin: 0;
   flex: 1;
   min-height: 0;
+}
+
+.tour-card-seo-footer {
+  margin: 0.75rem 0 0;
+  font-size: 0.78rem;
+  line-height: 1.5;
+  color: var(--ink-muted);
+  font-weight: 500;
 }
 
 .tour-1p-price {

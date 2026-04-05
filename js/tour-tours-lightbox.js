@@ -1,6 +1,6 @@
 /**
  * City tour cards: hero + thumbnails open GLightbox at the chosen index.
- * Slides marked data-tour-slide="vehicle" are grouped after city/tour images in the lightbox order.
+ * Hidden anchor order matches thumbnails (`data-tour-lb-start`) and hero main image sync.
  */
 (function () {
   "use strict";
@@ -9,21 +9,12 @@
     {
       root: ".tour-card-media--city-tour-pack",
       link: "a.tour-city-tour-lb",
-      isVehicle: function (anchor) {
-        return anchor.getAttribute("data-tour-slide") === "vehicle";
-      },
     },
   ];
 
+  /** Document order must match hero thumbnails (`data-tour-lb-start`) so the correct slide opens. */
   function orderedLinks(root, cfg) {
-    var nodes = Array.prototype.slice.call(root.querySelectorAll(cfg.link));
-    var experience = [];
-    var vehicle = [];
-    nodes.forEach(function (a) {
-      if (cfg.isVehicle(a)) vehicle.push(a);
-      else experience.push(a);
-    });
-    return experience.concat(vehicle);
+    return Array.prototype.slice.call(root.querySelectorAll(cfg.link));
   }
 
   function normHref(h) {

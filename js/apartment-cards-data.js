@@ -168,7 +168,7 @@
       imagesFromApartmentId: "avia",
       title: "Airport Studio Near Baku Airport (GYD)",
       description:
-        "Cozy airport studio ideal for transit guests and short stays: fast check-in, calm private space, and easy access to GYD.",
+        "Cozy studio apartment just 5 minutes from Baku Airport (GYD), ideal for transit stays and short visits. Free airport pickup, fast check-in, and fully equipped for a comfortable stay near the airport. Free airport transfer, breakfast included, and 24/7 check-in available.",
       guests: "Up to 3 guests",
       price: "Book on Booking.com or Airbnb",
       whatsapp: "#",
@@ -186,8 +186,8 @@
       imagesFromApartmentId: "layover",
       title: "Layover Near Baku Airport (GYD)",
       description:
-        "Purpose-built for layovers: quick check-in, restful sleep, and a short hop to the terminal when you fly.",
-      guests: "Ideal for 1–3 guests",
+        "Designed for layovers and short stays near Baku Airport (GYD), offering quick check-in, restful comfort, and easy access to the terminal. Ideal for transit passengers. Free airport transfer, breakfast included, and 24/7 check-in available.",
+      guests: "Up to 3 guests",
       price: "Book on Booking.com",
       whatsapp: "#",
       booking: "https://www.booking.com/hotel/az/5-minute-from-airport.en-gb.html",
@@ -204,7 +204,7 @@
       imagesFromApartmentId: "bina",
       title: "Premium Apartment Near Baku Airport (GYD)",
       description:
-        "Spacious, quiet premium stay near GYD — 2 bedrooms, 2 toilets, 2 bathrooms. Perfect to unwind before or after your flight.",
+        "Spacious 2-bedroom premium apartment 5 minutes from Baku Airport (GYD), perfect for families or groups up to 6 guests. Quiet, modern, and fully equipped. Free airport transfer, breakfast included, and 24/7 check-in available.",
       guests: "Up to 6 guests",
       price: "Book on Booking.com or Airbnb",
       whatsapp: "#",
@@ -222,8 +222,8 @@
       imagesFromApartmentId: "airport-family-apartment-2-bedroom",
       title: "Family Apartment Near Baku Airport (GYD)",
       description:
-        "Family-friendly two-bedroom apartment with room to spread out — great for parents and kids, groups up to five, minutes from the airport.",
-      guests: "Up to 5 guests",
+        "Family-friendly 2-bedroom apartment near Baku Airport (GYD), ideal for groups up to 6 guests. Comfortable, spacious, and fully equipped for a relaxing stay. Free airport transfer, breakfast included, and 24/7 check-in available.",
+      guests: "Up to 6 guests",
       price: "Book on Booking.com or Airbnb",
       whatsapp: "#",
       booking: "https://www.booking.com/hotel/az/house-near-baku-airport-and-bos.ru.html",
@@ -240,7 +240,7 @@
       imagesFromApartmentId: "horizon",
       title: "Modern Apartment Near Baku Airport (GYD)",
       description:
-        "Modern comfort in a quieter pocket near the airport — balanced layout, easy GYD access, ideal for short city-airport stays.",
+        "Modern and comfortable apartment near Baku Airport (GYD), located in a quiet area with easy access to the airport. Ideal for short and long stays. Free airport transfer, breakfast included, and 24/7 check-in available.",
       guests: "Up to 3 guests",
       price: "Book on Booking.com",
       whatsapp: "#",
@@ -259,8 +259,8 @@
       imagesFromApartmentId: "premium-villa-2-bedroom",
       title: "2 Bedroom Villa Near Baku Airport (GYD)",
       description:
-        "Large two-bedroom villa for families or groups — quiet area, generous living space, close to the airport and expo district.",
-      guests: "Families and groups",
+        "Spacious 2-bedroom villa near Baku Airport (GYD), perfect for families and groups up to 6 guests. Quiet location with large living space. Free airport transfer, breakfast included, and 24/7 check-in available.",
+      guests: "Up to 6 guests",
       price: "Book on Booking.com or Airbnb",
       whatsapp: "#",
       booking:
