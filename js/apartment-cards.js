@@ -112,13 +112,23 @@
       return { payload: payload, ok: false };
     }
     for (var i = 0; i < urlList.length; i++) {
-      var src = directUrls
-        ? String(urlList[i]).trim()
-        : bookCardImgSrc(urlList[i]) || String(urlList[i]).trim();
-      if (!src || isPlaceholderImageUrl(src)) {
+      var raw = String(urlList[i]).trim();
+      if (!raw) {
         return { payload: [], ok: false };
       }
-      payload.push({ src: src, altIndex: i });
+      var src;
+      if (directUrls) {
+        src = cardSliderSrc(raw) || normImgUrl(raw) || raw;
+      } else {
+        src = bookCardImgSrc(raw) || raw;
+        if (isPlaceholderImageUrl(src)) {
+          return { payload: [], ok: false };
+        }
+      }
+      if (!src) {
+        return { payload: [], ok: false };
+      }
+      payload.push({ src: String(src).trim(), altIndex: i });
     }
     return { payload: payload, ok: true };
   }
@@ -343,13 +353,37 @@
     body.appendChild(row);
   }
 
+  function appendPlainOtaTextButtonRow(body, bookingUrl, airbnbUrl) {
+    if (!bookingUrl || !airbnbUrl || !body) return;
+    var row = el("div", "apt-booking-ota-text-row");
+    var b = el("a", "apt-booking-ota-text apt-booking-ota-text--booking", {
+      href: bookingUrl,
+      text: "🔵 Book on Booking.com",
+    });
+    b.setAttribute("target", "_blank");
+    b.setAttribute("rel", "noopener noreferrer");
+    b.setAttribute("aria-label", "Book on Booking.com");
+    var ar = el("a", "apt-booking-ota-text apt-booking-ota-text--airbnb", {
+      href: airbnbUrl,
+      text: "🔴 Book on Airbnb",
+    });
+    ar.setAttribute("target", "_blank");
+    ar.setAttribute("rel", "noopener noreferrer");
+    ar.setAttribute("aria-label", "Book on Airbnb");
+    row.appendChild(b);
+    row.appendChild(ar);
+    body.appendChild(row);
+  }
+
   function appendBookingIconRow(media, apt, bookingUrl, airbnbUrl) {
     var row = el("div", "apt-booking-icon-row");
     row.setAttribute("role", "group");
     row.setAttribute("data-i18n-aria-label", "apt_booking_icons_group_a11y");
     row.setAttribute("aria-label", "");
 
-    if (bookingUrl) {
+    var otaAsTextRow = apt.otaTextButtons === true && bookingUrl && airbnbUrl;
+
+    if (bookingUrl && !otaAsTextRow) {
       var b = addIconTile(
         row,
         "a",
@@ -364,20 +398,9 @@
       );
       b.setAttribute("data-i18n-title", "apt_icon_booking_title");
       b.setAttribute("data-i18n-aria-label", "apt_icon_booking_title");
-    } else {
-      var bs = addIconTile(
-        row,
-        "span",
-        "apt-booking-icon-tile apt-booking-icon-tile--booking apt-booking-icon-tile--disabled",
-        iconSvgBooking,
-        {},
-        "apt_label_booking"
-      );
-      bs.setAttribute("data-i18n-title", "apt_icon_unavailable");
-      bs.setAttribute("data-i18n-aria-label", "apt_cta_unavailable");
     }
 
-    if (airbnbUrl) {
+    if (airbnbUrl && !otaAsTextRow) {
       var ar = addIconTile(
         row,
         "a",
@@ -392,17 +415,6 @@
       );
       ar.setAttribute("data-i18n-title", "apt_icon_airbnb_title");
       ar.setAttribute("data-i18n-aria-label", "apt_icon_airbnb_title");
-    } else {
-      var as = addIconTile(
-        row,
-        "span",
-        "apt-booking-icon-tile apt-booking-icon-tile--airbnb apt-booking-icon-tile--disabled",
-        iconSvgAirbnb,
-        {},
-        "apt_label_airbnb"
-      );
-      as.setAttribute("data-i18n-title", "apt_icon_unavailable");
-      as.setAttribute("data-i18n-aria-label", "apt_cta_unavailable");
     }
 
     var wa = el("a", "apt-booking-icon-tile apt-booking-icon-tile--wa");
@@ -447,12 +459,8 @@
         var listingUrls = slideUrls(apt, pool, { bookListingImagesOnly: true });
         var bookPack = assembleBookSlidesPayload(apt, listingUrls, false);
         if (!bookPack.ok || !bookPack.payload.length) {
-          bookPack = assembleBookSlidesPayload(apt, getBookStayDemoUrls(apt), true);
-          usedBookDemo = true;
-        }
-        if (!bookPack.payload.length) {
-          bookPack = assembleBookSlidesPayload(apt, [BOOK_STAY_DEMO_URLS[0]], true);
-          usedBookDemo = true;
+          bookPack = assembleBookSlidesPayload(apt, [PLACEHOLDER_IMAGE], true);
+          usedBookDemo = false;
         }
         slidesPayload = bookPack.payload;
       } else {
@@ -502,8 +510,12 @@
         heroImg.setAttribute("data-no-img-fallback", "true");
       }
       heroBtn.appendChild(heroImg);
-      if (apt.cardFreeTransfer !== false) {
-        var transferBadge = el("span", "apt-booking-transfer-badge");
+
+      function buildTransferBadge(inStack) {
+        var transferBadge = el(
+          "span",
+          "apt-booking-transfer-badge" + (inStack ? " apt-booking-transfer-badge--in-stack" : "")
+        );
         var transferIc = el("span", "apt-booking-transfer-badge__ic", { "aria-hidden": "true" });
         transferIc.innerHTML =
           '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="12" height="12" fill="currentColor" focusable="false"><path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-3.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z"/></svg>';
@@ -511,7 +523,24 @@
         var transferLbl = el("span", "apt-booking-transfer-badge__text");
         transferLbl.setAttribute("data-i18n", "apt_badge_free_transfer");
         transferBadge.appendChild(transferLbl);
-        heroBtn.appendChild(transferBadge);
+        return transferBadge;
+      }
+
+      var hbList = Array.isArray(apt.heroBadges) && apt.heroBadges.length ? apt.heroBadges : [];
+      var showTransfer = apt.cardFreeTransfer !== false;
+      if (hbList.length) {
+        var badgeCol = el("div", "apt-booking-hero-badges-col");
+        if (showTransfer) {
+          badgeCol.appendChild(buildTransferBadge(true));
+        }
+        for (var bix = 0; bix < hbList.length; bix++) {
+          badgeCol.appendChild(
+            el("span", "apt-booking-mini-badge", { text: "\u2705 " + hbList[bix] })
+          );
+        }
+        heroBtn.appendChild(badgeCol);
+      } else if (showTransfer) {
+        heroBtn.appendChild(buildTransferBadge(false));
       }
       if (slidesPayload.length > 1) {
         heroBtn.appendChild(
@@ -535,6 +564,12 @@
       if (apt._plain) {
         body.appendChild(el("h3", "apt-booking-title", { text: apt.plainTitle }));
 
+        if (apt.cardDistanceKey) {
+          var distPlain = el("p", "apt-booking-distance-label");
+          distPlain.setAttribute("data-i18n", apt.cardDistanceKey);
+          body.appendChild(distPlain);
+        }
+
         body.appendChild(el("p", "apt-booking-desc", { text: apt.plainDesc }));
 
         var guestsRowP = el("div", "apt-booking-guests");
@@ -551,6 +586,10 @@
           )
         );
 
+        if (apt.otaTextButtons === true) {
+          appendPlainOtaTextButtonRow(body, bookingUrl, airbnbUrl);
+        }
+
         if (isBookPreviewGrid) {
           appendBookPreviewChatRow(body, apt);
         }
@@ -562,16 +601,15 @@
               "data-i18n": "view_details",
             })
           );
-        } else {
-          body.appendChild(
-            el("span", "apt-booking-details-btn apt-booking-details-btn--disabled", {
-              "data-i18n": "view_details",
-              "aria-disabled": "true",
-            })
-          );
         }
       } else {
         body.appendChild(el("h3", "apt-booking-title", { "data-i18n": apt.titleKey }));
+
+        if (apt.cardDistanceKey) {
+          var distLegacy = el("p", "apt-booking-distance-label");
+          distLegacy.setAttribute("data-i18n", apt.cardDistanceKey);
+          body.appendChild(distLegacy);
+        }
 
         body.appendChild(el("p", "apt-booking-desc", { "data-i18n": apt.blurbKey }));
 

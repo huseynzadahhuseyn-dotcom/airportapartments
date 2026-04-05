@@ -3112,8 +3112,48 @@ html[dir="rtl"] iframe[src*="google.com/maps"] {
   min-width: 0;
 }
 
+.apt-booking-transfer-badge--in-stack {
+  position: relative;
+  top: auto;
+  left: auto;
+  max-width: 100%;
+}
+
+.apt-booking-hero-badges-col {
+  position: absolute;
+  top: 0.55rem;
+  left: 0.55rem;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.35rem;
+  max-width: min(13.5rem, calc(100% - 3.5rem));
+  pointer-events: none;
+}
+
+.apt-booking-mini-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.26rem 0.48rem;
+  font-size: 0.66rem;
+  font-weight: 750;
+  line-height: 1.15;
+  letter-spacing: 0.01em;
+  color: #fff;
+  text-align: left;
+  background: rgba(22, 28, 42, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 6px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.24);
+}
+
 /* Stack under the gold “Featured” pill (same corner on the card) */
-.apt-card--booking-featured .apt-booking-transfer-badge {
+.apt-card--booking-featured .apt-booking-transfer-badge:not(.apt-booking-transfer-badge--in-stack) {
+  top: 2.15rem;
+}
+
+.apt-card--booking-featured .apt-booking-hero-badges-col {
   top: 2.15rem;
 }
 
@@ -3296,6 +3336,68 @@ html[dir="rtl"] iframe[src*="google.com/maps"] {
   font-weight: 750;
   line-height: 1.28;
   color: var(--ink);
+}
+
+.apt-booking-distance-label {
+  margin: 0;
+  font-size: 0.8rem;
+  font-weight: 750;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--accent-hover);
+}
+
+.apt-booking-ota-text-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+  margin-top: 0.35rem;
+}
+
+.apt-booking-ota-text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 46px;
+  padding: 0.5rem 0.65rem;
+  font-size: 0.78rem;
+  font-weight: 750;
+  line-height: 1.25;
+  text-align: center;
+  text-decoration: none !important;
+  color: #fff !important;
+  border-radius: 12px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.14);
+  transition:
+    transform 0.18s ease,
+    filter 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.apt-booking-ota-text:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.04);
+}
+
+.apt-booking-ota-text:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.apt-booking-ota-text--booking {
+  background: linear-gradient(165deg, #004494 0%, #00224d 100%);
+  box-shadow: 0 6px 18px rgba(0, 34, 77, 0.32);
+}
+
+.apt-booking-ota-text--airbnb {
+  background: linear-gradient(165deg, #ff5a7d 0%, #e31c5f 52%, #c41e5c 100%);
+  box-shadow: 0 6px 18px rgba(227, 28, 95, 0.32);
+}
+
+@media (max-width: 480px) {
+  .apt-booking-ota-text-row {
+    grid-template-columns: 1fr;
+  }
 }
 
 .apt-booking-desc {
