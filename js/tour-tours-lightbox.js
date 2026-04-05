@@ -1,28 +1,14 @@
 /**
- * City tour cards: hero + thumbnails open GLightbox at the chosen index (no navigation).
- * Slide order matches apartments story: experience images first, vehicle slide(s) last.
+ * City tour cards: hero + thumbnails open GLightbox at the chosen index.
+ * Slides marked data-tour-slide="vehicle" are grouped after city/tour images in the lightbox order.
  */
 (function () {
   "use strict";
 
   var CONFIG = [
     {
-      root: ".tour-card-media--sedan-tour",
-      link: "a.tour-sedan-glightbox",
-      isVehicle: function (anchor) {
-        return anchor.getAttribute("data-tour-slide") === "vehicle";
-      },
-    },
-    {
-      root: ".tour-card-media--vito-city-tour",
-      link: "a.tour-vito-city-lightbox",
-      isVehicle: function (anchor) {
-        return anchor.getAttribute("data-tour-slide") === "vehicle";
-      },
-    },
-    {
-      root: ".tour-card-media--x5-tour",
-      link: "a.tour-x5-lightbox",
+      root: ".tour-card-media--city-tour-pack",
+      link: "a.tour-city-tour-lb",
       isVehicle: function (anchor) {
         return anchor.getAttribute("data-tour-slide") === "vehicle";
       },

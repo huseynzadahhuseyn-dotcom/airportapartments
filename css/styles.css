@@ -5046,6 +5046,199 @@ html[dir="rtl"] iframe[src*="google.com/maps"] {
   gap: 1.5rem;
 }
 
+/* City tours — unified premium cards (Sedan / Vito / BMW X5) */
+.tour-card--unified-premium {
+  border-radius: calc(var(--radius-lg) + 4px);
+  border-color: rgba(26, 31, 46, 0.1);
+  box-shadow:
+    0 20px 48px rgba(26, 31, 46, 0.1),
+    0 6px 18px rgba(13, 110, 110, 0.06);
+}
+
+.tour-card--unified-premium::before {
+  background: linear-gradient(90deg, var(--accent) 0%, rgba(13, 110, 110, 0.45) 100%);
+}
+
+.tour-card--unified-premium:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 26px 56px rgba(26, 31, 46, 0.12),
+    0 8px 22px rgba(13, 110, 110, 0.08);
+  border-color: rgba(13, 110, 110, 0.22);
+}
+
+.tour-card-body--unified {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  padding: 1.05rem 1.2rem 1.35rem;
+  flex: 1;
+  min-height: 0;
+}
+
+.tour-service-pills {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.5rem;
+}
+
+.tour-service-pill {
+  margin: 0;
+  padding: 0.32rem 0.55rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: 0.02em;
+  color: var(--ink);
+  background: linear-gradient(180deg, #f0f7f7 0%, #e8f3f3 100%);
+  border: 1px solid rgba(13, 110, 110, 0.2);
+  border-radius: 999px;
+}
+
+.tour-card-meta-line {
+  margin: 0;
+  font-size: 0.82rem;
+  font-weight: 650;
+  color: var(--accent-hover);
+  letter-spacing: 0.02em;
+}
+
+.tour-card-body--unified .tour-card-title {
+  margin: 0.15rem 0 0;
+}
+
+.tour-card-body--unified .tour-card-desc {
+  margin: 0;
+  flex: 1;
+  min-height: 0;
+}
+
+.tour-1p-price {
+  margin: 0.35rem 0 0.15rem;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+
+.tour-1p-price__prefix {
+  font-weight: 650;
+  color: var(--ink-muted);
+  margin-right: 0.15rem;
+}
+
+.tour-1p-price strong {
+  font-weight: 800;
+  color: var(--accent-hover);
+  font-size: clamp(1.2rem, 2.8vw, 1.55rem);
+}
+
+.tour-price-subheading {
+  margin: 0.75rem 0 0.35rem;
+  font-size: 0.72rem;
+  font-weight: 750;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+
+.tour-price-tiers--secondary .tour-price-tier-qty {
+  font-size: 0.84rem;
+}
+
+.tour-price-tiers--secondary .tour-price-tier-amt {
+  font-size: 0.9rem;
+}
+
+.tour-cta-icon-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+  margin-top: 0.35rem;
+}
+
+.tour-cta-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  border-radius: 14px;
+  text-decoration: none !important;
+  border: 1px solid transparent;
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    filter 0.18s ease;
+}
+
+.tour-cta-icon-btn:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.04);
+}
+
+.tour-cta-icon-btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.tour-cta-icon-btn__svg {
+  width: 1.55rem;
+  height: 1.55rem;
+  display: block;
+}
+
+.tour-cta-icon-btn--wa {
+  color: #fff !important;
+  background: linear-gradient(165deg, #25d366 0%, #128c7e 100%);
+  box-shadow: 0 4px 16px rgba(18, 140, 126, 0.32);
+}
+
+.tour-cta-icon-btn--tg {
+  color: #fff !important;
+  background: linear-gradient(165deg, #37aee2 0%, #1c8bc9 100%);
+  box-shadow: 0 4px 16px rgba(34, 158, 217, 0.3);
+}
+
+.tour-cta-icon-btn--email {
+  color: var(--ink) !important;
+  background: linear-gradient(180deg, #fff 0%, #f3f5f8 100%);
+  border-color: rgba(26, 31, 46, 0.14);
+  box-shadow: 0 4px 14px rgba(26, 31, 46, 0.08);
+}
+
+.tour-card-phone {
+  margin: 0.65rem 0 0;
+  text-align: center;
+  font-size: 0.92rem;
+  font-weight: 750;
+}
+
+.tour-card-phone__link {
+  color: var(--accent-hover);
+  text-decoration: none;
+}
+
+.tour-card-phone__link:hover {
+  text-decoration: underline;
+}
+
+.section-tours-premium .tour-card-body--unified .tour-price-block--premium {
+  margin-top: 0.15rem;
+}
+
+@media (max-width: 380px) {
+  .tour-cta-icon-row {
+    gap: 0.4rem;
+  }
+
+  .tour-cta-icon-btn {
+    min-height: 46px;
+  }
+}
+
 .section-tours-premium .tour-card-body {
   padding-top: 1rem;
 }
